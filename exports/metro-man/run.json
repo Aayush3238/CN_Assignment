@@ -1,0 +1,663 @@
+{
+  "scenario": {
+    "profile": "metro-man",
+    "description": "Metro MAN: HQ plus two remote sites (15-35 km), 450 users and a FinTech colo. Focus: OS2 SMF, EVPL, sub-5 ms QoS, dual-homed failover.",
+    "buildings": 1,
+    "remote_sites": 2,
+    "endpoints": 450,
+    "access_distance_m": 90.0,
+    "backbone_distance_m": 300.0,
+    "wan_distance_m": 22000.0,
+    "wan_service": "dark-fiber",
+    "uplink_gbps": 10.0,
+    "poe_aps": 20,
+    "resiliency": "dual-homed",
+    "cloud_vpc": false,
+    "qos_latency_ms": 5.0,
+    "root_prefix": "10.10.0.0/16",
+    "vlans": [
+      {
+        "name": "Corporate",
+        "hosts": 200,
+        "purpose": "HQ corporate users",
+        "poe": false,
+        "vlan_id": 10
+      },
+      {
+        "name": "Trading",
+        "hosts": 120,
+        "purpose": "Low-latency trading floor",
+        "poe": false,
+        "vlan_id": 20
+      },
+      {
+        "name": "Voice",
+        "hosts": 50,
+        "purpose": "Trading turret/voice",
+        "poe": true,
+        "vlan_id": 30
+      },
+      {
+        "name": "Guest",
+        "hosts": 40,
+        "purpose": "Visitor access",
+        "poe": false,
+        "vlan_id": 40
+      },
+      {
+        "name": "Management",
+        "hosts": 18,
+        "purpose": "Out-of-band management",
+        "poe": false,
+        "vlan_id": 50
+      },
+      {
+        "name": "Colo-DMZ",
+        "hosts": 20,
+        "purpose": "FinTech colocation services",
+        "poe": false,
+        "vlan_id": 60
+      }
+    ]
+  },
+  "media": [
+    {
+      "link": "LAN access",
+      "distance_m": 90.0,
+      "category": "access",
+      "media": "Cat6a copper",
+      "transceiver": "10GBASE-T",
+      "standard": "IEEE 802.3an",
+      "rationale": "Selected Cat6a (10GBASE-T) because the 90 m run is within the 100 m limit defined by IEEE 802.3an; Cat6a sustains 10 Gbps at this distance without active optics.",
+      "rule_id": "L1-DIST-01"
+    },
+    {
+      "link": "Building/site backbone",
+      "distance_m": 300.0,
+      "category": "backbone",
+      "media": "OM4 multimode fiber",
+      "transceiver": "10GBASE-SR",
+      "standard": "IEEE 802.3ae (850 nm)",
+      "rationale": "Selected OM4 Multimode Fiber (10GBASE-SR) because the 300 m run exceeds the 100 m copper limit but remains inside the 400 m OM4 reach at 850 nm, where modal dispersion and attenuation stay within budget.",
+      "rule_id": "L1-DIST-02"
+    },
+    {
+      "link": "WAN/MAN link",
+      "distance_m": 22000.0,
+      "category": "wan",
+      "media": "OS2 single-mode fiber",
+      "transceiver": "10GBASE-ER",
+      "standard": "IEEE 802.3ae (1550 nm)",
+      "rationale": "Selected OS2 Single-Mode Fiber because link distance (22.0 km) exceeds the 400 m attenuation limit of OM4 Multimode Fiber. Chose 10GBASE-ER (1550 nm) with a calculated link loss of 6.7 dB against a 10.5 dB budget (5.5 dB fiber + 1.0 dB connectors + 0.2 dB splices); nominal reach is 40 km.",
+      "rule_id": "L1-DIST-03"
+    }
+  ],
+  "vlans": [
+    {
+      "vlan_id": 10,
+      "name": "Corporate",
+      "purpose": "HQ corporate users",
+      "subnet": "10.10.0.0/24",
+      "gateway": "10.10.0.1",
+      "trunk_allowed": [
+        10,
+        20,
+        30,
+        40,
+        50,
+        60,
+        999
+      ],
+      "native_vlan": 999,
+      "rstp_role": "designated",
+      "poe": false,
+      "rationale": "VLAN 10 (Corporate) carries HQ corporate users on 10.10.0.0/24 with gateway 10.10.0.1. Trunks permit only VLANs 10, 20, 30, 40, 50, 60, 999; native VLAN 999 is reserved and unused to prevent double-tagged VLAN hopping. RSTP role: designated."
+    },
+    {
+      "vlan_id": 20,
+      "name": "Trading",
+      "purpose": "Low-latency trading floor",
+      "subnet": "10.10.1.0/25",
+      "gateway": "10.10.1.1",
+      "trunk_allowed": [
+        10,
+        20,
+        30,
+        40,
+        50,
+        60,
+        999
+      ],
+      "native_vlan": 999,
+      "rstp_role": "designated",
+      "poe": false,
+      "rationale": "VLAN 20 (Trading) carries Low-latency trading floor on 10.10.1.0/25 with gateway 10.10.1.1. Trunks permit only VLANs 10, 20, 30, 40, 50, 60, 999; native VLAN 999 is reserved and unused to prevent double-tagged VLAN hopping. RSTP role: designated."
+    },
+    {
+      "vlan_id": 30,
+      "name": "Voice",
+      "purpose": "Trading turret/voice",
+      "subnet": "10.10.1.128/26",
+      "gateway": "10.10.1.129",
+      "trunk_allowed": [
+        10,
+        20,
+        30,
+        40,
+        50,
+        60,
+        999
+      ],
+      "native_vlan": 999,
+      "rstp_role": "designated",
+      "poe": true,
+      "rationale": "VLAN 30 (Voice) carries Trading turret/voice on 10.10.1.128/26 with gateway 10.10.1.129. Trunks permit only VLANs 10, 20, 30, 40, 50, 60, 999; native VLAN 999 is reserved and unused to prevent double-tagged VLAN hopping. RSTP role: designated. PoE is enabled on access ports for this VLAN (802.3af/at budget planned per AP)."
+    },
+    {
+      "vlan_id": 40,
+      "name": "Guest",
+      "purpose": "Visitor access",
+      "subnet": "10.10.1.192/26",
+      "gateway": "10.10.1.193",
+      "trunk_allowed": [
+        10,
+        20,
+        30,
+        40,
+        50,
+        60,
+        999
+      ],
+      "native_vlan": 999,
+      "rstp_role": "designated",
+      "poe": false,
+      "rationale": "VLAN 40 (Guest) carries Visitor access on 10.10.1.192/26 with gateway 10.10.1.193. Trunks permit only VLANs 10, 20, 30, 40, 50, 60, 999; native VLAN 999 is reserved and unused to prevent double-tagged VLAN hopping. RSTP role: designated."
+    },
+    {
+      "vlan_id": 50,
+      "name": "Management",
+      "purpose": "Out-of-band management",
+      "subnet": "10.10.2.32/27",
+      "gateway": "10.10.2.33",
+      "trunk_allowed": [
+        10,
+        20,
+        30,
+        40,
+        50,
+        60,
+        999
+      ],
+      "native_vlan": 999,
+      "rstp_role": "root (priority 4096)",
+      "poe": false,
+      "rationale": "VLAN 50 (Management) carries Out-of-band management on 10.10.2.32/27 with gateway 10.10.2.33. Trunks permit only VLANs 10, 20, 30, 40, 50, 60, 999; native VLAN 999 is reserved and unused to prevent double-tagged VLAN hopping. RSTP role: root (priority 4096)."
+    },
+    {
+      "vlan_id": 60,
+      "name": "Colo-DMZ",
+      "purpose": "FinTech colocation services",
+      "subnet": "10.10.2.0/27",
+      "gateway": "10.10.2.1",
+      "trunk_allowed": [
+        10,
+        20,
+        30,
+        40,
+        50,
+        60,
+        999
+      ],
+      "native_vlan": 999,
+      "rstp_role": "designated",
+      "poe": false,
+      "rationale": "VLAN 60 (Colo-DMZ) carries FinTech colocation services on 10.10.2.0/27 with gateway 10.10.2.1. Trunks permit only VLANs 10, 20, 30, 40, 50, 60, 999; native VLAN 999 is reserved and unused to prevent double-tagged VLAN hopping. RSTP role: designated."
+    }
+  ],
+  "routing": {
+    "protocol": "Multi-Area OSPF",
+    "areas": {
+      "0": [
+        "10.10.0.0/24",
+        "10.10.1.0/25"
+      ],
+      "10": [
+        "10.10.1.128/26",
+        "10.10.1.192/26"
+      ],
+      "20": [
+        "10.10.2.0/27",
+        "10.10.2.32/27"
+      ]
+    },
+    "rationale": "Selected multi-area OSPF because the design spans 2 remote site/WAN link(s) or exceeds 50 subnets. Area 0 remains the transit core, while remote areas isolate SPF churn and permit route summarisation.",
+    "rule_id": "L3-ROUTE-02",
+    "summarization": [
+      "area 10 range 10.10.1.128 255.255.255.128",
+      "area 20 range 10.10.2.0 255.255.255.192"
+    ]
+  },
+  "subnets": [
+    {
+      "name": "Corporate",
+      "requested_hosts": 200,
+      "cidr": "10.10.0.0/24",
+      "network": "10.10.0.0",
+      "netmask": "255.255.255.0",
+      "wildcard": "0.0.0.255",
+      "broadcast": "10.10.0.255",
+      "first_host": "10.10.0.1",
+      "last_host": "10.10.0.254",
+      "gateway": "10.10.0.1",
+      "usable_hosts": 254,
+      "point_to_point": false
+    },
+    {
+      "name": "Trading",
+      "requested_hosts": 120,
+      "cidr": "10.10.1.0/25",
+      "network": "10.10.1.0",
+      "netmask": "255.255.255.128",
+      "wildcard": "0.0.0.127",
+      "broadcast": "10.10.1.127",
+      "first_host": "10.10.1.1",
+      "last_host": "10.10.1.126",
+      "gateway": "10.10.1.1",
+      "usable_hosts": 126,
+      "point_to_point": false
+    },
+    {
+      "name": "Voice",
+      "requested_hosts": 50,
+      "cidr": "10.10.1.128/26",
+      "network": "10.10.1.128",
+      "netmask": "255.255.255.192",
+      "wildcard": "0.0.0.63",
+      "broadcast": "10.10.1.191",
+      "first_host": "10.10.1.129",
+      "last_host": "10.10.1.190",
+      "gateway": "10.10.1.129",
+      "usable_hosts": 62,
+      "point_to_point": false
+    },
+    {
+      "name": "Guest",
+      "requested_hosts": 40,
+      "cidr": "10.10.1.192/26",
+      "network": "10.10.1.192",
+      "netmask": "255.255.255.192",
+      "wildcard": "0.0.0.63",
+      "broadcast": "10.10.1.255",
+      "first_host": "10.10.1.193",
+      "last_host": "10.10.1.254",
+      "gateway": "10.10.1.193",
+      "usable_hosts": 62,
+      "point_to_point": false
+    },
+    {
+      "name": "Colo-DMZ",
+      "requested_hosts": 20,
+      "cidr": "10.10.2.0/27",
+      "network": "10.10.2.0",
+      "netmask": "255.255.255.224",
+      "wildcard": "0.0.0.31",
+      "broadcast": "10.10.2.31",
+      "first_host": "10.10.2.1",
+      "last_host": "10.10.2.30",
+      "gateway": "10.10.2.1",
+      "usable_hosts": 30,
+      "point_to_point": false
+    },
+    {
+      "name": "Management",
+      "requested_hosts": 18,
+      "cidr": "10.10.2.32/27",
+      "network": "10.10.2.32",
+      "netmask": "255.255.255.224",
+      "wildcard": "0.0.0.31",
+      "broadcast": "10.10.2.63",
+      "first_host": "10.10.2.33",
+      "last_host": "10.10.2.62",
+      "gateway": "10.10.2.33",
+      "usable_hosts": 30,
+      "point_to_point": false
+    }
+  ],
+  "utilization": {
+    "root_prefix": "10.10.0.0/16",
+    "root_addresses": 65536,
+    "allocated_addresses": 576,
+    "address_pct": 0.88,
+    "requested_hosts": 448,
+    "usable_hosts": 564,
+    "host_pct": 79.43
+  },
+  "rationales": [
+    {
+      "rule_id": "L1-DIST-01",
+      "domain": "L1",
+      "inputs": {
+        "link": "LAN access",
+        "distance_m": 90.0,
+        "category": "access",
+        "requested_media": "auto"
+      },
+      "condition": "90 m on access link (requested: auto)",
+      "choice": "Cat6a copper / 10GBASE-T",
+      "rationale": "Selected Cat6a (10GBASE-T) because the 90 m run is within the 100 m limit defined by IEEE 802.3an; Cat6a sustains 10 Gbps at this distance without active optics.",
+      "standard": "IEEE 802.3an"
+    },
+    {
+      "rule_id": "L1-DIST-02",
+      "domain": "L1",
+      "inputs": {
+        "link": "Building/site backbone",
+        "distance_m": 300.0,
+        "category": "backbone",
+        "requested_media": "auto"
+      },
+      "condition": "300 m on backbone link (requested: auto)",
+      "choice": "OM4 multimode fiber / 10GBASE-SR",
+      "rationale": "Selected OM4 Multimode Fiber (10GBASE-SR) because the 300 m run exceeds the 100 m copper limit but remains inside the 400 m OM4 reach at 850 nm, where modal dispersion and attenuation stay within budget.",
+      "standard": "IEEE 802.3ae (850 nm)"
+    },
+    {
+      "rule_id": "L1-DIST-03",
+      "domain": "L1",
+      "inputs": {
+        "link": "WAN/MAN link",
+        "distance_m": 22000.0,
+        "category": "wan",
+        "requested_media": "auto"
+      },
+      "condition": "22000 m on wan link (requested: auto)",
+      "choice": "OS2 single-mode fiber / 10GBASE-ER",
+      "rationale": "Selected OS2 Single-Mode Fiber because link distance (22.0 km) exceeds the 400 m attenuation limit of OM4 Multimode Fiber. Chose 10GBASE-ER (1550 nm) with a calculated link loss of 6.7 dB against a 10.5 dB budget (5.5 dB fiber + 1.0 dB connectors + 0.2 dB splices); nominal reach is 40 km.",
+      "standard": "IEEE 802.3ae (1550 nm)"
+    },
+    {
+      "rule_id": "VLSM-ALLOC",
+      "domain": "VLSM",
+      "inputs": {
+        "root_prefix": "10.10.0.0/16",
+        "requests": {
+          "Corporate": 200,
+          "Trading": 120,
+          "Voice": 50,
+          "Guest": 40,
+          "Management": 18,
+          "Colo-DMZ": 20
+        }
+      },
+      "condition": "largest-first allocation with CIDR boundary alignment",
+      "choice": "6 non-overlapping subnets",
+      "rationale": "Allocated 6 subnets from 10.10.0.0/16 using largest-first VLSM. Address-space utilisation is 0.88% and host utilisation is 79.43%.",
+      "standard": "RFC 4632 (CIDR)"
+    },
+    {
+      "rule_id": "VLSM-BLOCK",
+      "domain": "VLSM",
+      "inputs": {
+        "name": "Corporate",
+        "requested_hosts": 200,
+        "cidr": "10.10.0.0/24"
+      },
+      "condition": "needed 200 usable host(s) plus network/broadcast",
+      "choice": "Corporate -> 10.10.0.0/24",
+      "rationale": "Allocated 10.10.0.0/24 to Corporate: 254 usable addresses, gateway 10.10.0.1, wildcard 0.0.0.255. Blocks are aligned and checked for overlap with all previously allocated subnets.",
+      "standard": "RFC 4632 (CIDR)"
+    },
+    {
+      "rule_id": "VLSM-BLOCK",
+      "domain": "VLSM",
+      "inputs": {
+        "name": "Trading",
+        "requested_hosts": 120,
+        "cidr": "10.10.1.0/25"
+      },
+      "condition": "needed 120 usable host(s) plus network/broadcast",
+      "choice": "Trading -> 10.10.1.0/25",
+      "rationale": "Allocated 10.10.1.0/25 to Trading: 126 usable addresses, gateway 10.10.1.1, wildcard 0.0.0.127. Blocks are aligned and checked for overlap with all previously allocated subnets.",
+      "standard": "RFC 4632 (CIDR)"
+    },
+    {
+      "rule_id": "VLSM-BLOCK",
+      "domain": "VLSM",
+      "inputs": {
+        "name": "Voice",
+        "requested_hosts": 50,
+        "cidr": "10.10.1.128/26"
+      },
+      "condition": "needed 50 usable host(s) plus network/broadcast",
+      "choice": "Voice -> 10.10.1.128/26",
+      "rationale": "Allocated 10.10.1.128/26 to Voice: 62 usable addresses, gateway 10.10.1.129, wildcard 0.0.0.63. Blocks are aligned and checked for overlap with all previously allocated subnets.",
+      "standard": "RFC 4632 (CIDR)"
+    },
+    {
+      "rule_id": "VLSM-BLOCK",
+      "domain": "VLSM",
+      "inputs": {
+        "name": "Guest",
+        "requested_hosts": 40,
+        "cidr": "10.10.1.192/26"
+      },
+      "condition": "needed 40 usable host(s) plus network/broadcast",
+      "choice": "Guest -> 10.10.1.192/26",
+      "rationale": "Allocated 10.10.1.192/26 to Guest: 62 usable addresses, gateway 10.10.1.193, wildcard 0.0.0.63. Blocks are aligned and checked for overlap with all previously allocated subnets.",
+      "standard": "RFC 4632 (CIDR)"
+    },
+    {
+      "rule_id": "VLSM-BLOCK",
+      "domain": "VLSM",
+      "inputs": {
+        "name": "Colo-DMZ",
+        "requested_hosts": 20,
+        "cidr": "10.10.2.0/27"
+      },
+      "condition": "needed 20 usable host(s) plus network/broadcast",
+      "choice": "Colo-DMZ -> 10.10.2.0/27",
+      "rationale": "Allocated 10.10.2.0/27 to Colo-DMZ: 30 usable addresses, gateway 10.10.2.1, wildcard 0.0.0.31. Blocks are aligned and checked for overlap with all previously allocated subnets.",
+      "standard": "RFC 4632 (CIDR)"
+    },
+    {
+      "rule_id": "VLSM-BLOCK",
+      "domain": "VLSM",
+      "inputs": {
+        "name": "Management",
+        "requested_hosts": 18,
+        "cidr": "10.10.2.32/27"
+      },
+      "condition": "needed 18 usable host(s) plus network/broadcast",
+      "choice": "Management -> 10.10.2.32/27",
+      "rationale": "Allocated 10.10.2.32/27 to Management: 30 usable addresses, gateway 10.10.2.33, wildcard 0.0.0.31. Blocks are aligned and checked for overlap with all previously allocated subnets.",
+      "standard": "RFC 4632 (CIDR)"
+    },
+    {
+      "rule_id": "L3-ROUTE-02",
+      "domain": "L3",
+      "inputs": {
+        "subnet_count": 6,
+        "remote_sites": 2,
+        "cloud_vpc": false,
+        "wan_distance_m": 22000.0
+      },
+      "condition": "single-AS vs multi-site/cloud boundary",
+      "choice": "Multi-Area OSPF",
+      "rationale": "Selected multi-area OSPF because the design spans 2 remote site/WAN link(s) or exceeds 50 subnets. Area 0 remains the transit core, while remote areas isolate SPF churn and permit route summarisation.",
+      "standard": "RFC 2328 (OSPFv2), RFC 4271 (BGP-4)"
+    },
+    {
+      "rule_id": "VLAN-8021Q",
+      "domain": "L2",
+      "inputs": {
+        "vlan_id": 10,
+        "name": "Corporate",
+        "subnet": "10.10.0.0/24",
+        "trunk_allowed": [
+          10,
+          20,
+          30,
+          40,
+          50,
+          60,
+          999
+        ]
+      },
+      "condition": "segmentation by function with explicit trunk policy",
+      "choice": "VLAN 10 (Corporate)",
+      "rationale": "VLAN 10 (Corporate) carries HQ corporate users on 10.10.0.0/24 with gateway 10.10.0.1. Trunks permit only VLANs 10, 20, 30, 40, 50, 60, 999; native VLAN 999 is reserved and unused to prevent double-tagged VLAN hopping. RSTP role: designated.",
+      "standard": "IEEE 802.1Q"
+    },
+    {
+      "rule_id": "VLAN-8021Q",
+      "domain": "L2",
+      "inputs": {
+        "vlan_id": 20,
+        "name": "Trading",
+        "subnet": "10.10.1.0/25",
+        "trunk_allowed": [
+          10,
+          20,
+          30,
+          40,
+          50,
+          60,
+          999
+        ]
+      },
+      "condition": "segmentation by function with explicit trunk policy",
+      "choice": "VLAN 20 (Trading)",
+      "rationale": "VLAN 20 (Trading) carries Low-latency trading floor on 10.10.1.0/25 with gateway 10.10.1.1. Trunks permit only VLANs 10, 20, 30, 40, 50, 60, 999; native VLAN 999 is reserved and unused to prevent double-tagged VLAN hopping. RSTP role: designated.",
+      "standard": "IEEE 802.1Q"
+    },
+    {
+      "rule_id": "VLAN-8021Q",
+      "domain": "L2",
+      "inputs": {
+        "vlan_id": 30,
+        "name": "Voice",
+        "subnet": "10.10.1.128/26",
+        "trunk_allowed": [
+          10,
+          20,
+          30,
+          40,
+          50,
+          60,
+          999
+        ]
+      },
+      "condition": "segmentation by function with explicit trunk policy",
+      "choice": "VLAN 30 (Voice)",
+      "rationale": "VLAN 30 (Voice) carries Trading turret/voice on 10.10.1.128/26 with gateway 10.10.1.129. Trunks permit only VLANs 10, 20, 30, 40, 50, 60, 999; native VLAN 999 is reserved and unused to prevent double-tagged VLAN hopping. RSTP role: designated. PoE is enabled on access ports for this VLAN (802.3af/at budget planned per AP).",
+      "standard": "IEEE 802.1Q"
+    },
+    {
+      "rule_id": "VLAN-8021Q",
+      "domain": "L2",
+      "inputs": {
+        "vlan_id": 40,
+        "name": "Guest",
+        "subnet": "10.10.1.192/26",
+        "trunk_allowed": [
+          10,
+          20,
+          30,
+          40,
+          50,
+          60,
+          999
+        ]
+      },
+      "condition": "segmentation by function with explicit trunk policy",
+      "choice": "VLAN 40 (Guest)",
+      "rationale": "VLAN 40 (Guest) carries Visitor access on 10.10.1.192/26 with gateway 10.10.1.193. Trunks permit only VLANs 10, 20, 30, 40, 50, 60, 999; native VLAN 999 is reserved and unused to prevent double-tagged VLAN hopping. RSTP role: designated.",
+      "standard": "IEEE 802.1Q"
+    },
+    {
+      "rule_id": "VLAN-8021Q",
+      "domain": "L2",
+      "inputs": {
+        "vlan_id": 50,
+        "name": "Management",
+        "subnet": "10.10.2.32/27",
+        "trunk_allowed": [
+          10,
+          20,
+          30,
+          40,
+          50,
+          60,
+          999
+        ]
+      },
+      "condition": "segmentation by function with explicit trunk policy",
+      "choice": "VLAN 50 (Management)",
+      "rationale": "VLAN 50 (Management) carries Out-of-band management on 10.10.2.32/27 with gateway 10.10.2.33. Trunks permit only VLANs 10, 20, 30, 40, 50, 60, 999; native VLAN 999 is reserved and unused to prevent double-tagged VLAN hopping. RSTP role: root (priority 4096).",
+      "standard": "IEEE 802.1Q"
+    },
+    {
+      "rule_id": "VLAN-8021Q",
+      "domain": "L2",
+      "inputs": {
+        "vlan_id": 60,
+        "name": "Colo-DMZ",
+        "subnet": "10.10.2.0/27",
+        "trunk_allowed": [
+          10,
+          20,
+          30,
+          40,
+          50,
+          60,
+          999
+        ]
+      },
+      "condition": "segmentation by function with explicit trunk policy",
+      "choice": "VLAN 60 (Colo-DMZ)",
+      "rationale": "VLAN 60 (Colo-DMZ) carries FinTech colocation services on 10.10.2.0/27 with gateway 10.10.2.1. Trunks permit only VLANs 10, 20, 30, 40, 50, 60, 999; native VLAN 999 is reserved and unused to prevent double-tagged VLAN hopping. RSTP role: designated.",
+      "standard": "IEEE 802.1Q"
+    },
+    {
+      "rule_id": "L2-RSTP",
+      "domain": "L2",
+      "inputs": {
+        "vlan_count": 6,
+        "resiliency": "dual-homed"
+      },
+      "condition": "loop prevention with deterministic root selection",
+      "choice": "Rapid PVST+",
+      "rationale": "Selected Rapid PVST+ with per-VLAN root priority 4096 on the management VLAN so that each VLAN has a deterministic root and sub-second reconvergence after a topology change.",
+      "standard": "IEEE 802.1w"
+    },
+    {
+      "rule_id": "L2-RESILIENCY",
+      "domain": "L2",
+      "inputs": {
+        "resiliency": "dual-homed"
+      },
+      "condition": "scenario requires non-single-homed availability",
+      "choice": "dual-homed uplinks + HSRP/VRRP peer",
+      "rationale": "Selected dual-homed design with a paired gateway peer because the scenario requests resilience beyond a single uplink. HSRP/VRRP removes the gateway as a single point of failure.",
+      "standard": "RFC 5798 (VRRP)"
+    },
+    {
+      "rule_id": "L3-QOS",
+      "domain": "QoS",
+      "inputs": {
+        "latency_target_ms": 5.0,
+        "uplink_gbps": 10.0
+      },
+      "condition": "latency-sensitive traffic on the WAN",
+      "choice": "EF priority queue + CS3 signalling bandwidth",
+      "rationale": "Selected a strict priority queue for DSCP EF and a reserved bandwidth class for CS3 because the scenario requires 5 ms application latency. Lower latency-sensitive traffic is shaped by class-default.",
+      "standard": "RFC 2474 / RFC 2475 (DiffServ)"
+    }
+  ],
+  "configs": {
+    "switches.cfg": "! NetArchitect generated switch configuration\n! Profile: metro-man\n! Review interface names, port counts, and PoE budgets before applying.\n!\nhostname metro-man-sw1\n!\nip routing\n!\n! --- VLAN database ---\nvlan 10\n name CORPORATE\n!\nvlan 20\n name TRADING\n!\nvlan 30\n name VOICE\n!\nvlan 40\n name GUEST\n!\nvlan 50\n name MANAGEMENT\n!\nvlan 60\n name COLO-DMZ\n!\nvlan 999\n name NATIVE_UNUSED\n!\n! --- Spanning tree ---\nspanning-tree mode rapid-pvst\nspanning-tree vlan 50 priority 4096\n!\n! Resiliency: dual-homed. Deploy paired distribution switches and an HSRP/VRRP gateway peer.\n!\n! --- VLAN gateways (SVIs) ---\ninterface Vlan10\n description Corporate gateway\n ip address 10.10.0.1 255.255.255.0\n no shutdown\n!\ninterface Vlan20\n description Trading gateway\n ip address 10.10.1.1 255.255.255.128\n no shutdown\n!\ninterface Vlan30\n description Voice gateway\n ip address 10.10.1.129 255.255.255.192\n no shutdown\n!\ninterface Vlan40\n description Guest gateway\n ip address 10.10.1.193 255.255.255.192\n ip access-group GUEST_ISOLATION in\n no shutdown\n!\ninterface Vlan50\n description Management gateway\n ip address 10.10.2.33 255.255.255.224\n no shutdown\n!\ninterface Vlan60\n description Colo-DMZ gateway\n ip address 10.10.2.1 255.255.255.224\n no shutdown\n!\n! --- Uplink trunk (explicit allowed VLANs) ---\ninterface GigabitEthernet0/1\n description Uplink trunk to distribution/core\n switchport trunk encapsulation dot1q\n switchport mode trunk\n switchport trunk native vlan 999\n switchport trunk allowed vlan 10,20,30,40,50,60,999\n switchport nonegotiate\n no shutdown\n!\n! --- Access ports (sample; expand to match endpoint count) ---\ninterface GigabitEthernet1/0/1\n description Access - Corporate\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n!\ninterface GigabitEthernet1/0/2\n description Access - Corporate\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n!\ninterface GigabitEthernet1/0/3\n description Access - Trading\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n!\ninterface GigabitEthernet1/0/4\n description Access - Trading\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n!\ninterface GigabitEthernet1/0/5\n description Access - Voice\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n power inline auto\n!\ninterface GigabitEthernet1/0/6\n description Access - Voice\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n power inline auto\n!\ninterface GigabitEthernet1/0/7\n description Access - Guest\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n!\ninterface GigabitEthernet1/0/8\n description Access - Guest\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n!\ninterface GigabitEthernet1/0/9\n description Access - Management\n switchport mode access\n switchport access vlan 50\n spanning-tree portfast\n spanning-tree bpduguard enable\n!\ninterface GigabitEthernet1/0/10\n description Access - Management\n switchport mode access\n switchport access vlan 50\n spanning-tree portfast\n spanning-tree bpduguard enable\n!\ninterface GigabitEthernet1/0/11\n description Access - Colo-DMZ\n switchport mode access\n switchport access vlan 60\n spanning-tree portfast\n spanning-tree bpduguard enable\n!\ninterface GigabitEthernet1/0/12\n description Access - Colo-DMZ\n switchport mode access\n switchport access vlan 60\n spanning-tree portfast\n spanning-tree bpduguard enable\n!\nend\n",
+    "router.cfg": "! NetArchitect generated router configuration\n! Profile: metro-man\n!\nhostname metro-man-rtr\n!\n! --- LAN trunk and VLAN subinterfaces ---\ninterface GigabitEthernet0/0\n description LAN trunk to L3 switch\n no ip address\n no shutdown\n!\ninterface GigabitEthernet0/0.10\n description Corporate gateway\n encapsulation dot1Q 10\n ip address 10.10.0.1 255.255.255.0\n no shutdown\n!\ninterface GigabitEthernet0/0.20\n description Trading gateway\n encapsulation dot1Q 20\n ip address 10.10.1.1 255.255.255.128\n no shutdown\n!\ninterface GigabitEthernet0/0.30\n description Voice gateway\n encapsulation dot1Q 30\n ip address 10.10.1.129 255.255.255.192\n no shutdown\n!\ninterface GigabitEthernet0/0.40\n description Guest gateway\n encapsulation dot1Q 40\n ip address 10.10.1.193 255.255.255.192\n no shutdown\n!\ninterface GigabitEthernet0/0.50\n description Management gateway\n encapsulation dot1Q 50\n ip address 10.10.2.33 255.255.255.224\n no shutdown\n!\ninterface GigabitEthernet0/0.60\n description Colo-DMZ gateway\n encapsulation dot1Q 60\n ip address 10.10.2.1 255.255.255.224\n no shutdown\n!\n! --- WAN uplink ---\ninterface GigabitEthernet0/1\n description WAN (OS2 single-mode fiber, 10GBASE-ER)\n! Replace the documentation /30 with the carrier-provided link.\n ip address 192.0.2.1 255.255.255.252\n no shutdown\n!\n! --- OSPF ---\nrouter ospf 1\n router-id 10.10.0.1\n passive-interface default\n no passive-interface GigabitEthernet0/0\n no passive-interface GigabitEthernet0/1\n network 10.10.0.0 0.0.0.255 area 0\n network 10.10.1.0 0.0.0.127 area 0\n network 10.10.1.128 0.0.0.63 area 10\n network 10.10.1.192 0.0.0.63 area 10\n network 10.10.2.0 0.0.0.31 area 20\n network 10.10.2.32 0.0.0.31 area 20\n area 10 range 10.10.1.128 255.255.255.128\n area 20 range 10.10.2.0 255.255.255.192\n!\nend\n",
+    "acl.cfg": "! NetArchitect generated guest isolation ACL\n! Applied inbound on guest SVIs (see switches.cfg).\nip access-list extended GUEST_ISOLATION\n remark Block guest VLANs from internal address space\n deny ip any 10.10.0.0 0.0.255.255\n deny ip any 10.0.0.0 0.255.255.255\n deny ip any 172.16.0.0 0.15.255.255\n deny ip any 192.168.0.0 0.0.255.255\n permit udp any any eq 53\n permit tcp any any eq 443\n permit ip any any\n!\nend\n",
+    "qos.cfg": "! NetArchitect generated WAN QoS policy\n! Target application latency: 5 ms\n! Apply after router.cfg; the interface already exists there.\nclass-map match-any VOICE\n match dscp ef\nclass-map match-any SIGNALLING\n match dscp cs3\n!\npolicy-map WAN-QOS\n class VOICE\n  priority percent 30\n class SIGNALLING\n  bandwidth percent 10\n class class-default\n  fair-queue\n  random-detect\n!\ninterface GigabitEthernet0/1\n service-policy output WAN-QOS\n!\nend\n"
+  }
+}
