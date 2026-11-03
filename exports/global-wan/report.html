@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NetArchitect - global-wan</title>
+<style>
+  :root { color-scheme: light dark; --accent: #0b6e4f; --muted: #667; }
+  * { box-sizing: border-box; }
+  body { font-family: system-ui, -apple-system, Segoe UI, sans-serif;
+         margin: 0 auto; max-width: 1100px; padding: 2rem; line-height: 1.5; }
+  h1 { margin-bottom: .25rem; }
+  .lede { color: var(--muted); margin-top: 0; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0 2rem; }
+  th, td { border: 1px solid #8884; padding: .45rem .6rem; text-align: left; }
+  th { background: #8881; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
+  .card { border: 1px solid #8884; border-radius: .6rem; padding: 1rem; }
+  .card h3 { margin: 0 0 .35rem; font-size: 1rem; }
+  .meta { color: var(--muted); font-size: .85rem; margin-top: 0; }
+  details { border: 1px solid #8884; border-radius: .5rem; margin: .6rem 0; padding: .6rem .8rem; }
+  summary { cursor: pointer; font-weight: 600; }
+  pre { overflow-x: auto; padding: .8rem; background: #8881; border-radius: .4rem; }
+  .stats { display: flex; gap: 2rem; flex-wrap: wrap; }
+  .stats strong { font-size: 1.4rem; color: var(--accent); }
+</style>
+</head>
+<body>
+<h1>global-wan</h1>
+<p class="lede">Global WAN: four cities plus a cloud VPC, 2,000 IoT/scanner devices. Focus: IPsec VPN, multi-area OSPF/BGP, route summarization.</p>
+
+<div class="stats">
+  <div><strong>4.54%</strong><br>address utilisation</div>
+  <div><strong>67.43%</strong><br>host utilisation</div>
+  <div><strong>5</strong><br>subnets</div>
+  <div><strong>5</strong><br>VLANs</div>
+</div>
+
+<h2>Layer 1 media</h2>
+<table><thead><tr><th>Link</th><th>Distance</th><th>Media</th><th>Transceiver</th><th>Standard</th></tr></thead>
+<tbody><tr><td>LAN access</td><td>90 m</td><td>Cat6a copper</td><td>10GBASE-T</td><td>IEEE 802.3an</td></tr><tr><td>WAN/MAN link</td><td>5000 km</td><td>ISP Carrier Ethernet + IPsec VPN</td><td>N/A (service handoff)</td><td>RFC 4301 (IPsec)</td></tr></tbody></table>
+
+<h2>VLAN plan</h2>
+<table><thead><tr><th>VLAN</th><th>Name</th><th>Subnet</th><th>Gateway</th><th>Trunk allowed</th><th>PoE</th></tr></thead>
+<tbody><tr><td>10</td><td>IoT</td><td>10.20.0.0/21</td><td>10.20.0.1</td><td>10,20,30,40,50,999</td><td>no</td></tr><tr><td>20</td><td>Scanners</td><td>10.20.8.0/23</td><td>10.20.8.1</td><td>10,20,30,40,50,999</td><td>no</td></tr><tr><td>30</td><td>Corporate</td><td>10.20.10.0/24</td><td>10.20.10.1</td><td>10,20,30,40,50,999</td><td>no</td></tr><tr><td>40</td><td>Management</td><td>10.20.11.0/25</td><td>10.20.11.1</td><td>10,20,30,40,50,999</td><td>no</td></tr><tr><td>50</td><td>Guest</td><td>10.20.11.128/27</td><td>10.20.11.129</td><td>10,20,30,40,50,999</td><td>no</td></tr></tbody></table>
+
+<h2>VLSM allocation</h2>
+<table><thead><tr><th>Name</th><th>Requested</th><th>CIDR</th><th>Wildcard</th><th>Gateway</th><th>Broadcast</th><th>Usable</th></tr></thead>
+<tbody><tr><td>IoT</td><td>1200</td><td>10.20.0.0/21</td><td>0.0.7.255</td><td>10.20.0.1</td><td>10.20.7.255</td><td>2046</td></tr><tr><td>Scanners</td><td>500</td><td>10.20.8.0/23</td><td>0.0.1.255</td><td>10.20.8.1</td><td>10.20.9.255</td><td>510</td></tr><tr><td>Corporate</td><td>200</td><td>10.20.10.0/24</td><td>0.0.0.255</td><td>10.20.10.1</td><td>10.20.10.255</td><td>254</td></tr><tr><td>Management</td><td>80</td><td>10.20.11.0/25</td><td>0.0.0.127</td><td>10.20.11.1</td><td>10.20.11.127</td><td>126</td></tr><tr><td>Guest</td><td>20</td><td>10.20.11.128/27</td><td>0.0.0.31</td><td>10.20.11.129</td><td>10.20.11.159</td><td>30</td></tr></tbody></table>
+
+<h2>Routing</h2>
+<p><strong>Multi-Area OSPF + eBGP (cloud boundary)</strong> (L3-ROUTE-03)</p>
+<p>Selected multi-area OSPF inside the enterprise and eBGP at the cloud VPC boundary because the design includes a cloud VPC plus 4 remote site(s). eBGP provides routing-domain isolation and policy control, while OSPF areas contain internal topology changes and allow summarisation.</p>
+<table><thead><tr><th>Area</th><th>Subnets</th></tr></thead><tbody><tr><td>0</td><td>10.20.0.0/21, 10.20.8.0/23</td></tr><tr><td>10</td><td>10.20.10.0/24, 10.20.11.0/25</td></tr><tr><td>20</td><td>10.20.11.128/27</td></tr></tbody></table>
+<ul><li>No summarisation opportunity detected.</li></ul>
+
+<h2>Explainability log</h2>
+<div class="grid"><article class='card'><h3>L1-DIST-01: Cat6a copper / 10GBASE-T</h3><p class='meta'>L1 &middot; 90 m on access link (requested: auto) &middot; IEEE 802.3an</p><p>Selected Cat6a (10GBASE-T) because the 90 m run is within the 100 m limit defined by IEEE 802.3an; Cat6a sustains 10 Gbps at this distance without active optics.</p></article><article class='card'><h3>L1-WAN-CARRIER: ISP Carrier Ethernet + IPsec VPN / N/A (service handoff)</h3><p class='meta'>L1 &middot; 5e+06 m on wan link (requested: auto) &middot; RFC 4301 (IPsec)</p><p>Selected an ISP Carrier Ethernet handoff protected by IPsec because the 5000.0 km multi-city path cannot be served by a direct single-mode run at acceptable cost. The carrier provides the L1 transport and the enterprise overlay provides confidentiality and route isolation across the public WAN.</p></article><article class='card'><h3>VLSM-ALLOC: 5 non-overlapping subnets</h3><p class='meta'>VLSM &middot; largest-first allocation with CIDR boundary alignment &middot; RFC 4632 (CIDR)</p><p>Allocated 5 subnets from 10.20.0.0/16 using largest-first VLSM. Address-space utilisation is 4.54% and host utilisation is 67.43%.</p></article><article class='card'><h3>VLSM-BLOCK: IoT -&gt; 10.20.0.0/21</h3><p class='meta'>VLSM &middot; needed 1200 usable host(s) plus network/broadcast &middot; RFC 4632 (CIDR)</p><p>Allocated 10.20.0.0/21 to IoT: 2046 usable addresses, gateway 10.20.0.1, wildcard 0.0.7.255. Blocks are aligned and checked for overlap with all previously allocated subnets.</p></article><article class='card'><h3>VLSM-BLOCK: Scanners -&gt; 10.20.8.0/23</h3><p class='meta'>VLSM &middot; needed 500 usable host(s) plus network/broadcast &middot; RFC 4632 (CIDR)</p><p>Allocated 10.20.8.0/23 to Scanners: 510 usable addresses, gateway 10.20.8.1, wildcard 0.0.1.255. Blocks are aligned and checked for overlap with all previously allocated subnets.</p></article><article class='card'><h3>VLSM-BLOCK: Corporate -&gt; 10.20.10.0/24</h3><p class='meta'>VLSM &middot; needed 200 usable host(s) plus network/broadcast &middot; RFC 4632 (CIDR)</p><p>Allocated 10.20.10.0/24 to Corporate: 254 usable addresses, gateway 10.20.10.1, wildcard 0.0.0.255. Blocks are aligned and checked for overlap with all previously allocated subnets.</p></article><article class='card'><h3>VLSM-BLOCK: Management -&gt; 10.20.11.0/25</h3><p class='meta'>VLSM &middot; needed 80 usable host(s) plus network/broadcast &middot; RFC 4632 (CIDR)</p><p>Allocated 10.20.11.0/25 to Management: 126 usable addresses, gateway 10.20.11.1, wildcard 0.0.0.127. Blocks are aligned and checked for overlap with all previously allocated subnets.</p></article><article class='card'><h3>VLSM-BLOCK: Guest -&gt; 10.20.11.128/27</h3><p class='meta'>VLSM &middot; needed 20 usable host(s) plus network/broadcast &middot; RFC 4632 (CIDR)</p><p>Allocated 10.20.11.128/27 to Guest: 30 usable addresses, gateway 10.20.11.129, wildcard 0.0.0.31. Blocks are aligned and checked for overlap with all previously allocated subnets.</p></article><article class='card'><h3>L3-ROUTE-03: Multi-Area OSPF + eBGP (cloud boundary)</h3><p class='meta'>L3 &middot; single-AS vs multi-site/cloud boundary &middot; RFC 2328 (OSPFv2), RFC 4271 (BGP-4)</p><p>Selected multi-area OSPF inside the enterprise and eBGP at the cloud VPC boundary because the design includes a cloud VPC plus 4 remote site(s). eBGP provides routing-domain isolation and policy control, while OSPF areas contain internal topology changes and allow summarisation.</p></article><article class='card'><h3>VLAN-8021Q: VLAN 10 (IoT)</h3><p class='meta'>L2 &middot; segmentation by function with explicit trunk policy &middot; IEEE 802.1Q</p><p>VLAN 10 (IoT) carries Warehouse sensors on 10.20.0.0/21 with gateway 10.20.0.1. Trunks permit only VLANs 10, 20, 30, 40, 50, 999; native VLAN 999 is reserved and unused to prevent double-tagged VLAN hopping. RSTP role: designated.</p></article><article class='card'><h3>VLAN-8021Q: VLAN 20 (Scanners)</h3><p class='meta'>L2 &middot; segmentation by function with explicit trunk policy &middot; IEEE 802.1Q</p><p>VLAN 20 (Scanners) carries Handheld scanners on 10.20.8.0/23 with gateway 10.20.8.1. Trunks permit only VLANs 10, 20, 30, 40, 50, 999; native VLAN 999 is reserved and unused to prevent double-tagged VLAN hopping. RSTP role: designated.</p></article><article class='card'><h3>VLAN-8021Q: VLAN 30 (Corporate)</h3><p class='meta'>L2 &middot; segmentation by function with explicit trunk policy &middot; IEEE 802.1Q</p><p>VLAN 30 (Corporate) carries City office users on 10.20.10.0/24 with gateway 10.20.10.1. Trunks permit only VLANs 10, 20, 30, 40, 50, 999; native VLAN 999 is reserved and unused to prevent double-tagged VLAN hopping. RSTP role: designated.</p></article><article class='card'><h3>VLAN-8021Q: VLAN 40 (Management)</h3><p class='meta'>L2 &middot; segmentation by function with explicit trunk policy &middot; IEEE 802.1Q</p><p>VLAN 40 (Management) carries Infrastructure management on 10.20.11.0/25 with gateway 10.20.11.1. Trunks permit only VLANs 10, 20, 30, 40, 50, 999; native VLAN 999 is reserved and unused to prevent double-tagged VLAN hopping. RSTP role: root (priority 4096).</p></article><article class='card'><h3>VLAN-8021Q: VLAN 50 (Guest)</h3><p class='meta'>L2 &middot; segmentation by function with explicit trunk policy &middot; IEEE 802.1Q</p><p>VLAN 50 (Guest) carries Visitor access on 10.20.11.128/27 with gateway 10.20.11.129. Trunks permit only VLANs 10, 20, 30, 40, 50, 999; native VLAN 999 is reserved and unused to prevent double-tagged VLAN hopping. RSTP role: designated.</p></article><article class='card'><h3>L2-RSTP: Rapid PVST+</h3><p class='meta'>L2 &middot; loop prevention with deterministic root selection &middot; IEEE 802.1w</p><p>Selected Rapid PVST+ with per-VLAN root priority 4096 on the management VLAN so that each VLAN has a deterministic root and sub-second reconvergence after a topology change.</p></article><article class='card'><h3>L2-RESILIENCY: dual-homed uplinks + HSRP/VRRP peer</h3><p class='meta'>L2 &middot; scenario requires non-single-homed availability &middot; RFC 5798 (VRRP)</p><p>Selected dual-homed design with a paired gateway peer because the scenario requests resilience beyond a single uplink. HSRP/VRRP removes the gateway as a single point of failure.</p></article><article class='card'><h3>L3-QOS: EF priority queue + CS3 signalling bandwidth</h3><p class='meta'>QoS &middot; latency-sensitive traffic on the WAN &middot; RFC 2474 / RFC 2475 (DiffServ)</p><p>Selected a strict priority queue for DSCP EF and a reserved bandwidth class for CS3 because the scenario requires 150 ms application latency. Lower latency-sensitive traffic is shaped by class-default.</p></article><article class='card'><h3>L3-VPN: IPsec tunnel (AES-256/SHA-256)</h3><p class='meta'>Security &middot; traffic crosses an untrusted public WAN &middot; RFC 4301 (IPsec)</p><p>Selected an IPsec VPN overlay because the WAN crosses public infrastructure. AES-256/SHA-256 provides confidentiality and integrity, and the tunnel policy limits interesting traffic to the enterprise/cloud prefixes.</p></article></div>
+
+<h2>Generated configurations</h2>
+<details><summary>switches.cfg</summary><pre>! NetArchitect generated switch configuration
+! Profile: global-wan
+! Review interface names, port counts, and PoE budgets before applying.
+!
+hostname global-wan-sw1
+!
+ip routing
+!
+! --- VLAN database ---
+vlan 10
+ name IOT
+!
+vlan 20
+ name SCANNERS
+!
+vlan 30
+ name CORPORATE
+!
+vlan 40
+ name MANAGEMENT
+!
+vlan 50
+ name GUEST
+!
+vlan 999
+ name NATIVE_UNUSED
+!
+! --- Spanning tree ---
+spanning-tree mode rapid-pvst
+spanning-tree vlan 40 priority 4096
+!
+! Resiliency: dual-homed. Deploy paired distribution switches and an HSRP/VRRP gateway peer.
+!
+! --- VLAN gateways (SVIs) ---
+interface Vlan10
+ description IoT gateway
+ ip address 10.20.0.1 255.255.248.0
+ no shutdown
+!
+interface Vlan20
+ description Scanners gateway
+ ip address 10.20.8.1 255.255.254.0
+ no shutdown
+!
+interface Vlan30
+ description Corporate gateway
+ ip address 10.20.10.1 255.255.255.0
+ no shutdown
+!
+interface Vlan40
+ description Management gateway
+ ip address 10.20.11.1 255.255.255.128
+ no shutdown
+!
+interface Vlan50
+ description Guest gateway
+ ip address 10.20.11.129 255.255.255.224
+ ip access-group GUEST_ISOLATION in
+ no shutdown
+!
+! --- Uplink trunk (explicit allowed VLANs) ---
+interface GigabitEthernet0/1
+ description Uplink trunk to distribution/core
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 10,20,30,40,50,999
+ switchport nonegotiate
+ no shutdown
+!
+! --- Access ports (sample; expand to match endpoint count) ---
+interface GigabitEthernet1/0/1
+ description Access - IoT
+ switchport mode access
+ switchport access vlan 10
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/2
+ description Access - IoT
+ switchport mode access
+ switchport access vlan 10
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/3
+ description Access - Scanners
+ switchport mode access
+ switchport access vlan 20
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/4
+ description Access - Scanners
+ switchport mode access
+ switchport access vlan 20
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/5
+ description Access - Corporate
+ switchport mode access
+ switchport access vlan 30
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/6
+ description Access - Corporate
+ switchport mode access
+ switchport access vlan 30
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/7
+ description Access - Management
+ switchport mode access
+ switchport access vlan 40
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/8
+ description Access - Management
+ switchport mode access
+ switchport access vlan 40
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/9
+ description Access - Guest
+ switchport mode access
+ switchport access vlan 50
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/10
+ description Access - Guest
+ switchport mode access
+ switchport access vlan 50
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+end
+</pre></details><details><summary>router.cfg</summary><pre>! NetArchitect generated router configuration
+! Profile: global-wan
+!
+hostname global-wan-rtr
+!
+! --- LAN trunk and VLAN subinterfaces ---
+interface GigabitEthernet0/0
+ description LAN trunk to L3 switch
+ no ip address
+ no shutdown
+!
+interface GigabitEthernet0/0.10
+ description IoT gateway
+ encapsulation dot1Q 10
+ ip address 10.20.0.1 255.255.248.0
+ no shutdown
+!
+interface GigabitEthernet0/0.20
+ description Scanners gateway
+ encapsulation dot1Q 20
+ ip address 10.20.8.1 255.255.254.0
+ no shutdown
+!
+interface GigabitEthernet0/0.30
+ description Corporate gateway
+ encapsulation dot1Q 30
+ ip address 10.20.10.1 255.255.255.0
+ no shutdown
+!
+interface GigabitEthernet0/0.40
+ description Management gateway
+ encapsulation dot1Q 40
+ ip address 10.20.11.1 255.255.255.128
+ no shutdown
+!
+interface GigabitEthernet0/0.50
+ description Guest gateway
+ encapsulation dot1Q 50
+ ip address 10.20.11.129 255.255.255.224
+ no shutdown
+!
+! --- WAN uplink ---
+interface GigabitEthernet0/1
+ description WAN (ISP Carrier Ethernet + IPsec VPN, N/A (service handoff))
+ ip address dhcp
+ no shutdown
+!
+! Default route points at the ISP handoff (replace with real next hop).
+ip route 0.0.0.0 0.0.0.0 192.0.2.1
+!
+! --- OSPF ---
+router ospf 1
+ router-id 10.20.0.1
+ passive-interface default
+ no passive-interface GigabitEthernet0/0
+ no passive-interface GigabitEthernet0/1
+ network 10.20.0.0 0.0.7.255 area 0
+ network 10.20.8.0 0.0.1.255 area 0
+ network 10.20.10.0 0.0.0.255 area 10
+ network 10.20.11.0 0.0.0.127 area 10
+ network 10.20.11.128 0.0.0.31 area 20
+!
+! --- eBGP to cloud VPC (placeholder ASN/peer) ---
+router bgp 65000
+ bgp router-id 10.20.0.1
+ bgp log-neighbor-changes
+ neighbor 192.0.2.2 remote-as 64512
+ !
+ address-family ipv4 unicast
+  network 10.20.0.0 mask 255.255.248.0
+  network 10.20.8.0 mask 255.255.254.0
+  network 10.20.10.0 mask 255.255.255.0
+  network 10.20.11.0 mask 255.255.255.128
+  network 10.20.11.128 mask 255.255.255.224
+  neighbor 192.0.2.2 activate
+  neighbor 192.0.2.2 route-map FROM-CLOUD in
+ exit-address-family
+!
+route-map FROM-CLOUD permit 10
+ set local-preference 200
+!
+end
+</pre></details><details><summary>acl.cfg</summary><pre>! NetArchitect generated guest isolation ACL
+! Applied inbound on guest SVIs (see switches.cfg).
+ip access-list extended GUEST_ISOLATION
+ remark Block guest VLANs from internal address space
+ deny ip any 10.20.0.0 0.0.255.255
+ deny ip any 10.0.0.0 0.255.255.255
+ deny ip any 172.16.0.0 0.15.255.255
+ deny ip any 192.168.0.0 0.0.255.255
+ permit udp any any eq 53
+ permit tcp any any eq 443
+ permit ip any any
+!
+end
+</pre></details><details><summary>qos.cfg</summary><pre>! NetArchitect generated WAN QoS policy
+! Target application latency: 150 ms
+! Apply after router.cfg; the interface already exists there.
+class-map match-any VOICE
+ match dscp ef
+class-map match-any SIGNALLING
+ match dscp cs3
+!
+policy-map WAN-QOS
+ class VOICE
+  priority percent 30
+ class SIGNALLING
+  bandwidth percent 10
+ class class-default
+  fair-queue
+  random-detect
+!
+interface GigabitEthernet0/1
+ service-policy output WAN-QOS
+!
+end
+</pre></details><details><summary>vpn.cfg</summary><pre>! NetArchitect generated IPsec VPN skeleton
+! Replace peer addresses and ASNs with the contracted values.
+! Never commit the pre-shared key; configure it out-of-band.
+crypto isakmp policy 10
+ encr aes 256
+ hash sha256
+ authentication pre-share
+ group 14
+ lifetime 28800
+!
+crypto ipsec transform-set NETARCH-TS esp-aes 256 esp-sha256-hmac
+ mode tunnel
+!
+ip access-list extended VPN-INTERESTING
+ permit ip 10.20.0.0 0.0.255.255 172.31.0.0 0.0.255.255
+!
+crypto map NETARCH-MAP 10 ipsec-isakmp
+ set peer 198.51.100.2
+ set transform-set NETARCH-TS
+ match address VPN-INTERESTING
+!
+interface GigabitEthernet0/1
+ crypto map NETARCH-MAP
+!
+end
+</pre></details>
+</body>
+</html>
