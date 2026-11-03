@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NetArchitect - campus-lan</title>
+<style>
+  :root { color-scheme: light dark; --accent: #0b6e4f; --muted: #667; }
+  * { box-sizing: border-box; }
+  body { font-family: system-ui, -apple-system, Segoe UI, sans-serif;
+         margin: 0 auto; max-width: 1100px; padding: 2rem; line-height: 1.5; }
+  h1 { margin-bottom: .25rem; }
+  .lede { color: var(--muted); margin-top: 0; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0 2rem; }
+  th, td { border: 1px solid #8884; padding: .45rem .6rem; text-align: left; }
+  th { background: #8881; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
+  .card { border: 1px solid #8884; border-radius: .6rem; padding: 1rem; }
+  .card h3 { margin: 0 0 .35rem; font-size: 1rem; }
+  .meta { color: var(--muted); font-size: .85rem; margin-top: 0; }
+  details { border: 1px solid #8884; border-radius: .5rem; margin: .6rem 0; padding: .6rem .8rem; }
+  summary { cursor: pointer; font-weight: 600; }
+  pre { overflow-x: auto; padding: .8rem; background: #8881; border-radius: .4rem; }
+  .stats { display: flex; gap: 2rem; flex-wrap: wrap; }
+  .stats strong { font-size: 1.4rem; color: var(--accent); }
+</style>
+</head>
+<body>
+<h1>campus-lan</h1>
+<p class="lede">Campus LAN: 3 buildings within 400 m, 1,600 endpoints and PoE access points. Focus: Cat6a/MMF, 802.1Q VLANs, RSTP, single-area OSPF.</p>
+
+<div class="stats">
+  <div><strong>3.08%</strong><br>address utilisation</div>
+  <div><strong>75.85%</strong><br>host utilisation</div>
+  <div><strong>6</strong><br>subnets</div>
+  <div><strong>6</strong><br>VLANs</div>
+</div>
+
+<h2>Layer 1 media</h2>
+<table><thead><tr><th>Link</th><th>Distance</th><th>Media</th><th>Transceiver</th><th>Standard</th></tr></thead>
+<tbody><tr><td>LAN access</td><td>90 m</td><td>Cat6a copper</td><td>10GBASE-T</td><td>IEEE 802.3an</td></tr><tr><td>Building/site backbone</td><td>350 m</td><td>OM4 multimode fiber</td><td>10GBASE-SR</td><td>IEEE 802.3ae (850 nm)</td></tr></tbody></table>
+
+<h2>VLAN plan</h2>
+<table><thead><tr><th>VLAN</th><th>Name</th><th>Subnet</th><th>Gateway</th><th>Trunk allowed</th><th>PoE</th></tr></thead>
+<tbody><tr><td>10</td><td>Staff</td><td>10.0.4.0/23</td><td>10.0.4.1</td><td>10,20,30,40,50,60,999</td><td>no</td></tr><tr><td>20</td><td>Students</td><td>10.0.0.0/22</td><td>10.0.0.1</td><td>10,20,30,40,50,60,999</td><td>no</td></tr><tr><td>30</td><td>Voice</td><td>10.0.6.0/24</td><td>10.0.6.1</td><td>10,20,30,40,50,60,999</td><td>yes</td></tr><tr><td>40</td><td>Guest</td><td>10.0.7.0/25</td><td>10.0.7.1</td><td>10,20,30,40,50,60,999</td><td>no</td></tr><tr><td>50</td><td>IoT</td><td>10.0.7.128/26</td><td>10.0.7.129</td><td>10,20,30,40,50,60,999</td><td>no</td></tr><tr><td>60</td><td>Management</td><td>10.0.7.192/27</td><td>10.0.7.193</td><td>10,20,30,40,50,60,999</td><td>no</td></tr></tbody></table>
+
+<h2>VLSM allocation</h2>
+<table><thead><tr><th>Name</th><th>Requested</th><th>CIDR</th><th>Wildcard</th><th>Gateway</th><th>Broadcast</th><th>Usable</th></tr></thead>
+<tbody><tr><td>Students</td><td>700</td><td>10.0.0.0/22</td><td>0.0.3.255</td><td>10.0.0.1</td><td>10.0.3.255</td><td>1022</td></tr><tr><td>Staff</td><td>400</td><td>10.0.4.0/23</td><td>0.0.1.255</td><td>10.0.4.1</td><td>10.0.5.255</td><td>510</td></tr><tr><td>Voice</td><td>250</td><td>10.0.6.0/24</td><td>0.0.0.255</td><td>10.0.6.1</td><td>10.0.6.255</td><td>254</td></tr><tr><td>Guest</td><td>100</td><td>10.0.7.0/25</td><td>0.0.0.127</td><td>10.0.7.1</td><td>10.0.7.127</td><td>126</td></tr><tr><td>IoT</td><td>50</td><td>10.0.7.128/26</td><td>0.0.0.63</td><td>10.0.7.129</td><td>10.0.7.191</td><td>62</td></tr><tr><td>Management</td><td>20</td><td>10.0.7.192/27</td><td>0.0.0.31</td><td>10.0.7.193</td><td>10.0.7.223</td><td>30</td></tr></tbody></table>
+
+<h2>Routing</h2>
+<p><strong>OSPF Area 0 (single area)</strong> (L3-ROUTE-01)</p>
+<p>Selected single-area OSPF (Area 0) because the scenario contains 6 subnet(s), fewer than 50, inside one autonomous system. Link-state convergence is fast and the flat area keeps the design simple to operate.</p>
+<table><thead><tr><th>Area</th><th>Subnets</th></tr></thead><tbody><tr><td>0</td><td>10.0.0.0/22, 10.0.4.0/23, 10.0.6.0/24, 10.0.7.0/25, 10.0.7.128/26, 10.0.7.192/27</td></tr></tbody></table>
+<ul><li>No summarisation opportunity detected.</li></ul>
+
+<h2>Explainability log</h2>
+<div class="grid"><article class='card'><h3>L1-DIST-01: Cat6a copper / 10GBASE-T</h3><p class='meta'>L1 &middot; 90 m on access link (requested: auto) &middot; IEEE 802.3an</p><p>Selected Cat6a (10GBASE-T) because the 90 m run is within the 100 m limit defined by IEEE 802.3an; Cat6a sustains 10 Gbps at this distance without active optics.</p></article><article class='card'><h3>L1-DIST-02: OM4 multimode fiber / 10GBASE-SR</h3><p class='meta'>L1 &middot; 350 m on backbone link (requested: auto) &middot; IEEE 802.3ae (850 nm)</p><p>Selected OM4 Multimode Fiber (10GBASE-SR) because the 350 m run exceeds the 100 m copper limit but remains inside the 400 m OM4 reach at 850 nm, where modal dispersion and attenuation stay within budget.</p></article><article class='card'><h3>VLSM-ALLOC: 6 non-overlapping subnets</h3><p class='meta'>VLSM &middot; largest-first allocation with CIDR boundary alignment &middot; RFC 4632 (CIDR)</p><p>Allocated 6 subnets from 10.0.0.0/16 using largest-first VLSM. Address-space utilisation is 3.08% and host utilisation is 75.85%.</p></article><article class='card'><h3>VLSM-BLOCK: Students -&gt; 10.0.0.0/22</h3><p class='meta'>VLSM &middot; needed 700 usable host(s) plus network/broadcast &middot; RFC 4632 (CIDR)</p><p>Allocated 10.0.0.0/22 to Students: 1022 usable addresses, gateway 10.0.0.1, wildcard 0.0.3.255. Blocks are aligned and checked for overlap with all previously allocated subnets.</p></article><article class='card'><h3>VLSM-BLOCK: Staff -&gt; 10.0.4.0/23</h3><p class='meta'>VLSM &middot; needed 400 usable host(s) plus network/broadcast &middot; RFC 4632 (CIDR)</p><p>Allocated 10.0.4.0/23 to Staff: 510 usable addresses, gateway 10.0.4.1, wildcard 0.0.1.255. Blocks are aligned and checked for overlap with all previously allocated subnets.</p></article><article class='card'><h3>VLSM-BLOCK: Voice -&gt; 10.0.6.0/24</h3><p class='meta'>VLSM &middot; needed 250 usable host(s) plus network/broadcast &middot; RFC 4632 (CIDR)</p><p>Allocated 10.0.6.0/24 to Voice: 254 usable addresses, gateway 10.0.6.1, wildcard 0.0.0.255. Blocks are aligned and checked for overlap with all previously allocated subnets.</p></article><article class='card'><h3>VLSM-BLOCK: Guest -&gt; 10.0.7.0/25</h3><p class='meta'>VLSM &middot; needed 100 usable host(s) plus network/broadcast &middot; RFC 4632 (CIDR)</p><p>Allocated 10.0.7.0/25 to Guest: 126 usable addresses, gateway 10.0.7.1, wildcard 0.0.0.127. Blocks are aligned and checked for overlap with all previously allocated subnets.</p></article><article class='card'><h3>VLSM-BLOCK: IoT -&gt; 10.0.7.128/26</h3><p class='meta'>VLSM &middot; needed 50 usable host(s) plus network/broadcast &middot; RFC 4632 (CIDR)</p><p>Allocated 10.0.7.128/26 to IoT: 62 usable addresses, gateway 10.0.7.129, wildcard 0.0.0.63. Blocks are aligned and checked for overlap with all previously allocated subnets.</p></article><article class='card'><h3>VLSM-BLOCK: Management -&gt; 10.0.7.192/27</h3><p class='meta'>VLSM &middot; needed 20 usable host(s) plus network/broadcast &middot; RFC 4632 (CIDR)</p><p>Allocated 10.0.7.192/27 to Management: 30 usable addresses, gateway 10.0.7.193, wildcard 0.0.0.31. Blocks are aligned and checked for overlap with all previously allocated subnets.</p></article><article class='card'><h3>L3-ROUTE-01: OSPF Area 0 (single area)</h3><p class='meta'>L3 &middot; single-AS vs multi-site/cloud boundary &middot; RFC 2328 (OSPFv2), RFC 4271 (BGP-4)</p><p>Selected single-area OSPF (Area 0) because the scenario contains 6 subnet(s), fewer than 50, inside one autonomous system. Link-state convergence is fast and the flat area keeps the design simple to operate.</p></article><article class='card'><h3>VLAN-8021Q: VLAN 10 (Staff)</h3><p class='meta'>L2 &middot; segmentation by function with explicit trunk policy &middot; IEEE 802.1Q</p><p>VLAN 10 (Staff) carries Employee wired/wireless on 10.0.4.0/23 with gateway 10.0.4.1. Trunks permit only VLANs 10, 20, 30, 40, 50, 60, 999; native VLAN 999 is reserved and unused to prevent double-tagged VLAN hopping. RSTP role: designated.</p></article><article class='card'><h3>VLAN-8021Q: VLAN 20 (Students)</h3><p class='meta'>L2 &middot; segmentation by function with explicit trunk policy &middot; IEEE 802.1Q</p><p>VLAN 20 (Students) carries Student devices on 10.0.0.0/22 with gateway 10.0.0.1. Trunks permit only VLANs 10, 20, 30, 40, 50, 60, 999; native VLAN 999 is reserved and unused to prevent double-tagged VLAN hopping. RSTP role: designated.</p></article><article class='card'><h3>VLAN-8021Q: VLAN 30 (Voice)</h3><p class='meta'>L2 &middot; segmentation by function with explicit trunk policy &middot; IEEE 802.1Q</p><p>VLAN 30 (Voice) carries VoIP handsets on 10.0.6.0/24 with gateway 10.0.6.1. Trunks permit only VLANs 10, 20, 30, 40, 50, 60, 999; native VLAN 999 is reserved and unused to prevent double-tagged VLAN hopping. RSTP role: designated. PoE is enabled on access ports for this VLAN (802.3af/at budget planned per AP).</p></article><article class='card'><h3>VLAN-8021Q: VLAN 40 (Guest)</h3><p class='meta'>L2 &middot; segmentation by function with explicit trunk policy &middot; IEEE 802.1Q</p><p>VLAN 40 (Guest) carries Untrusted guest Wi-Fi on 10.0.7.0/25 with gateway 10.0.7.1. Trunks permit only VLANs 10, 20, 30, 40, 50, 60, 999; native VLAN 999 is reserved and unused to prevent double-tagged VLAN hopping. RSTP role: designated.</p></article><article class='card'><h3>VLAN-8021Q: VLAN 50 (IoT)</h3><p class='meta'>L2 &middot; segmentation by function with explicit trunk policy &middot; IEEE 802.1Q</p><p>VLAN 50 (IoT) carries Building sensors on 10.0.7.128/26 with gateway 10.0.7.129. Trunks permit only VLANs 10, 20, 30, 40, 50, 60, 999; native VLAN 999 is reserved and unused to prevent double-tagged VLAN hopping. RSTP role: designated.</p></article><article class='card'><h3>VLAN-8021Q: VLAN 60 (Management)</h3><p class='meta'>L2 &middot; segmentation by function with explicit trunk policy &middot; IEEE 802.1Q</p><p>VLAN 60 (Management) carries Infrastructure management on 10.0.7.192/27 with gateway 10.0.7.193. Trunks permit only VLANs 10, 20, 30, 40, 50, 60, 999; native VLAN 999 is reserved and unused to prevent double-tagged VLAN hopping. RSTP role: root (priority 4096).</p></article><article class='card'><h3>L2-RSTP: Rapid PVST+</h3><p class='meta'>L2 &middot; loop prevention with deterministic root selection &middot; IEEE 802.1w</p><p>Selected Rapid PVST+ with per-VLAN root priority 4096 on the management VLAN so that each VLAN has a deterministic root and sub-second reconvergence after a topology change.</p></article><article class='card'><h3>L2-RESILIENCY: dual-uplink uplinks + HSRP/VRRP peer</h3><p class='meta'>L2 &middot; scenario requires non-single-homed availability &middot; RFC 5798 (VRRP)</p><p>Selected dual-uplink design with a paired gateway peer because the scenario requests resilience beyond a single uplink. HSRP/VRRP removes the gateway as a single point of failure.</p></article></div>
+
+<h2>Generated configurations</h2>
+<details><summary>switches.cfg</summary><pre>! NetArchitect generated switch configuration
+! Profile: campus-lan
+! Review interface names, port counts, and PoE budgets before applying.
+!
+hostname campus-lan-sw1
+!
+ip routing
+!
+! --- VLAN database ---
+vlan 10
+ name STAFF
+!
+vlan 20
+ name STUDENTS
+!
+vlan 30
+ name VOICE
+!
+vlan 40
+ name GUEST
+!
+vlan 50
+ name IOT
+!
+vlan 60
+ name MANAGEMENT
+!
+vlan 999
+ name NATIVE_UNUSED
+!
+! --- Spanning tree ---
+spanning-tree mode rapid-pvst
+spanning-tree vlan 60 priority 4096
+!
+! Resiliency: dual-uplink. Deploy paired distribution switches and an HSRP/VRRP gateway peer.
+!
+! --- VLAN gateways (SVIs) ---
+interface Vlan10
+ description Staff gateway
+ ip address 10.0.4.1 255.255.254.0
+ no shutdown
+!
+interface Vlan20
+ description Students gateway
+ ip address 10.0.0.1 255.255.252.0
+ no shutdown
+!
+interface Vlan30
+ description Voice gateway
+ ip address 10.0.6.1 255.255.255.0
+ no shutdown
+!
+interface Vlan40
+ description Guest gateway
+ ip address 10.0.7.1 255.255.255.128
+ ip access-group GUEST_ISOLATION in
+ no shutdown
+!
+interface Vlan50
+ description IoT gateway
+ ip address 10.0.7.129 255.255.255.192
+ no shutdown
+!
+interface Vlan60
+ description Management gateway
+ ip address 10.0.7.193 255.255.255.224
+ no shutdown
+!
+! --- Uplink trunk (explicit allowed VLANs) ---
+interface GigabitEthernet0/1
+ description Uplink trunk to distribution/core
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 10,20,30,40,50,60,999
+ switchport nonegotiate
+ no shutdown
+!
+! --- Access ports (sample; expand to match endpoint count) ---
+interface GigabitEthernet1/0/1
+ description Access - Staff
+ switchport mode access
+ switchport access vlan 10
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/2
+ description Access - Staff
+ switchport mode access
+ switchport access vlan 10
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/3
+ description Access - Students
+ switchport mode access
+ switchport access vlan 20
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/4
+ description Access - Students
+ switchport mode access
+ switchport access vlan 20
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/5
+ description Access - Voice
+ switchport mode access
+ switchport access vlan 30
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ power inline auto
+!
+interface GigabitEthernet1/0/6
+ description Access - Voice
+ switchport mode access
+ switchport access vlan 30
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ power inline auto
+!
+interface GigabitEthernet1/0/7
+ description Access - Guest
+ switchport mode access
+ switchport access vlan 40
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/8
+ description Access - Guest
+ switchport mode access
+ switchport access vlan 40
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/9
+ description Access - IoT
+ switchport mode access
+ switchport access vlan 50
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/10
+ description Access - IoT
+ switchport mode access
+ switchport access vlan 50
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/11
+ description Access - Management
+ switchport mode access
+ switchport access vlan 60
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/12
+ description Access - Management
+ switchport mode access
+ switchport access vlan 60
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+end
+</pre></details><details><summary>router.cfg</summary><pre>! NetArchitect generated router configuration
+! Profile: campus-lan
+!
+hostname campus-lan-rtr
+!
+! --- LAN trunk and VLAN subinterfaces ---
+interface GigabitEthernet0/0
+ description LAN trunk to L3 switch
+ no ip address
+ no shutdown
+!
+interface GigabitEthernet0/0.10
+ description Staff gateway
+ encapsulation dot1Q 10
+ ip address 10.0.4.1 255.255.254.0
+ no shutdown
+!
+interface GigabitEthernet0/0.20
+ description Students gateway
+ encapsulation dot1Q 20
+ ip address 10.0.0.1 255.255.252.0
+ no shutdown
+!
+interface GigabitEthernet0/0.30
+ description Voice gateway
+ encapsulation dot1Q 30
+ ip address 10.0.6.1 255.255.255.0
+ no shutdown
+!
+interface GigabitEthernet0/0.40
+ description Guest gateway
+ encapsulation dot1Q 40
+ ip address 10.0.7.1 255.255.255.128
+ no shutdown
+!
+interface GigabitEthernet0/0.50
+ description IoT gateway
+ encapsulation dot1Q 50
+ ip address 10.0.7.129 255.255.255.192
+ no shutdown
+!
+interface GigabitEthernet0/0.60
+ description Management gateway
+ encapsulation dot1Q 60
+ ip address 10.0.7.193 255.255.255.224
+ no shutdown
+!
+! --- OSPF ---
+router ospf 1
+ router-id 10.0.0.1
+ passive-interface default
+ no passive-interface GigabitEthernet0/0
+ network 10.0.0.0 0.0.3.255 area 0
+ network 10.0.4.0 0.0.1.255 area 0
+ network 10.0.6.0 0.0.0.255 area 0
+ network 10.0.7.0 0.0.0.127 area 0
+ network 10.0.7.128 0.0.0.63 area 0
+ network 10.0.7.192 0.0.0.31 area 0
+!
+end
+</pre></details><details><summary>acl.cfg</summary><pre>! NetArchitect generated guest isolation ACL
+! Applied inbound on guest SVIs (see switches.cfg).
+ip access-list extended GUEST_ISOLATION
+ remark Block guest VLANs from internal address space
+ deny ip any 10.0.0.0 0.0.255.255
+ deny ip any 10.0.0.0 0.255.255.255
+ deny ip any 172.16.0.0 0.15.255.255
+ deny ip any 192.168.0.0 0.0.255.255
+ permit udp any any eq 53
+ permit tcp any any eq 443
+ permit ip any any
+!
+end
+</pre></details>
+</body>
+</html>
