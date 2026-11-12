@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NetArchitect · {{ preset }} dashboard</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: #131a30;
+      --panel-2: #0f1628;
+      --line: #243154;
+      --text: #e8edf7;
+      --muted: #9aa8c7;
+      --accent: #5eead4;
+      --accent-2: #7dd3fc;
+      --warn: #fbbf24;
+      --bad: #fb7185;
+      --good: #34d399;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: radial-gradient(1200px 600px at 10% -10%, #1b2a4a 0%, var(--bg) 55%);
+      color: var(--text);
+      font: 15px/1.55 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+      min-height: 100vh;
+    }
+    header {
+      padding: 28px 32px 18px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(11, 16, 32, .72);
+      backdrop-filter: blur(8px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    h1 { margin: 0; font-size: 26px; letter-spacing: -.02em; }
+    h1 span { color: var(--accent); }
+    .sub { color: var(--muted); margin-top: 4px; }
+    .wrap { max-width: 1280px; margin: 0 auto; padding: 24px 32px 60px; }
+    .preset-nav { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
+    .preset-nav a {
+      color: var(--text); text-decoration: none; padding: 7px 13px;
+      border: 1px solid var(--line); border-radius: 999px; background: var(--panel-2);
+      font-size: 13px;
+    }
+    .preset-nav a.active { border-color: var(--accent); color: var(--accent); }
+    form.controls {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px; margin-top: 16px; align-items: end;
+    }
+    label { font-size: 12px; color: var(--muted); display: block; margin-bottom: 4px; }
+    input, select, button {
+      width: 100%; padding: 9px 10px; border-radius: 9px;
+      border: 1px solid var(--line); background: #0c1324; color: var(--text);
+      font: inherit;
+    }
+    .check { display: flex; align-items: center; gap: 8px; padding-bottom: 9px; }
+    .check input { width: auto; }
+    button.primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #06221f; font-weight: 700; border: 0; cursor: pointer;
+    }
+    button.primary:hover { filter: brightness(1.08); }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin: 22px 0; }
+    .card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; }
+    .card .k { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; }
+    .card .v { font-size: 20px; font-weight: 700; margin-top: 4px; }
+    .card .v.small { font-size: 15px; font-weight: 600; }
+    .tabs { display: flex; gap: 6px; flex-wrap: wrap; border-bottom: 1px solid var(--line); margin-top: 6px; }
+    .tab {
+      width: auto; border: 0; border-bottom: 2px solid transparent; border-radius: 0;
+      background: transparent; color: var(--muted); padding: 10px 14px; cursor: pointer;
+    }
+    .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+    .panel { display: none; margin-top: 18px; }
+    .panel.active { display: block; }
+    h2 { font-size: 18px; margin: 18px 0 8px; }
+    h3 { font-size: 15px; margin: 16px 0 8px; color: var(--accent-2); }
+    table { width: 100%; border-collapse: collapse; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+    th, td { text-align: left; padding: 9px 11px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { background: var(--panel-2); color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .06em; }
+    tr:last-child td { border-bottom: 0; }
+    code, pre, .mono { font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace; }
+    .pill { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px; border: 1px solid var(--line); }
+    .info { color: var(--good); border-color: rgba(52, 211, 153, .4); }
+    .warning { color: var(--warn); border-color: rgba(251, 191, 36, .4); }
+    .violation { color: var(--bad); border-color: rgba(251, 113, 133, .4); }
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 860px) { .grid2 { grid-template-columns: 1fr; } .wrap, header { padding-left: 18px; padding-right: 18px; } }
+    .note { color: var(--muted); font-size: 13px; }
+    .error { background: rgba(251, 113, 133, .1); border: 1px solid rgba(251, 113, 133, .45); padding: 14px 16px; border-radius: 12px; color: #fecdd3; }
+    .diagram { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
+    .tier { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin: 8px 0; }
+    .node { min-width: 110px; text-align: center; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--panel-2); font-size: 13px; }
+    .node.core { border-color: rgba(94, 234, 212, .6); }
+    .node.dist { border-color: rgba(125, 211, 252, .55); }
+    .node.acc { border-color: rgba(251, 191, 36, .5); }
+    .arrow { text-align: center; color: var(--muted); margin: 2px 0; }
+    .config-head { display: flex; justify-content: space-between; gap: 12px; align-items: center; flex-wrap: wrap; }
+    .config-head select { max-width: 360px; }
+    pre.config {
+      margin: 12px 0 0; padding: 16px; background: #060b16; border: 1px solid var(--line);
+      border-radius: 12px; overflow: auto; max-height: 640px; font-size: 12.5px; line-height: 1.5;
+      white-space: pre;
+    }
+    .violations { margin: 8px 0 0; padding-left: 18px; color: #fecdd3; }
+    .muted { color: var(--muted); }
+    a { color: var(--accent-2); }
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap" style="padding-top:0;padding-bottom:0">
+    <h1>Net<span>Architect</span></h1>
+    <div class="sub">Explainable network planning engine · CLI and web dashboard share one decision core</div>
+    <div class="preset-nav">
+      {% for name in presets %}
+        <a href="/?preset={{ name }}" class="{{ 'active' if preset == name else '' }}">{{ name }} preset</a>
+      {% endfor %}
+      <a href="/docs">API docs</a>
+    </div>
+    <form class="controls" method="get" action="/">
+      <input type="hidden" name="preset" value="{{ preset }}">
+      <div>
+        <label for="distance_m">Backbone / WAN distance (m)</label>
+        <input id="distance_m" name="distance_m" type="number" min="0.001" step="0.001"
+               value="{{ distance_m if distance_m is not none else '' }}" placeholder="preset default">
+      </div>
+      <div>
+        <label for="endpoints">Endpoints</label>
+        <input id="endpoints" name="endpoints" type="number" min="1" step="1"
+               value="{{ endpoints if endpoints is not none else '' }}" placeholder="{{ scenario.endpoints if scenario else 'preset default' }}">
+      </div>
+      <div>
+        <label for="buildings">Buildings / sites</label>
+        <input id="buildings" name="buildings" type="number" min="1" step="1"
+               value="{{ buildings if buildings is not none else '' }}" placeholder="{{ scenario.buildings if scenario else 'preset default' }}">
+      </div>
+      <div>
+        <label for="resilient">Resiliency</label>
+        <select id="resilient" name="resilient">
+          <option value="" {{ 'selected' if resilient is none else '' }}>preset default</option>
+          <option value="true" {{ 'selected' if resilient is true else '' }}>resilient (dual)</option>
+          <option value="false" {{ 'selected' if resilient is false else '' }}>single</option>
+        </select>
+      </div>
+      <div><button class="primary" type="submit">Run design</button></div>
+    </form>
+  </div>
+</header>
+
+<div class="wrap">
+  {% if error %}
+    <div class="error"><strong>Design rejected:</strong> {{ error }}</div>
+  {% endif %}
+
+  {% if analysis %}
+    {% set plan = analysis.selected %}
+    {% set alt = analysis.alternate %}
+    <div class="cards">
+      <div class="card"><div class="k">Topology</div><div class="v">{{ plan.topology.tier }}</div></div>
+      <div class="card"><div class="k">Routing</div><div class="v small">{{ plan.routing.protocol }}</div></div>
+      <div class="card"><div class="k">Address use</div><div class="v">{{ '%.1f'|format(plan.vlsm.utilization) }}%</div></div>
+      <div class="card"><div class="k">Oversubscription</div><div class="v">{{ plan.topology.ratio }}</div></div>
+      <div class="card"><div class="k">Switches</div><div class="v">{{ plan.topology.switch_count }}</div></div>
+      <div class="card"><div class="k">Violations</div><div class="v" style="color: {{ 'var(--bad)' if plan.violations else 'var(--good)' }}">{{ plan.violations|length }}</div></div>
+    </div>
+
+    <nav class="tabs" id="tabs">
+      <button class="tab active" data-tab="overview">Overview</button>
+      <button class="tab" data-tab="decisions">Decision log</button>
+      <button class="tab" data-tab="addressing">Address plan</button>
+      <button class="tab" data-tab="topology">Tier diagram</button>
+      <button class="tab" data-tab="configs">Configurations</button>
+    </nav>
+
+    <section class="panel active" id="overview">
+      <div class="grid2">
+        <div class="card">
+          <div class="k">Selected design</div>
+          <h2 style="margin-top:8px">{{ plan.topology.tier }}</h2>
+          <p class="note">{{ plan.topology.reason }}</p>
+          <table>
+            <tr><th>Routing</th><td>{{ plan.routing.protocol }}</td></tr>
+            <tr><th>Spanning tree</th><td>{{ plan.switching.stp }}</td></tr>
+            <tr><th>FHRP</th><td>{{ plan.switching.fhrp }}</td></tr>
+            <tr><th>Access switches</th><td>{{ plan.topology.access_switches }}</td></tr>
+            <tr><th>Address plan</th><td>{{ plan.vlsm.blocks|length }} subnets in {{ plan.vlsm.root }}</td></tr>
+          </table>
+        </div>
+        <div class="card">
+          <div class="k">Alternate design</div>
+          <h2 style="margin-top:8px">{{ alt.topology.tier }}</h2>
+          <p class="note">{{ alt.routing.protocol }} · {{ alt.topology.switch_count }} switches</p>
+          {% if alt.violations %}
+            <ul class="violations">
+              {% for violation in alt.violations %}<li>{{ violation }}</li>{% endfor %}
+            </ul>
+          {% else %}
+            <p class="note">No rule violations; this is a viable alternative at this scale.</p>
+          {% endif %}
+        </div>
+      </div>
+
+      <h2>Layer-1 media</h2>
+      <table>
+        <thead><tr><th>Link</th><th>Distance</th><th>Medium</th><th>Transceiver</th><th>Loss / budget</th><th>Severity</th></tr></thead>
+        <tbody>
+        {% for item in plan.media %}
+          <tr>
+            <td>{{ item.link }}</td>
+            <td class="mono">{{ item.distance_label }}</td>
+            <td>{{ item.medium }}</td>
+            <td>{{ item.transceiver }}</td>
+            <td class="mono">{% if item.loss_db is not none and item.budget_db is not none %}{{ '%.2f'|format(item.loss_db) }} / {{ '%.1f'|format(item.budget_db) }} dB{% else %}-{% endif %}</td>
+            <td><span class="pill {{ item.severity }}">{{ item.severity }}</span></td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+
+      <h2>Why these choices</h2>
+      <p class="note">
+        Every row in the decision log cites the input value, the limit it was compared with, and
+        the standard behind the rule. The same objects are printed by
+        <code>python -m netarchitect explain {{ preset }}</code>.
+      </p>
+    </section>
+
+    <section class="panel" id="decisions">
+      <h2>Decision log</h2>
+      <table>
+        <thead><tr><th>Category</th><th>Choice</th><th>Standard</th><th>Severity</th><th>Reason</th></tr></thead>
+        <tbody>
+        {% for decision in plan.decisions %}
+          <tr>
+            <td>{{ decision.category }}</td>
+            <td><strong>{{ decision.choice }}</strong></td>
+            <td class="muted">{{ decision.standard }}</td>
+            <td><span class="pill {{ decision.severity }}">{{ decision.severity }}</span></td>
+            <td>{{ decision.reason }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="panel" id="addressing">
+      <h2>Address plan · {{ plan.vlsm.root }}</h2>
+      <p class="note">
+        {{ plan.vlsm.requested_total }} requested hosts across {{ plan.vlsm.blocks|length }} subnets ·
+        {{ plan.vlsm.allocated_addresses }} addresses allocated ·
+        {{ '%.1f'|format(plan.vlsm.utilization) }}% address use ·
+        {{ plan.vlsm.wasted }} addresses left unused inside the root.
+      </p>
+      <table>
+        <thead><tr><th>Subnet</th><th>VLAN</th><th>CIDR</th><th>Mask</th><th>Wildcard</th><th>Broadcast</th><th>Gateway</th><th>Usable</th><th>Use</th></tr></thead>
+        <tbody>
+        {% for block in plan.vlsm.blocks %}
+          <tr>
+            <td>{{ block.name }}</td>
+            <td class="mono">{{ block.vlan if block.vlan is not none else '-' }}</td>
+            <td class="mono">{{ block.cidr }}</td>
+            <td class="mono">{{ block.mask }}</td>
+            <td class="mono">{{ block.wildcard }}</td>
+            <td class="mono">{{ block.broadcast or '-' }}</td>
+            <td class="mono">{{ block.gateway }}</td>
+            <td class="mono">{{ block.usable }}</td>
+            <td class="mono">{{ '%.0f'|format(block.utilization) }}%</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="panel" id="topology">
+      <h2>Tier diagram · {{ diagram.tier }}</h2>
+      <div class="diagram">
+        <div class="tier">
+          {% for _ in range(diagram.core) %}<div class="node core">Core {{ loop.index }}</div>{% endfor %}
+        </div>
+        {% if diagram.distribution %}
+          <div class="arrow">↓ trunk / routed uplinks ↓</div>
+          <div class="tier">
+            {% for _ in range(diagram.distribution) %}<div class="node dist">Distribution {{ loop.index }}</div>{% endfor %}
+          </div>
+        {% else %}
+          <div class="arrow">core and distribution are combined</div>
+        {% endif %}
+        <div class="arrow">↓ access trunks ↓</div>
+        <div class="tier">
+          {% for _ in range(diagram.access_shown) %}<div class="node acc">Access {{ loop.index }}</div>{% endfor %}
+          {% if diagram.access_more %}<div class="node acc">+{{ diagram.access_more }} more</div>{% endif %}
+        </div>
+        <p class="note" style="text-align:center;margin-bottom:0">
+          {{ diagram.access_total }} access switches planned at 48 ports each.
+          Oversubscription {{ plan.topology.ratio }}.
+        </p>
+      </div>
+      {% if plan.violations %}
+        <h3>Violations</h3>
+        <ul class="violations">
+          {% for violation in plan.violations %}<li>{{ violation }}</li>{% endfor %}
+        </ul>
+      {% endif %}
+    </section>
+
+    <section class="panel" id="configs">
+      <h2>Cisco IOS configurations</h2>
+      <div class="config-head">
+        <p class="note" style="margin:0">
+          One template rendered once per device. The combined export is
+          <code>exports/{{ analysis.export_filename }}</code>.
+        </p>
+        <select id="config-select">
+          {% for name in device_names %}
+            <option value="{{ name }}">{{ name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <pre class="config" id="config-pre"></pre>
+      <p class="note" style="margin-top:10px">
+        Lab credentials: enable secret and user <code>admin</code> use
+        <code>NetArchitect-Lab-123</code>; the IPsec key is
+        <code>NetArchitect-Lab-Key</code>. Replace both before production.
+      </p>
+    </section>
+
+    <script id="config-data" type="application/json">{{ configs_json | safe }}</script>
+    <script>
+      const buttons = document.querySelectorAll(".tab");
+      const panels = document.querySelectorAll(".panel");
+      function showTab(id) {
+        buttons.forEach(b => b.classList.toggle("active", b.dataset.tab === id));
+        panels.forEach(p => p.classList.toggle("active", p.id === id));
+      }
+      buttons.forEach(b => b.addEventListener("click", () => showTab(b.dataset.tab)));
+
+      let configs = {};
+      try {
+        configs = JSON.parse(document.getElementById("config-data").textContent || "{}");
+      } catch (err) { configs = {}; }
+      const select = document.getElementById("config-select");
+      const pre = document.getElementById("config-pre");
+      function renderConfig() {
+        if (!select || !pre) return;
+        pre.textContent = configs[select.value] || "No configuration generated.";
+      }
+      if (select) {
+        select.addEventListener("change", renderConfig);
+        renderConfig();
+      }
+    </script>
+  {% endif %}
+</div>
+</body>
+</html>
