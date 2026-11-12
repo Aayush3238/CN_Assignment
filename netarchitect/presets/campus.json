@@ -1,0 +1,31 @@
+{
+  "name": "campus",
+  "description": "Campus LAN: three buildings inside 400 m, 1,600 endpoints, PoE access points, Cat6a access and OM4 backbone.",
+  "endpoints": 1600,
+  "buildings": 3,
+  "links": [
+    {"name": "LAN access", "distance_m": 90, "kind": "access", "media": "copper"},
+    {"name": "Building backbone", "distance_m": 320, "kind": "backbone", "media": "auto"}
+  ],
+  "root_prefix": "10.10.0.0/16",
+  "subnets": [
+    {"name": "Data", "hosts": 700, "vlan": 10, "site": "Campus"},
+    {"name": "Voice", "hosts": 300, "vlan": 20, "site": "Campus", "poe": true},
+    {"name": "Wi-Fi", "hosts": 400, "vlan": 30, "site": "Campus", "poe": true},
+    {"name": "Management", "hosts": 100, "vlan": 40, "site": "Campus"},
+    {"name": "Servers", "hosts": 100, "vlan": 50, "site": "Campus"}
+  ],
+  "sites": [
+    {"name": "Campus", "subnets": ["Data", "Voice", "Wi-Fi", "Management", "Servers"], "role": "hq"}
+  ],
+  "resilient": true,
+  "single_as": true,
+  "cloud": false,
+  "local_asn": null,
+  "peer_asn": null,
+  "access_speed_gbps": 1,
+  "uplink_speed_gbps": 10,
+  "uplinks": 2,
+  "forced_tier": null,
+  "prices": null
+}
