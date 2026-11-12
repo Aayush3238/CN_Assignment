@@ -1,0 +1,2464 @@
+{
+  "scenario": {
+    "name": "wan",
+    "description": "Global WAN: four cities and a cloud VPC, 2,000 IoT endpoints, multi-area OSPF plus eBGP and IPsec at the cloud boundary.",
+    "endpoints": 2000,
+    "buildings": 4,
+    "links": [
+      {
+        "name": "City A LAN access",
+        "distance_m": 90.0,
+        "kind": "access",
+        "media": "copper",
+        "connectors": 2,
+        "splices": 0
+      },
+      {
+        "name": "City A to City B",
+        "distance_m": 650000.0,
+        "kind": "wan",
+        "media": "fiber",
+        "connectors": 2,
+        "splices": 0
+      },
+      {
+        "name": "City A to City C",
+        "distance_m": 1200000.0,
+        "kind": "wan",
+        "media": "fiber",
+        "connectors": 2,
+        "splices": 0
+      },
+      {
+        "name": "City A to City D",
+        "distance_m": 4800000.0,
+        "kind": "wan",
+        "media": "fiber",
+        "connectors": 2,
+        "splices": 0
+      },
+      {
+        "name": "City A to Cloud VPC",
+        "distance_m": 250000.0,
+        "kind": "wan",
+        "media": "fiber",
+        "connectors": 2,
+        "splices": 0
+      }
+    ],
+    "root_prefix": "10.64.0.0/14",
+    "subnets": [
+      {
+        "name": "CityA-IoT",
+        "hosts": 600,
+        "mode": "lan",
+        "poe": false,
+        "vlan": 10,
+        "site": "CityA"
+      },
+      {
+        "name": "CityB-IoT",
+        "hosts": 500,
+        "mode": "lan",
+        "poe": false,
+        "vlan": 20,
+        "site": "CityB"
+      },
+      {
+        "name": "CityC-IoT",
+        "hosts": 500,
+        "mode": "lan",
+        "poe": false,
+        "vlan": 30,
+        "site": "CityC"
+      },
+      {
+        "name": "CityD-IoT",
+        "hosts": 400,
+        "mode": "lan",
+        "poe": false,
+        "vlan": 40,
+        "site": "CityD"
+      },
+      {
+        "name": "Cloud-VPC",
+        "hosts": 200,
+        "mode": "lan",
+        "poe": false,
+        "vlan": 50,
+        "site": "Cloud"
+      },
+      {
+        "name": "Link-A-B",
+        "hosts": 2,
+        "mode": "p2p30",
+        "poe": false,
+        "site": "CityA",
+        "between": [
+          "CityA",
+          "CityB"
+        ]
+      },
+      {
+        "name": "Link-A-C",
+        "hosts": 2,
+        "mode": "p2p30",
+        "poe": false,
+        "site": "CityA",
+        "between": [
+          "CityA",
+          "CityC"
+        ]
+      },
+      {
+        "name": "Link-A-D",
+        "hosts": 2,
+        "mode": "p2p30",
+        "poe": false,
+        "site": "CityA",
+        "between": [
+          "CityA",
+          "CityD"
+        ]
+      },
+      {
+        "name": "Link-A-Cloud",
+        "hosts": 2,
+        "mode": "p2p30",
+        "poe": false,
+        "site": "CityA",
+        "between": [
+          "CityA",
+          "Cloud"
+        ]
+      }
+    ],
+    "sites": [
+      {
+        "name": "CityA",
+        "subnets": [
+          "CityA-IoT",
+          "Link-A-B",
+          "Link-A-C",
+          "Link-A-D",
+          "Link-A-Cloud"
+        ],
+        "role": "hub"
+      },
+      {
+        "name": "CityB",
+        "subnets": [
+          "CityB-IoT"
+        ],
+        "role": "site"
+      },
+      {
+        "name": "CityC",
+        "subnets": [
+          "CityC-IoT"
+        ],
+        "role": "site"
+      },
+      {
+        "name": "CityD",
+        "subnets": [
+          "CityD-IoT"
+        ],
+        "role": "site"
+      },
+      {
+        "name": "Cloud",
+        "subnets": [
+          "Cloud-VPC"
+        ],
+        "role": "cloud"
+      }
+    ],
+    "resilient": true,
+    "single_as": false,
+    "cloud": true,
+    "local_asn": 65010,
+    "peer_asn": 64512,
+    "access_speed_gbps": 1,
+    "uplink_speed_gbps": 10,
+    "uplinks": 2,
+    "forced_tier": null,
+    "prices": null,
+    "native_vlan": 999
+  },
+  "selected": {
+    "scenario": {
+      "name": "wan",
+      "description": "Global WAN: four cities and a cloud VPC, 2,000 IoT endpoints, multi-area OSPF plus eBGP and IPsec at the cloud boundary.",
+      "endpoints": 2000,
+      "buildings": 4,
+      "links": [
+        {
+          "name": "City A LAN access",
+          "distance_m": 90.0,
+          "kind": "access",
+          "media": "copper",
+          "connectors": 2,
+          "splices": 0
+        },
+        {
+          "name": "City A to City B",
+          "distance_m": 650000.0,
+          "kind": "wan",
+          "media": "fiber",
+          "connectors": 2,
+          "splices": 0
+        },
+        {
+          "name": "City A to City C",
+          "distance_m": 1200000.0,
+          "kind": "wan",
+          "media": "fiber",
+          "connectors": 2,
+          "splices": 0
+        },
+        {
+          "name": "City A to City D",
+          "distance_m": 4800000.0,
+          "kind": "wan",
+          "media": "fiber",
+          "connectors": 2,
+          "splices": 0
+        },
+        {
+          "name": "City A to Cloud VPC",
+          "distance_m": 250000.0,
+          "kind": "wan",
+          "media": "fiber",
+          "connectors": 2,
+          "splices": 0
+        }
+      ],
+      "root_prefix": "10.64.0.0/14",
+      "subnets": [
+        {
+          "name": "CityA-IoT",
+          "hosts": 600,
+          "mode": "lan",
+          "poe": false,
+          "vlan": 10,
+          "site": "CityA"
+        },
+        {
+          "name": "CityB-IoT",
+          "hosts": 500,
+          "mode": "lan",
+          "poe": false,
+          "vlan": 20,
+          "site": "CityB"
+        },
+        {
+          "name": "CityC-IoT",
+          "hosts": 500,
+          "mode": "lan",
+          "poe": false,
+          "vlan": 30,
+          "site": "CityC"
+        },
+        {
+          "name": "CityD-IoT",
+          "hosts": 400,
+          "mode": "lan",
+          "poe": false,
+          "vlan": 40,
+          "site": "CityD"
+        },
+        {
+          "name": "Cloud-VPC",
+          "hosts": 200,
+          "mode": "lan",
+          "poe": false,
+          "vlan": 50,
+          "site": "Cloud"
+        },
+        {
+          "name": "Link-A-B",
+          "hosts": 2,
+          "mode": "p2p30",
+          "poe": false,
+          "site": "CityA",
+          "between": [
+            "CityA",
+            "CityB"
+          ]
+        },
+        {
+          "name": "Link-A-C",
+          "hosts": 2,
+          "mode": "p2p30",
+          "poe": false,
+          "site": "CityA",
+          "between": [
+            "CityA",
+            "CityC"
+          ]
+        },
+        {
+          "name": "Link-A-D",
+          "hosts": 2,
+          "mode": "p2p30",
+          "poe": false,
+          "site": "CityA",
+          "between": [
+            "CityA",
+            "CityD"
+          ]
+        },
+        {
+          "name": "Link-A-Cloud",
+          "hosts": 2,
+          "mode": "p2p30",
+          "poe": false,
+          "site": "CityA",
+          "between": [
+            "CityA",
+            "Cloud"
+          ]
+        }
+      ],
+      "sites": [
+        {
+          "name": "CityA",
+          "subnets": [
+            "CityA-IoT",
+            "Link-A-B",
+            "Link-A-C",
+            "Link-A-D",
+            "Link-A-Cloud"
+          ],
+          "role": "hub"
+        },
+        {
+          "name": "CityB",
+          "subnets": [
+            "CityB-IoT"
+          ],
+          "role": "site"
+        },
+        {
+          "name": "CityC",
+          "subnets": [
+            "CityC-IoT"
+          ],
+          "role": "site"
+        },
+        {
+          "name": "CityD",
+          "subnets": [
+            "CityD-IoT"
+          ],
+          "role": "site"
+        },
+        {
+          "name": "Cloud",
+          "subnets": [
+            "Cloud-VPC"
+          ],
+          "role": "cloud"
+        }
+      ],
+      "resilient": true,
+      "single_as": false,
+      "cloud": true,
+      "local_asn": 65010,
+      "peer_asn": 64512,
+      "access_speed_gbps": 1,
+      "uplink_speed_gbps": 10,
+      "uplinks": 2,
+      "forced_tier": null,
+      "prices": null,
+      "native_vlan": 999
+    },
+    "media": [
+      {
+        "link": "City A LAN access",
+        "distance_m": 90.0,
+        "distance_label": "90 m",
+        "kind": "access",
+        "medium": "Cat6a copper",
+        "standard": "IEEE 802.3an (10GBASE-T)",
+        "transceiver": "10GBASE-T",
+        "wavelength_nm": null,
+        "reach_m": 100.0,
+        "budget_db": null,
+        "loss_db": null,
+        "severity": "info",
+        "reason": "Selected Cat6a copper with a 10GBASE-T transceiver because the access run (90 m) is within the 100 m 10GBASE-T channel limit (IEEE 802.3an). Category 6a supports 10 Gb/s over 100 m and is the lowest-cost medium at this distance.",
+        "evidence": {
+          "limit_m": 100.0,
+          "distance_m": 90.0,
+          "headroom_m": 10.0
+        }
+      },
+      {
+        "link": "City A to City B",
+        "distance_m": 650000.0,
+        "distance_label": "650 km",
+        "kind": "wan",
+        "medium": "OS2 single-mode fiber",
+        "standard": "IEEE 802.3ae (10GBASE-ER)",
+        "transceiver": "10GBASE-ER",
+        "wavelength_nm": 1550,
+        "reach_m": 40000.0,
+        "budget_db": 11.1,
+        "loss_db": 231.5,
+        "severity": "warning",
+        "reason": "Selected OS2 single-mode fiber with 10GBASE-ER because the wan run (650 km) exceeds the 400 m attenuation limit of OM4 multimode fiber. OS2 has a 9 µm core and carries 10GBASE-ER at 1550 nm (IEEE 802.3ae). Optical budget: 650.00 km x 0.35 dB/km + 2 connector(s) x 0.5 dB + 0 splice(s) x 0.1 dB + 3 dB margin = 231.50 dB against a 11.1 dB budget. Warning: the span exceeds the 40 km 10GBASE-ER catalogue reach, so it needs an amplifier or DWDM; estimated loss 231.50 dB exceeds the 11.1 dB 10GBASE-ER budget.",
+        "evidence": {
+          "mmf_limit_m": 400.0,
+          "distance_m": 650000.0,
+          "reach_m": 40000.0,
+          "wavelength_nm": 1550,
+          "attenuation_db_per_km": 0.35,
+          "connectors": 2,
+          "splices": 0,
+          "margin_db": 3.0,
+          "loss_db": 231.5,
+          "budget_db": 11.1,
+          "headroom_db": -220.4
+        }
+      },
+      {
+        "link": "City A to City C",
+        "distance_m": 1200000.0,
+        "distance_label": "1200 km",
+        "kind": "wan",
+        "medium": "OS2 single-mode fiber",
+        "standard": "IEEE 802.3ae (10GBASE-ER)",
+        "transceiver": "10GBASE-ER",
+        "wavelength_nm": 1550,
+        "reach_m": 40000.0,
+        "budget_db": 11.1,
+        "loss_db": 424.0,
+        "severity": "warning",
+        "reason": "Selected OS2 single-mode fiber with 10GBASE-ER because the wan run (1200 km) exceeds the 400 m attenuation limit of OM4 multimode fiber. OS2 has a 9 µm core and carries 10GBASE-ER at 1550 nm (IEEE 802.3ae). Optical budget: 1200.00 km x 0.35 dB/km + 2 connector(s) x 0.5 dB + 0 splice(s) x 0.1 dB + 3 dB margin = 424.00 dB against a 11.1 dB budget. Warning: the span exceeds the 40 km 10GBASE-ER catalogue reach, so it needs an amplifier or DWDM; estimated loss 424.00 dB exceeds the 11.1 dB 10GBASE-ER budget.",
+        "evidence": {
+          "mmf_limit_m": 400.0,
+          "distance_m": 1200000.0,
+          "reach_m": 40000.0,
+          "wavelength_nm": 1550,
+          "attenuation_db_per_km": 0.35,
+          "connectors": 2,
+          "splices": 0,
+          "margin_db": 3.0,
+          "loss_db": 424.0,
+          "budget_db": 11.1,
+          "headroom_db": -412.9
+        }
+      },
+      {
+        "link": "City A to City D",
+        "distance_m": 4800000.0,
+        "distance_label": "4800 km",
+        "kind": "wan",
+        "medium": "OS2 single-mode fiber",
+        "standard": "IEEE 802.3ae (10GBASE-ER)",
+        "transceiver": "10GBASE-ER",
+        "wavelength_nm": 1550,
+        "reach_m": 40000.0,
+        "budget_db": 11.1,
+        "loss_db": 1684.0,
+        "severity": "warning",
+        "reason": "Selected OS2 single-mode fiber with 10GBASE-ER because the wan run (4800 km) exceeds the 400 m attenuation limit of OM4 multimode fiber. OS2 has a 9 µm core and carries 10GBASE-ER at 1550 nm (IEEE 802.3ae). Optical budget: 4800.00 km x 0.35 dB/km + 2 connector(s) x 0.5 dB + 0 splice(s) x 0.1 dB + 3 dB margin = 1684.00 dB against a 11.1 dB budget. Warning: the span exceeds the 40 km 10GBASE-ER catalogue reach, so it needs an amplifier or DWDM; estimated loss 1684.00 dB exceeds the 11.1 dB 10GBASE-ER budget.",
+        "evidence": {
+          "mmf_limit_m": 400.0,
+          "distance_m": 4800000.0,
+          "reach_m": 40000.0,
+          "wavelength_nm": 1550,
+          "attenuation_db_per_km": 0.35,
+          "connectors": 2,
+          "splices": 0,
+          "margin_db": 3.0,
+          "loss_db": 1684.0,
+          "budget_db": 11.1,
+          "headroom_db": -1672.9
+        }
+      },
+      {
+        "link": "City A to Cloud VPC",
+        "distance_m": 250000.0,
+        "distance_label": "250 km",
+        "kind": "wan",
+        "medium": "OS2 single-mode fiber",
+        "standard": "IEEE 802.3ae (10GBASE-ER)",
+        "transceiver": "10GBASE-ER",
+        "wavelength_nm": 1550,
+        "reach_m": 40000.0,
+        "budget_db": 11.1,
+        "loss_db": 91.5,
+        "severity": "warning",
+        "reason": "Selected OS2 single-mode fiber with 10GBASE-ER because the wan run (250 km) exceeds the 400 m attenuation limit of OM4 multimode fiber. OS2 has a 9 µm core and carries 10GBASE-ER at 1550 nm (IEEE 802.3ae). Optical budget: 250.00 km x 0.35 dB/km + 2 connector(s) x 0.5 dB + 0 splice(s) x 0.1 dB + 3 dB margin = 91.50 dB against a 11.1 dB budget. Warning: the span exceeds the 40 km 10GBASE-ER catalogue reach, so it needs an amplifier or DWDM; estimated loss 91.50 dB exceeds the 11.1 dB 10GBASE-ER budget.",
+        "evidence": {
+          "mmf_limit_m": 400.0,
+          "distance_m": 250000.0,
+          "reach_m": 40000.0,
+          "wavelength_nm": 1550,
+          "attenuation_db_per_km": 0.35,
+          "connectors": 2,
+          "splices": 0,
+          "margin_db": 3.0,
+          "loss_db": 91.5,
+          "budget_db": 11.1,
+          "headroom_db": -80.4
+        }
+      }
+    ],
+    "vlsm": {
+      "root": "10.64.0.0/14",
+      "blocks": [
+        {
+          "name": "CityA-IoT",
+          "hosts": 600,
+          "prefix": 22,
+          "mode": "lan",
+          "vlan": 10,
+          "site": "CityA",
+          "between": null,
+          "poe": false,
+          "network": "10.64.0.0",
+          "mask": "255.255.252.0",
+          "wildcard": "0.0.3.255",
+          "broadcast": "10.64.3.255",
+          "first_usable": "10.64.0.1",
+          "last_usable": "10.64.3.254",
+          "gateway": "10.64.0.1",
+          "cidr": "10.64.0.0/22",
+          "usable": 1022,
+          "size": 1024,
+          "utilization": 58.7
+        },
+        {
+          "name": "CityB-IoT",
+          "hosts": 500,
+          "prefix": 23,
+          "mode": "lan",
+          "vlan": 20,
+          "site": "CityB",
+          "between": null,
+          "poe": false,
+          "network": "10.64.4.0",
+          "mask": "255.255.254.0",
+          "wildcard": "0.0.1.255",
+          "broadcast": "10.64.5.255",
+          "first_usable": "10.64.4.1",
+          "last_usable": "10.64.5.254",
+          "gateway": "10.64.4.1",
+          "cidr": "10.64.4.0/23",
+          "usable": 510,
+          "size": 512,
+          "utilization": 98.0
+        },
+        {
+          "name": "CityC-IoT",
+          "hosts": 500,
+          "prefix": 23,
+          "mode": "lan",
+          "vlan": 30,
+          "site": "CityC",
+          "between": null,
+          "poe": false,
+          "network": "10.64.6.0",
+          "mask": "255.255.254.0",
+          "wildcard": "0.0.1.255",
+          "broadcast": "10.64.7.255",
+          "first_usable": "10.64.6.1",
+          "last_usable": "10.64.7.254",
+          "gateway": "10.64.6.1",
+          "cidr": "10.64.6.0/23",
+          "usable": 510,
+          "size": 512,
+          "utilization": 98.0
+        },
+        {
+          "name": "CityD-IoT",
+          "hosts": 400,
+          "prefix": 23,
+          "mode": "lan",
+          "vlan": 40,
+          "site": "CityD",
+          "between": null,
+          "poe": false,
+          "network": "10.64.8.0",
+          "mask": "255.255.254.0",
+          "wildcard": "0.0.1.255",
+          "broadcast": "10.64.9.255",
+          "first_usable": "10.64.8.1",
+          "last_usable": "10.64.9.254",
+          "gateway": "10.64.8.1",
+          "cidr": "10.64.8.0/23",
+          "usable": 510,
+          "size": 512,
+          "utilization": 78.4
+        },
+        {
+          "name": "Cloud-VPC",
+          "hosts": 200,
+          "prefix": 24,
+          "mode": "lan",
+          "vlan": 50,
+          "site": "Cloud",
+          "between": null,
+          "poe": false,
+          "network": "10.64.10.0",
+          "mask": "255.255.255.0",
+          "wildcard": "0.0.0.255",
+          "broadcast": "10.64.10.255",
+          "first_usable": "10.64.10.1",
+          "last_usable": "10.64.10.254",
+          "gateway": "10.64.10.1",
+          "cidr": "10.64.10.0/24",
+          "usable": 254,
+          "size": 256,
+          "utilization": 78.7
+        },
+        {
+          "name": "Link-A-B",
+          "hosts": 2,
+          "prefix": 30,
+          "mode": "p2p30",
+          "vlan": null,
+          "site": "CityA",
+          "between": [
+            "CityA",
+            "CityB"
+          ],
+          "poe": false,
+          "network": "10.64.11.0",
+          "mask": "255.255.255.252",
+          "wildcard": "0.0.0.3",
+          "broadcast": "10.64.11.3",
+          "first_usable": "10.64.11.1",
+          "last_usable": "10.64.11.2",
+          "gateway": "10.64.11.1",
+          "cidr": "10.64.11.0/30",
+          "usable": 2,
+          "size": 4,
+          "utilization": 100.0
+        },
+        {
+          "name": "Link-A-C",
+          "hosts": 2,
+          "prefix": 30,
+          "mode": "p2p30",
+          "vlan": null,
+          "site": "CityA",
+          "between": [
+            "CityA",
+            "CityC"
+          ],
+          "poe": false,
+          "network": "10.64.11.4",
+          "mask": "255.255.255.252",
+          "wildcard": "0.0.0.3",
+          "broadcast": "10.64.11.7",
+          "first_usable": "10.64.11.5",
+          "last_usable": "10.64.11.6",
+          "gateway": "10.64.11.5",
+          "cidr": "10.64.11.4/30",
+          "usable": 2,
+          "size": 4,
+          "utilization": 100.0
+        },
+        {
+          "name": "Link-A-D",
+          "hosts": 2,
+          "prefix": 30,
+          "mode": "p2p30",
+          "vlan": null,
+          "site": "CityA",
+          "between": [
+            "CityA",
+            "CityD"
+          ],
+          "poe": false,
+          "network": "10.64.11.8",
+          "mask": "255.255.255.252",
+          "wildcard": "0.0.0.3",
+          "broadcast": "10.64.11.11",
+          "first_usable": "10.64.11.9",
+          "last_usable": "10.64.11.10",
+          "gateway": "10.64.11.9",
+          "cidr": "10.64.11.8/30",
+          "usable": 2,
+          "size": 4,
+          "utilization": 100.0
+        },
+        {
+          "name": "Link-A-Cloud",
+          "hosts": 2,
+          "prefix": 30,
+          "mode": "p2p30",
+          "vlan": null,
+          "site": "CityA",
+          "between": [
+            "CityA",
+            "Cloud"
+          ],
+          "poe": false,
+          "network": "10.64.11.12",
+          "mask": "255.255.255.252",
+          "wildcard": "0.0.0.3",
+          "broadcast": "10.64.11.15",
+          "first_usable": "10.64.11.13",
+          "last_usable": "10.64.11.14",
+          "gateway": "10.64.11.13",
+          "cidr": "10.64.11.12/30",
+          "usable": 2,
+          "size": 4,
+          "utilization": 100.0
+        }
+      ],
+      "requested_total": 2208,
+      "allocated_addresses": 2832,
+      "usable_total": 2814,
+      "root_size": 262144,
+      "utilization": 77.97,
+      "usable_utilization": 78.46,
+      "wasted": 259312
+    },
+    "topology": {
+      "tier": "Three-tier",
+      "natural_tier": "Three-tier",
+      "access_switches": 42,
+      "distribution_switches": 4,
+      "core_switches": 2,
+      "switch_count": 48,
+      "oversubscription": 2.4,
+      "ratio": "2.4:1",
+      "violation": null,
+      "reason": "Selected three-tier because endpoints (2000) are >= 1000 or buildings (4) are >= 4. The design uses 42 access switch(es) at 48 ports each, 4 distribution switch(es), and 2 core switch(es). Oversubscription is (48 x 1 Gb/s) / (2 x 10 Gb/s) = 2.4:1.",
+      "advantages": [
+        "Fault domains and broadcast domains stay small.",
+        "Distribution switches summarise routes and enforce policy.",
+        "Core links can be sized and upgraded independently."
+      ],
+      "disadvantages": [
+        "More switches and more cabling than a collapsed core.",
+        "More OSPF adjacencies and more configuration surface."
+      ],
+      "tradeoffs": [
+        "Higher capital cost; cleaner growth path and predictable convergence."
+      ],
+      "cost": null,
+      "cost_note": "Cost was not scored because the scenario did not supply all three switch prices."
+    },
+    "routing": {
+      "protocol": "Multi-area OSPF + eBGP",
+      "area_for_site": {
+        "CityA": 0,
+        "CityB": 1,
+        "CityC": 2,
+        "CityD": 3,
+        "Cloud": 0
+      },
+      "areas": {
+        "0": [
+          "10.64.0.0/22",
+          "10.64.11.0/30",
+          "10.64.11.4/30",
+          "10.64.11.8/30",
+          "10.64.11.12/30"
+        ],
+        "1": [
+          "10.64.4.0/23"
+        ],
+        "2": [
+          "10.64.6.0/23"
+        ],
+        "3": [
+          "10.64.8.0/23"
+        ]
+      },
+      "networks": [
+        {
+          "name": "CityA-IoT",
+          "network": "10.64.0.0",
+          "wildcard": "0.0.3.255",
+          "mask": "255.255.252.0",
+          "area": 0,
+          "cidr": "10.64.0.0/22",
+          "passive": true
+        },
+        {
+          "name": "CityB-IoT",
+          "network": "10.64.4.0",
+          "wildcard": "0.0.1.255",
+          "mask": "255.255.254.0",
+          "area": 1,
+          "cidr": "10.64.4.0/23",
+          "passive": true
+        },
+        {
+          "name": "CityC-IoT",
+          "network": "10.64.6.0",
+          "wildcard": "0.0.1.255",
+          "mask": "255.255.254.0",
+          "area": 2,
+          "cidr": "10.64.6.0/23",
+          "passive": true
+        },
+        {
+          "name": "CityD-IoT",
+          "network": "10.64.8.0",
+          "wildcard": "0.0.1.255",
+          "mask": "255.255.254.0",
+          "area": 3,
+          "cidr": "10.64.8.0/23",
+          "passive": true
+        },
+        {
+          "name": "Link-A-B",
+          "network": "10.64.11.0",
+          "wildcard": "0.0.0.3",
+          "mask": "255.255.255.252",
+          "area": 0,
+          "cidr": "10.64.11.0/30",
+          "passive": false
+        },
+        {
+          "name": "Link-A-C",
+          "network": "10.64.11.4",
+          "wildcard": "0.0.0.3",
+          "mask": "255.255.255.252",
+          "area": 0,
+          "cidr": "10.64.11.4/30",
+          "passive": false
+        },
+        {
+          "name": "Link-A-D",
+          "network": "10.64.11.8",
+          "wildcard": "0.0.0.3",
+          "mask": "255.255.255.252",
+          "area": 0,
+          "cidr": "10.64.11.8/30",
+          "passive": false
+        },
+        {
+          "name": "Link-A-Cloud",
+          "network": "10.64.11.12",
+          "wildcard": "0.0.0.3",
+          "mask": "255.255.255.252",
+          "area": 0,
+          "cidr": "10.64.11.12/30",
+          "passive": false
+        }
+      ],
+      "summaries": [
+        {
+          "area": 1,
+          "site": "CityB",
+          "network": "10.64.4.0",
+          "mask": "255.255.254.0",
+          "cidr": "10.64.4.0/23",
+          "exact": false,
+          "reason": "Area 1 (CityB) is summarised as 10.64.4.0/23, the shortest prefix covering 1 block(s), and it does not contain another site."
+        },
+        {
+          "area": 2,
+          "site": "CityC",
+          "network": "10.64.6.0",
+          "mask": "255.255.254.0",
+          "cidr": "10.64.6.0/23",
+          "exact": false,
+          "reason": "Area 2 (CityC) is summarised as 10.64.6.0/23, the shortest prefix covering 1 block(s), and it does not contain another site."
+        },
+        {
+          "area": 3,
+          "site": "CityD",
+          "network": "10.64.8.0",
+          "mask": "255.255.254.0",
+          "cidr": "10.64.8.0/23",
+          "exact": false,
+          "reason": "Area 3 (CityD) is summarised as 10.64.8.0/23, the shortest prefix covering 1 block(s), and it does not contain another site."
+        }
+      ],
+      "bgp": true,
+      "local_asn": 65010,
+      "peer_asn": 64512,
+      "reason": "Selected multi-area OSPF plus eBGP because the scenario contains a cloud boundary (True) or more than one autonomous system (single_as=False). OSPF Area 0 carries the internal topology with per-site areas and summaries (RFC 2328); eBGP advertises the internal prefixes to AS 64512 from AS 65010 and isolates the routing domains (RFC 4271).",
+      "violation": null,
+      "alternatives": [
+        "IS-IS is a link-state alternative, but OSPF is the Cisco-native choice for this course and Packet Tracer."
+      ]
+    },
+    "switching": {
+      "stp": "RSTP",
+      "stp_mode": "rapid-pvst",
+      "fhrp": "HSRP",
+      "fhrp_alternative": "VRRP (RFC 5798)",
+      "vlan_count": 5,
+      "switch_count": 48,
+      "native_vlan": 999,
+      "allowed_vlans": [
+        10,
+        20,
+        30,
+        40,
+        50
+      ],
+      "reason": "RSTP (IEEE 802.1w) is sufficient: 5 VLAN(s) <= 16 and 48 switch(es) < 50. Rapid PVST+ gives sub-second convergence per VLAN and Packet Tracer accepts it directly. HSRP is configured because the scenario is resilient: two cores share a virtual gateway, the first core uses priority 110, the second 100, and preemption returns traffic after a failure. VRRP (RFC 5798) is the open alternative. Trunk hardening: allowed VLANs 10, 20, 30, 40, 50, native VLAN 999.",
+      "hardening": [
+        "Every trunk lists allowed VLAN ids explicitly; 'switchport trunk allowed vlan all' is never emitted.",
+        "Native VLAN is 999 and is not in the allowed user list.",
+        "Access ports enable PortFast and BPDU Guard.",
+        "Management VTY lines accept SSH only and are filtered by an ACL."
+      ]
+    },
+    "decisions": [
+      {
+        "category": "Physical media (L1)",
+        "choice": "Cat6a copper / 10GBASE-T",
+        "reason": "Selected Cat6a copper with a 10GBASE-T transceiver because the access run (90 m) is within the 100 m 10GBASE-T channel limit (IEEE 802.3an). Category 6a supports 10 Gb/s over 100 m and is the lowest-cost medium at this distance.",
+        "standard": "IEEE 802.3an (10GBASE-T)",
+        "severity": "info",
+        "evidence": {
+          "limit_m": 100.0,
+          "distance_m": 90.0,
+          "headroom_m": 10.0
+        }
+      },
+      {
+        "category": "Physical media (L1)",
+        "choice": "OS2 single-mode fiber / 10GBASE-ER",
+        "reason": "Selected OS2 single-mode fiber with 10GBASE-ER because the wan run (650 km) exceeds the 400 m attenuation limit of OM4 multimode fiber. OS2 has a 9 µm core and carries 10GBASE-ER at 1550 nm (IEEE 802.3ae). Optical budget: 650.00 km x 0.35 dB/km + 2 connector(s) x 0.5 dB + 0 splice(s) x 0.1 dB + 3 dB margin = 231.50 dB against a 11.1 dB budget. Warning: the span exceeds the 40 km 10GBASE-ER catalogue reach, so it needs an amplifier or DWDM; estimated loss 231.50 dB exceeds the 11.1 dB 10GBASE-ER budget.",
+        "standard": "IEEE 802.3ae (10GBASE-ER)",
+        "severity": "warning",
+        "evidence": {
+          "mmf_limit_m": 400.0,
+          "distance_m": 650000.0,
+          "reach_m": 40000.0,
+          "wavelength_nm": 1550,
+          "attenuation_db_per_km": 0.35,
+          "connectors": 2,
+          "splices": 0,
+          "margin_db": 3.0,
+          "loss_db": 231.5,
+          "budget_db": 11.1,
+          "headroom_db": -220.4
+        }
+      },
+      {
+        "category": "Physical media (L1)",
+        "choice": "OS2 single-mode fiber / 10GBASE-ER",
+        "reason": "Selected OS2 single-mode fiber with 10GBASE-ER because the wan run (1200 km) exceeds the 400 m attenuation limit of OM4 multimode fiber. OS2 has a 9 µm core and carries 10GBASE-ER at 1550 nm (IEEE 802.3ae). Optical budget: 1200.00 km x 0.35 dB/km + 2 connector(s) x 0.5 dB + 0 splice(s) x 0.1 dB + 3 dB margin = 424.00 dB against a 11.1 dB budget. Warning: the span exceeds the 40 km 10GBASE-ER catalogue reach, so it needs an amplifier or DWDM; estimated loss 424.00 dB exceeds the 11.1 dB 10GBASE-ER budget.",
+        "standard": "IEEE 802.3ae (10GBASE-ER)",
+        "severity": "warning",
+        "evidence": {
+          "mmf_limit_m": 400.0,
+          "distance_m": 1200000.0,
+          "reach_m": 40000.0,
+          "wavelength_nm": 1550,
+          "attenuation_db_per_km": 0.35,
+          "connectors": 2,
+          "splices": 0,
+          "margin_db": 3.0,
+          "loss_db": 424.0,
+          "budget_db": 11.1,
+          "headroom_db": -412.9
+        }
+      },
+      {
+        "category": "Physical media (L1)",
+        "choice": "OS2 single-mode fiber / 10GBASE-ER",
+        "reason": "Selected OS2 single-mode fiber with 10GBASE-ER because the wan run (4800 km) exceeds the 400 m attenuation limit of OM4 multimode fiber. OS2 has a 9 µm core and carries 10GBASE-ER at 1550 nm (IEEE 802.3ae). Optical budget: 4800.00 km x 0.35 dB/km + 2 connector(s) x 0.5 dB + 0 splice(s) x 0.1 dB + 3 dB margin = 1684.00 dB against a 11.1 dB budget. Warning: the span exceeds the 40 km 10GBASE-ER catalogue reach, so it needs an amplifier or DWDM; estimated loss 1684.00 dB exceeds the 11.1 dB 10GBASE-ER budget.",
+        "standard": "IEEE 802.3ae (10GBASE-ER)",
+        "severity": "warning",
+        "evidence": {
+          "mmf_limit_m": 400.0,
+          "distance_m": 4800000.0,
+          "reach_m": 40000.0,
+          "wavelength_nm": 1550,
+          "attenuation_db_per_km": 0.35,
+          "connectors": 2,
+          "splices": 0,
+          "margin_db": 3.0,
+          "loss_db": 1684.0,
+          "budget_db": 11.1,
+          "headroom_db": -1672.9
+        }
+      },
+      {
+        "category": "Physical media (L1)",
+        "choice": "OS2 single-mode fiber / 10GBASE-ER",
+        "reason": "Selected OS2 single-mode fiber with 10GBASE-ER because the wan run (250 km) exceeds the 400 m attenuation limit of OM4 multimode fiber. OS2 has a 9 µm core and carries 10GBASE-ER at 1550 nm (IEEE 802.3ae). Optical budget: 250.00 km x 0.35 dB/km + 2 connector(s) x 0.5 dB + 0 splice(s) x 0.1 dB + 3 dB margin = 91.50 dB against a 11.1 dB budget. Warning: the span exceeds the 40 km 10GBASE-ER catalogue reach, so it needs an amplifier or DWDM; estimated loss 91.50 dB exceeds the 11.1 dB 10GBASE-ER budget.",
+        "standard": "IEEE 802.3ae (10GBASE-ER)",
+        "severity": "warning",
+        "evidence": {
+          "mmf_limit_m": 400.0,
+          "distance_m": 250000.0,
+          "reach_m": 40000.0,
+          "wavelength_nm": 1550,
+          "attenuation_db_per_km": 0.35,
+          "connectors": 2,
+          "splices": 0,
+          "margin_db": 3.0,
+          "loss_db": 91.5,
+          "budget_db": 11.1,
+          "headroom_db": -80.4
+        }
+      },
+      {
+        "category": "Addressing (VLSM)",
+        "choice": "10.64.0.0/14 -> 9 non-overlapping subnets",
+        "reason": "Allocated 9 subnets inside 10.64.0.0/14 by sorting host requests largest-first and aligning each block to its own power-of-two boundary. 2208 requested hosts occupy 2832 addresses (78.0% address utilisation, 78.5% of usable addresses). An independent range scan confirms no overlap. Plan: CityA-IoT 10.64.0.0/22, CityB-IoT 10.64.4.0/23, CityC-IoT 10.64.6.0/23, CityD-IoT 10.64.8.0/23, Cloud-VPC 10.64.10.0/24, Link-A-B 10.64.11.0/30, Link-A-C 10.64.11.4/30, Link-A-D 10.64.11.8/30, Link-A-Cloud 10.64.11.12/30.",
+        "standard": "RFC 1918 private addressing; RFC 4632 CIDR; RFC 3021 for /31",
+        "severity": "info",
+        "evidence": {
+          "root": "10.64.0.0/14",
+          "blocks": 9,
+          "requested_total": 2208,
+          "allocated_addresses": 2832,
+          "utilization": 77.97,
+          "usable_utilization": 78.46,
+          "wasted": 259312
+        }
+      },
+      {
+        "category": "Topology",
+        "choice": "Three-tier (42 access, 4 distribution, 2 core)",
+        "reason": "Selected three-tier because endpoints (2000) are >= 1000 or buildings (4) are >= 4. The design uses 42 access switch(es) at 48 ports each, 4 distribution switch(es), and 2 core switch(es). Oversubscription is (48 x 1 Gb/s) / (2 x 10 Gb/s) = 2.4:1. Cost was not scored because the scenario did not supply all three switch prices.",
+        "standard": "CIC-307 topology-tier rule; 48-port access switch sizing",
+        "severity": "info",
+        "evidence": {
+          "tier": "Three-tier",
+          "natural_tier": "Three-tier",
+          "access_switches": 42,
+          "distribution_switches": 4,
+          "core_switches": 2,
+          "switch_count": 48,
+          "oversubscription": 2.4,
+          "ratio": "2.4:1",
+          "violation": null,
+          "reason": "Selected three-tier because endpoints (2000) are >= 1000 or buildings (4) are >= 4. The design uses 42 access switch(es) at 48 ports each, 4 distribution switch(es), and 2 core switch(es). Oversubscription is (48 x 1 Gb/s) / (2 x 10 Gb/s) = 2.4:1.",
+          "advantages": [
+            "Fault domains and broadcast domains stay small.",
+            "Distribution switches summarise routes and enforce policy.",
+            "Core links can be sized and upgraded independently."
+          ],
+          "disadvantages": [
+            "More switches and more cabling than a collapsed core.",
+            "More OSPF adjacencies and more configuration surface."
+          ],
+          "tradeoffs": [
+            "Higher capital cost; cleaner growth path and predictable convergence."
+          ],
+          "cost": null,
+          "cost_note": "Cost was not scored because the scenario did not supply all three switch prices."
+        }
+      },
+      {
+        "category": "Routing (L3)",
+        "choice": "Multi-area OSPF + eBGP",
+        "reason": "Selected multi-area OSPF plus eBGP because the scenario contains a cloud boundary (True) or more than one autonomous system (single_as=False). OSPF Area 0 carries the internal topology with per-site areas and summaries (RFC 2328); eBGP advertises the internal prefixes to AS 64512 from AS 65010 and isolates the routing domains (RFC 4271).",
+        "standard": "RFC 2328 (OSPFv2); RFC 4271 (BGP-4)",
+        "severity": "info",
+        "evidence": {
+          "protocol": "Multi-area OSPF + eBGP",
+          "area_for_site": {
+            "CityA": 0,
+            "CityB": 1,
+            "CityC": 2,
+            "CityD": 3,
+            "Cloud": 0
+          },
+          "areas": {
+            "0": [
+              "10.64.0.0/22",
+              "10.64.11.0/30",
+              "10.64.11.4/30",
+              "10.64.11.8/30",
+              "10.64.11.12/30"
+            ],
+            "1": [
+              "10.64.4.0/23"
+            ],
+            "2": [
+              "10.64.6.0/23"
+            ],
+            "3": [
+              "10.64.8.0/23"
+            ]
+          },
+          "networks": [
+            {
+              "name": "CityA-IoT",
+              "network": "10.64.0.0",
+              "wildcard": "0.0.3.255",
+              "mask": "255.255.252.0",
+              "area": 0,
+              "cidr": "10.64.0.0/22",
+              "passive": true
+            },
+            {
+              "name": "CityB-IoT",
+              "network": "10.64.4.0",
+              "wildcard": "0.0.1.255",
+              "mask": "255.255.254.0",
+              "area": 1,
+              "cidr": "10.64.4.0/23",
+              "passive": true
+            },
+            {
+              "name": "CityC-IoT",
+              "network": "10.64.6.0",
+              "wildcard": "0.0.1.255",
+              "mask": "255.255.254.0",
+              "area": 2,
+              "cidr": "10.64.6.0/23",
+              "passive": true
+            },
+            {
+              "name": "CityD-IoT",
+              "network": "10.64.8.0",
+              "wildcard": "0.0.1.255",
+              "mask": "255.255.254.0",
+              "area": 3,
+              "cidr": "10.64.8.0/23",
+              "passive": true
+            },
+            {
+              "name": "Link-A-B",
+              "network": "10.64.11.0",
+              "wildcard": "0.0.0.3",
+              "mask": "255.255.255.252",
+              "area": 0,
+              "cidr": "10.64.11.0/30",
+              "passive": false
+            },
+            {
+              "name": "Link-A-C",
+              "network": "10.64.11.4",
+              "wildcard": "0.0.0.3",
+              "mask": "255.255.255.252",
+              "area": 0,
+              "cidr": "10.64.11.4/30",
+              "passive": false
+            },
+            {
+              "name": "Link-A-D",
+              "network": "10.64.11.8",
+              "wildcard": "0.0.0.3",
+              "mask": "255.255.255.252",
+              "area": 0,
+              "cidr": "10.64.11.8/30",
+              "passive": false
+            },
+            {
+              "name": "Link-A-Cloud",
+              "network": "10.64.11.12",
+              "wildcard": "0.0.0.3",
+              "mask": "255.255.255.252",
+              "area": 0,
+              "cidr": "10.64.11.12/30",
+              "passive": false
+            }
+          ],
+          "summaries": [
+            {
+              "area": 1,
+              "site": "CityB",
+              "network": "10.64.4.0",
+              "mask": "255.255.254.0",
+              "cidr": "10.64.4.0/23",
+              "exact": false,
+              "reason": "Area 1 (CityB) is summarised as 10.64.4.0/23, the shortest prefix covering 1 block(s), and it does not contain another site."
+            },
+            {
+              "area": 2,
+              "site": "CityC",
+              "network": "10.64.6.0",
+              "mask": "255.255.254.0",
+              "cidr": "10.64.6.0/23",
+              "exact": false,
+              "reason": "Area 2 (CityC) is summarised as 10.64.6.0/23, the shortest prefix covering 1 block(s), and it does not contain another site."
+            },
+            {
+              "area": 3,
+              "site": "CityD",
+              "network": "10.64.8.0",
+              "mask": "255.255.254.0",
+              "cidr": "10.64.8.0/23",
+              "exact": false,
+              "reason": "Area 3 (CityD) is summarised as 10.64.8.0/23, the shortest prefix covering 1 block(s), and it does not contain another site."
+            }
+          ],
+          "bgp": true,
+          "local_asn": 65010,
+          "peer_asn": 64512,
+          "reason": "Selected multi-area OSPF plus eBGP because the scenario contains a cloud boundary (True) or more than one autonomous system (single_as=False). OSPF Area 0 carries the internal topology with per-site areas and summaries (RFC 2328); eBGP advertises the internal prefixes to AS 64512 from AS 65010 and isolates the routing domains (RFC 4271).",
+          "violation": null,
+          "alternatives": [
+            "IS-IS is a link-state alternative, but OSPF is the Cisco-native choice for this course and Packet Tracer."
+          ]
+        }
+      },
+      {
+        "category": "Routing (L3)",
+        "choice": "Area 1 summary 10.64.4.0/23",
+        "reason": "Area 1 (CityB) is summarised as 10.64.4.0/23, the shortest prefix covering 1 block(s), and it does not contain another site.",
+        "standard": "RFC 2328 area range summarisation",
+        "severity": "info",
+        "evidence": {
+          "area": 1,
+          "site": "CityB",
+          "network": "10.64.4.0",
+          "mask": "255.255.254.0",
+          "cidr": "10.64.4.0/23",
+          "exact": false,
+          "reason": "Area 1 (CityB) is summarised as 10.64.4.0/23, the shortest prefix covering 1 block(s), and it does not contain another site."
+        }
+      },
+      {
+        "category": "Routing (L3)",
+        "choice": "Area 2 summary 10.64.6.0/23",
+        "reason": "Area 2 (CityC) is summarised as 10.64.6.0/23, the shortest prefix covering 1 block(s), and it does not contain another site.",
+        "standard": "RFC 2328 area range summarisation",
+        "severity": "info",
+        "evidence": {
+          "area": 2,
+          "site": "CityC",
+          "network": "10.64.6.0",
+          "mask": "255.255.254.0",
+          "cidr": "10.64.6.0/23",
+          "exact": false,
+          "reason": "Area 2 (CityC) is summarised as 10.64.6.0/23, the shortest prefix covering 1 block(s), and it does not contain another site."
+        }
+      },
+      {
+        "category": "Routing (L3)",
+        "choice": "Area 3 summary 10.64.8.0/23",
+        "reason": "Area 3 (CityD) is summarised as 10.64.8.0/23, the shortest prefix covering 1 block(s), and it does not contain another site.",
+        "standard": "RFC 2328 area range summarisation",
+        "severity": "info",
+        "evidence": {
+          "area": 3,
+          "site": "CityD",
+          "network": "10.64.8.0",
+          "mask": "255.255.254.0",
+          "cidr": "10.64.8.0/23",
+          "exact": false,
+          "reason": "Area 3 (CityD) is summarised as 10.64.8.0/23, the shortest prefix covering 1 block(s), and it does not contain another site."
+        }
+      },
+      {
+        "category": "Switching (L2)",
+        "choice": "RSTP + HSRP",
+        "reason": "RSTP (IEEE 802.1w) is sufficient: 5 VLAN(s) <= 16 and 48 switch(es) < 50. Rapid PVST+ gives sub-second convergence per VLAN and Packet Tracer accepts it directly. HSRP is configured because the scenario is resilient: two cores share a virtual gateway, the first core uses priority 110, the second 100, and preemption returns traffic after a failure. VRRP (RFC 5798) is the open alternative. Trunk hardening: allowed VLANs 10, 20, 30, 40, 50, native VLAN 999.",
+        "standard": "IEEE 802.1w; IEEE 802.1s; RFC 5798 (VRRP alternative)",
+        "severity": "info",
+        "evidence": {
+          "stp": "RSTP",
+          "stp_mode": "rapid-pvst",
+          "fhrp": "HSRP",
+          "fhrp_alternative": "VRRP (RFC 5798)",
+          "vlan_count": 5,
+          "switch_count": 48,
+          "native_vlan": 999,
+          "allowed_vlans": [
+            10,
+            20,
+            30,
+            40,
+            50
+          ],
+          "reason": "RSTP (IEEE 802.1w) is sufficient: 5 VLAN(s) <= 16 and 48 switch(es) < 50. Rapid PVST+ gives sub-second convergence per VLAN and Packet Tracer accepts it directly. HSRP is configured because the scenario is resilient: two cores share a virtual gateway, the first core uses priority 110, the second 100, and preemption returns traffic after a failure. VRRP (RFC 5798) is the open alternative. Trunk hardening: allowed VLANs 10, 20, 30, 40, 50, native VLAN 999.",
+          "hardening": [
+            "Every trunk lists allowed VLAN ids explicitly; 'switchport trunk allowed vlan all' is never emitted.",
+            "Native VLAN is 999 and is not in the allowed user list.",
+            "Access ports enable PortFast and BPDU Guard.",
+            "Management VTY lines accept SSH only and are filtered by an ACL."
+          ]
+        }
+      },
+      {
+        "category": "Security and hardening",
+        "choice": "Guest/server ACL, SSH-only VTY, site-to-site IPsec on the cloud-facing interface, and a QoS priority queue for latency-sensitive traffic",
+        "reason": "The Wi-Fi/guest subnet is denied reachability to the server subnet with an extended ACL, management access is restricted to SSH from the management subnet, and trunks use an explicit allowed-VLAN list with an unused native VLAN. The cloud boundary adds an ISAKMP/IPsec transform and crypto map because the traffic crosses an untrusted provider.",
+        "standard": "RFC 4301 (IPsec); Cisco IOS extended ACL syntax",
+        "severity": "info",
+        "evidence": {
+          "vlans": [
+            10,
+            20,
+            30,
+            40,
+            50
+          ],
+          "native_vlan": 999,
+          "ssh_only": true,
+          "ipsec": true
+        }
+      }
+    ],
+    "violations": [
+      "City A to City B: Selected OS2 single-mode fiber with 10GBASE-ER because the wan run (650 km) exceeds the 400 m attenuation limit of OM4 multimode fiber. OS2 has a 9 µm core and carries 10GBASE-ER at 1550 nm (IEEE 802.3ae). Optical budget: 650.00 km x 0.35 dB/km + 2 connector(s) x 0.5 dB + 0 splice(s) x 0.1 dB + 3 dB margin = 231.50 dB against a 11.1 dB budget. Warning: the span exceeds the 40 km 10GBASE-ER catalogue reach, so it needs an amplifier or DWDM; estimated loss 231.50 dB exceeds the 11.1 dB 10GBASE-ER budget.",
+      "City A to City C: Selected OS2 single-mode fiber with 10GBASE-ER because the wan run (1200 km) exceeds the 400 m attenuation limit of OM4 multimode fiber. OS2 has a 9 µm core and carries 10GBASE-ER at 1550 nm (IEEE 802.3ae). Optical budget: 1200.00 km x 0.35 dB/km + 2 connector(s) x 0.5 dB + 0 splice(s) x 0.1 dB + 3 dB margin = 424.00 dB against a 11.1 dB budget. Warning: the span exceeds the 40 km 10GBASE-ER catalogue reach, so it needs an amplifier or DWDM; estimated loss 424.00 dB exceeds the 11.1 dB 10GBASE-ER budget.",
+      "City A to City D: Selected OS2 single-mode fiber with 10GBASE-ER because the wan run (4800 km) exceeds the 400 m attenuation limit of OM4 multimode fiber. OS2 has a 9 µm core and carries 10GBASE-ER at 1550 nm (IEEE 802.3ae). Optical budget: 4800.00 km x 0.35 dB/km + 2 connector(s) x 0.5 dB + 0 splice(s) x 0.1 dB + 3 dB margin = 1684.00 dB against a 11.1 dB budget. Warning: the span exceeds the 40 km 10GBASE-ER catalogue reach, so it needs an amplifier or DWDM; estimated loss 1684.00 dB exceeds the 11.1 dB 10GBASE-ER budget.",
+      "City A to Cloud VPC: Selected OS2 single-mode fiber with 10GBASE-ER because the wan run (250 km) exceeds the 400 m attenuation limit of OM4 multimode fiber. OS2 has a 9 µm core and carries 10GBASE-ER at 1550 nm (IEEE 802.3ae). Optical budget: 250.00 km x 0.35 dB/km + 2 connector(s) x 0.5 dB + 0 splice(s) x 0.1 dB + 3 dB margin = 91.50 dB against a 11.1 dB budget. Warning: the span exceeds the 40 km 10GBASE-ER catalogue reach, so it needs an amplifier or DWDM; estimated loss 91.50 dB exceeds the 11.1 dB 10GBASE-ER budget."
+    ]
+  },
+  "alternate": {
+    "scenario": {
+      "name": "wan",
+      "description": "Global WAN: four cities and a cloud VPC, 2,000 IoT endpoints, multi-area OSPF plus eBGP and IPsec at the cloud boundary.",
+      "endpoints": 2000,
+      "buildings": 4,
+      "links": [
+        {
+          "name": "City A LAN access",
+          "distance_m": 90.0,
+          "kind": "access",
+          "media": "copper",
+          "connectors": 2,
+          "splices": 0
+        },
+        {
+          "name": "City A to City B",
+          "distance_m": 650000.0,
+          "kind": "wan",
+          "media": "fiber",
+          "connectors": 2,
+          "splices": 0
+        },
+        {
+          "name": "City A to City C",
+          "distance_m": 1200000.0,
+          "kind": "wan",
+          "media": "fiber",
+          "connectors": 2,
+          "splices": 0
+        },
+        {
+          "name": "City A to City D",
+          "distance_m": 4800000.0,
+          "kind": "wan",
+          "media": "fiber",
+          "connectors": 2,
+          "splices": 0
+        },
+        {
+          "name": "City A to Cloud VPC",
+          "distance_m": 250000.0,
+          "kind": "wan",
+          "media": "fiber",
+          "connectors": 2,
+          "splices": 0
+        }
+      ],
+      "root_prefix": "10.64.0.0/14",
+      "subnets": [
+        {
+          "name": "CityA-IoT",
+          "hosts": 600,
+          "mode": "lan",
+          "poe": false,
+          "vlan": 10,
+          "site": "CityA"
+        },
+        {
+          "name": "CityB-IoT",
+          "hosts": 500,
+          "mode": "lan",
+          "poe": false,
+          "vlan": 20,
+          "site": "CityB"
+        },
+        {
+          "name": "CityC-IoT",
+          "hosts": 500,
+          "mode": "lan",
+          "poe": false,
+          "vlan": 30,
+          "site": "CityC"
+        },
+        {
+          "name": "CityD-IoT",
+          "hosts": 400,
+          "mode": "lan",
+          "poe": false,
+          "vlan": 40,
+          "site": "CityD"
+        },
+        {
+          "name": "Cloud-VPC",
+          "hosts": 200,
+          "mode": "lan",
+          "poe": false,
+          "vlan": 50,
+          "site": "Cloud"
+        },
+        {
+          "name": "Link-A-B",
+          "hosts": 2,
+          "mode": "p2p30",
+          "poe": false,
+          "site": "CityA",
+          "between": [
+            "CityA",
+            "CityB"
+          ]
+        },
+        {
+          "name": "Link-A-C",
+          "hosts": 2,
+          "mode": "p2p30",
+          "poe": false,
+          "site": "CityA",
+          "between": [
+            "CityA",
+            "CityC"
+          ]
+        },
+        {
+          "name": "Link-A-D",
+          "hosts": 2,
+          "mode": "p2p30",
+          "poe": false,
+          "site": "CityA",
+          "between": [
+            "CityA",
+            "CityD"
+          ]
+        },
+        {
+          "name": "Link-A-Cloud",
+          "hosts": 2,
+          "mode": "p2p30",
+          "poe": false,
+          "site": "CityA",
+          "between": [
+            "CityA",
+            "Cloud"
+          ]
+        }
+      ],
+      "sites": [
+        {
+          "name": "CityA",
+          "subnets": [
+            "CityA-IoT",
+            "Link-A-B",
+            "Link-A-C",
+            "Link-A-D",
+            "Link-A-Cloud"
+          ],
+          "role": "hub"
+        },
+        {
+          "name": "CityB",
+          "subnets": [
+            "CityB-IoT"
+          ],
+          "role": "site"
+        },
+        {
+          "name": "CityC",
+          "subnets": [
+            "CityC-IoT"
+          ],
+          "role": "site"
+        },
+        {
+          "name": "CityD",
+          "subnets": [
+            "CityD-IoT"
+          ],
+          "role": "site"
+        },
+        {
+          "name": "Cloud",
+          "subnets": [
+            "Cloud-VPC"
+          ],
+          "role": "cloud"
+        }
+      ],
+      "resilient": true,
+      "single_as": false,
+      "cloud": true,
+      "local_asn": 65010,
+      "peer_asn": 64512,
+      "access_speed_gbps": 1,
+      "uplink_speed_gbps": 10,
+      "uplinks": 2,
+      "forced_tier": null,
+      "prices": null,
+      "native_vlan": 999
+    },
+    "media": [
+      {
+        "link": "City A LAN access",
+        "distance_m": 90.0,
+        "distance_label": "90 m",
+        "kind": "access",
+        "medium": "Cat6a copper",
+        "standard": "IEEE 802.3an (10GBASE-T)",
+        "transceiver": "10GBASE-T",
+        "wavelength_nm": null,
+        "reach_m": 100.0,
+        "budget_db": null,
+        "loss_db": null,
+        "severity": "info",
+        "reason": "Selected Cat6a copper with a 10GBASE-T transceiver because the access run (90 m) is within the 100 m 10GBASE-T channel limit (IEEE 802.3an). Category 6a supports 10 Gb/s over 100 m and is the lowest-cost medium at this distance.",
+        "evidence": {
+          "limit_m": 100.0,
+          "distance_m": 90.0,
+          "headroom_m": 10.0
+        }
+      },
+      {
+        "link": "City A to City B",
+        "distance_m": 650000.0,
+        "distance_label": "650 km",
+        "kind": "wan",
+        "medium": "OS2 single-mode fiber",
+        "standard": "IEEE 802.3ae (10GBASE-ER)",
+        "transceiver": "10GBASE-ER",
+        "wavelength_nm": 1550,
+        "reach_m": 40000.0,
+        "budget_db": 11.1,
+        "loss_db": 231.5,
+        "severity": "warning",
+        "reason": "Selected OS2 single-mode fiber with 10GBASE-ER because the wan run (650 km) exceeds the 400 m attenuation limit of OM4 multimode fiber. OS2 has a 9 µm core and carries 10GBASE-ER at 1550 nm (IEEE 802.3ae). Optical budget: 650.00 km x 0.35 dB/km + 2 connector(s) x 0.5 dB + 0 splice(s) x 0.1 dB + 3 dB margin = 231.50 dB against a 11.1 dB budget. Warning: the span exceeds the 40 km 10GBASE-ER catalogue reach, so it needs an amplifier or DWDM; estimated loss 231.50 dB exceeds the 11.1 dB 10GBASE-ER budget.",
+        "evidence": {
+          "mmf_limit_m": 400.0,
+          "distance_m": 650000.0,
+          "reach_m": 40000.0,
+          "wavelength_nm": 1550,
+          "attenuation_db_per_km": 0.35,
+          "connectors": 2,
+          "splices": 0,
+          "margin_db": 3.0,
+          "loss_db": 231.5,
+          "budget_db": 11.1,
+          "headroom_db": -220.4
+        }
+      },
+      {
+        "link": "City A to City C",
+        "distance_m": 1200000.0,
+        "distance_label": "1200 km",
+        "kind": "wan",
+        "medium": "OS2 single-mode fiber",
+        "standard": "IEEE 802.3ae (10GBASE-ER)",
+        "transceiver": "10GBASE-ER",
+        "wavelength_nm": 1550,
+        "reach_m": 40000.0,
+        "budget_db": 11.1,
+        "loss_db": 424.0,
+        "severity": "warning",
+        "reason": "Selected OS2 single-mode fiber with 10GBASE-ER because the wan run (1200 km) exceeds the 400 m attenuation limit of OM4 multimode fiber. OS2 has a 9 µm core and carries 10GBASE-ER at 1550 nm (IEEE 802.3ae). Optical budget: 1200.00 km x 0.35 dB/km + 2 connector(s) x 0.5 dB + 0 splice(s) x 0.1 dB + 3 dB margin = 424.00 dB against a 11.1 dB budget. Warning: the span exceeds the 40 km 10GBASE-ER catalogue reach, so it needs an amplifier or DWDM; estimated loss 424.00 dB exceeds the 11.1 dB 10GBASE-ER budget.",
+        "evidence": {
+          "mmf_limit_m": 400.0,
+          "distance_m": 1200000.0,
+          "reach_m": 40000.0,
+          "wavelength_nm": 1550,
+          "attenuation_db_per_km": 0.35,
+          "connectors": 2,
+          "splices": 0,
+          "margin_db": 3.0,
+          "loss_db": 424.0,
+          "budget_db": 11.1,
+          "headroom_db": -412.9
+        }
+      },
+      {
+        "link": "City A to City D",
+        "distance_m": 4800000.0,
+        "distance_label": "4800 km",
+        "kind": "wan",
+        "medium": "OS2 single-mode fiber",
+        "standard": "IEEE 802.3ae (10GBASE-ER)",
+        "transceiver": "10GBASE-ER",
+        "wavelength_nm": 1550,
+        "reach_m": 40000.0,
+        "budget_db": 11.1,
+        "loss_db": 1684.0,
+        "severity": "warning",
+        "reason": "Selected OS2 single-mode fiber with 10GBASE-ER because the wan run (4800 km) exceeds the 400 m attenuation limit of OM4 multimode fiber. OS2 has a 9 µm core and carries 10GBASE-ER at 1550 nm (IEEE 802.3ae). Optical budget: 4800.00 km x 0.35 dB/km + 2 connector(s) x 0.5 dB + 0 splice(s) x 0.1 dB + 3 dB margin = 1684.00 dB against a 11.1 dB budget. Warning: the span exceeds the 40 km 10GBASE-ER catalogue reach, so it needs an amplifier or DWDM; estimated loss 1684.00 dB exceeds the 11.1 dB 10GBASE-ER budget.",
+        "evidence": {
+          "mmf_limit_m": 400.0,
+          "distance_m": 4800000.0,
+          "reach_m": 40000.0,
+          "wavelength_nm": 1550,
+          "attenuation_db_per_km": 0.35,
+          "connectors": 2,
+          "splices": 0,
+          "margin_db": 3.0,
+          "loss_db": 1684.0,
+          "budget_db": 11.1,
+          "headroom_db": -1672.9
+        }
+      },
+      {
+        "link": "City A to Cloud VPC",
+        "distance_m": 250000.0,
+        "distance_label": "250 km",
+        "kind": "wan",
+        "medium": "OS2 single-mode fiber",
+        "standard": "IEEE 802.3ae (10GBASE-ER)",
+        "transceiver": "10GBASE-ER",
+        "wavelength_nm": 1550,
+        "reach_m": 40000.0,
+        "budget_db": 11.1,
+        "loss_db": 91.5,
+        "severity": "warning",
+        "reason": "Selected OS2 single-mode fiber with 10GBASE-ER because the wan run (250 km) exceeds the 400 m attenuation limit of OM4 multimode fiber. OS2 has a 9 µm core and carries 10GBASE-ER at 1550 nm (IEEE 802.3ae). Optical budget: 250.00 km x 0.35 dB/km + 2 connector(s) x 0.5 dB + 0 splice(s) x 0.1 dB + 3 dB margin = 91.50 dB against a 11.1 dB budget. Warning: the span exceeds the 40 km 10GBASE-ER catalogue reach, so it needs an amplifier or DWDM; estimated loss 91.50 dB exceeds the 11.1 dB 10GBASE-ER budget.",
+        "evidence": {
+          "mmf_limit_m": 400.0,
+          "distance_m": 250000.0,
+          "reach_m": 40000.0,
+          "wavelength_nm": 1550,
+          "attenuation_db_per_km": 0.35,
+          "connectors": 2,
+          "splices": 0,
+          "margin_db": 3.0,
+          "loss_db": 91.5,
+          "budget_db": 11.1,
+          "headroom_db": -80.4
+        }
+      }
+    ],
+    "vlsm": {
+      "root": "10.64.0.0/14",
+      "blocks": [
+        {
+          "name": "CityA-IoT",
+          "hosts": 600,
+          "prefix": 22,
+          "mode": "lan",
+          "vlan": 10,
+          "site": "CityA",
+          "between": null,
+          "poe": false,
+          "network": "10.64.0.0",
+          "mask": "255.255.252.0",
+          "wildcard": "0.0.3.255",
+          "broadcast": "10.64.3.255",
+          "first_usable": "10.64.0.1",
+          "last_usable": "10.64.3.254",
+          "gateway": "10.64.0.1",
+          "cidr": "10.64.0.0/22",
+          "usable": 1022,
+          "size": 1024,
+          "utilization": 58.7
+        },
+        {
+          "name": "CityB-IoT",
+          "hosts": 500,
+          "prefix": 23,
+          "mode": "lan",
+          "vlan": 20,
+          "site": "CityB",
+          "between": null,
+          "poe": false,
+          "network": "10.64.4.0",
+          "mask": "255.255.254.0",
+          "wildcard": "0.0.1.255",
+          "broadcast": "10.64.5.255",
+          "first_usable": "10.64.4.1",
+          "last_usable": "10.64.5.254",
+          "gateway": "10.64.4.1",
+          "cidr": "10.64.4.0/23",
+          "usable": 510,
+          "size": 512,
+          "utilization": 98.0
+        },
+        {
+          "name": "CityC-IoT",
+          "hosts": 500,
+          "prefix": 23,
+          "mode": "lan",
+          "vlan": 30,
+          "site": "CityC",
+          "between": null,
+          "poe": false,
+          "network": "10.64.6.0",
+          "mask": "255.255.254.0",
+          "wildcard": "0.0.1.255",
+          "broadcast": "10.64.7.255",
+          "first_usable": "10.64.6.1",
+          "last_usable": "10.64.7.254",
+          "gateway": "10.64.6.1",
+          "cidr": "10.64.6.0/23",
+          "usable": 510,
+          "size": 512,
+          "utilization": 98.0
+        },
+        {
+          "name": "CityD-IoT",
+          "hosts": 400,
+          "prefix": 23,
+          "mode": "lan",
+          "vlan": 40,
+          "site": "CityD",
+          "between": null,
+          "poe": false,
+          "network": "10.64.8.0",
+          "mask": "255.255.254.0",
+          "wildcard": "0.0.1.255",
+          "broadcast": "10.64.9.255",
+          "first_usable": "10.64.8.1",
+          "last_usable": "10.64.9.254",
+          "gateway": "10.64.8.1",
+          "cidr": "10.64.8.0/23",
+          "usable": 510,
+          "size": 512,
+          "utilization": 78.4
+        },
+        {
+          "name": "Cloud-VPC",
+          "hosts": 200,
+          "prefix": 24,
+          "mode": "lan",
+          "vlan": 50,
+          "site": "Cloud",
+          "between": null,
+          "poe": false,
+          "network": "10.64.10.0",
+          "mask": "255.255.255.0",
+          "wildcard": "0.0.0.255",
+          "broadcast": "10.64.10.255",
+          "first_usable": "10.64.10.1",
+          "last_usable": "10.64.10.254",
+          "gateway": "10.64.10.1",
+          "cidr": "10.64.10.0/24",
+          "usable": 254,
+          "size": 256,
+          "utilization": 78.7
+        },
+        {
+          "name": "Link-A-B",
+          "hosts": 2,
+          "prefix": 30,
+          "mode": "p2p30",
+          "vlan": null,
+          "site": "CityA",
+          "between": [
+            "CityA",
+            "CityB"
+          ],
+          "poe": false,
+          "network": "10.64.11.0",
+          "mask": "255.255.255.252",
+          "wildcard": "0.0.0.3",
+          "broadcast": "10.64.11.3",
+          "first_usable": "10.64.11.1",
+          "last_usable": "10.64.11.2",
+          "gateway": "10.64.11.1",
+          "cidr": "10.64.11.0/30",
+          "usable": 2,
+          "size": 4,
+          "utilization": 100.0
+        },
+        {
+          "name": "Link-A-C",
+          "hosts": 2,
+          "prefix": 30,
+          "mode": "p2p30",
+          "vlan": null,
+          "site": "CityA",
+          "between": [
+            "CityA",
+            "CityC"
+          ],
+          "poe": false,
+          "network": "10.64.11.4",
+          "mask": "255.255.255.252",
+          "wildcard": "0.0.0.3",
+          "broadcast": "10.64.11.7",
+          "first_usable": "10.64.11.5",
+          "last_usable": "10.64.11.6",
+          "gateway": "10.64.11.5",
+          "cidr": "10.64.11.4/30",
+          "usable": 2,
+          "size": 4,
+          "utilization": 100.0
+        },
+        {
+          "name": "Link-A-D",
+          "hosts": 2,
+          "prefix": 30,
+          "mode": "p2p30",
+          "vlan": null,
+          "site": "CityA",
+          "between": [
+            "CityA",
+            "CityD"
+          ],
+          "poe": false,
+          "network": "10.64.11.8",
+          "mask": "255.255.255.252",
+          "wildcard": "0.0.0.3",
+          "broadcast": "10.64.11.11",
+          "first_usable": "10.64.11.9",
+          "last_usable": "10.64.11.10",
+          "gateway": "10.64.11.9",
+          "cidr": "10.64.11.8/30",
+          "usable": 2,
+          "size": 4,
+          "utilization": 100.0
+        },
+        {
+          "name": "Link-A-Cloud",
+          "hosts": 2,
+          "prefix": 30,
+          "mode": "p2p30",
+          "vlan": null,
+          "site": "CityA",
+          "between": [
+            "CityA",
+            "Cloud"
+          ],
+          "poe": false,
+          "network": "10.64.11.12",
+          "mask": "255.255.255.252",
+          "wildcard": "0.0.0.3",
+          "broadcast": "10.64.11.15",
+          "first_usable": "10.64.11.13",
+          "last_usable": "10.64.11.14",
+          "gateway": "10.64.11.13",
+          "cidr": "10.64.11.12/30",
+          "usable": 2,
+          "size": 4,
+          "utilization": 100.0
+        }
+      ],
+      "requested_total": 2208,
+      "allocated_addresses": 2832,
+      "usable_total": 2814,
+      "root_size": 262144,
+      "utilization": 77.97,
+      "usable_utilization": 78.46,
+      "wasted": 259312
+    },
+    "topology": {
+      "tier": "Collapsed core",
+      "natural_tier": "Three-tier",
+      "access_switches": 42,
+      "distribution_switches": 0,
+      "core_switches": 2,
+      "switch_count": 44,
+      "oversubscription": 2.4,
+      "ratio": "2.4:1",
+      "violation": "Collapsed core violates the tier rule for 2000 endpoints and 4 buildings; three-tier is required at >= 1000 endpoints or >= 4 buildings.",
+      "reason": "Selected a collapsed core because endpoints (2000) are < 1000 and buildings (4) are < 4. The design uses 42 access switch(es) and 2 combined core/distribution switch(es). Oversubscription is (48 x 1 Gb/s) / (2 x 10 Gb/s) = 2.4:1.",
+      "advantages": [
+        "Fewer devices and lower capital cost.",
+        "Short, simple Layer-2 domains for a small site."
+      ],
+      "disadvantages": [
+        "Core and distribution functions share the same chassis.",
+        "Growth past the tier threshold forces a redesign, not an upgrade."
+      ],
+      "tradeoffs": [
+        "Lower cost now; limited scale and a single policy boundary."
+      ],
+      "cost": null,
+      "cost_note": "Cost was not scored because the scenario did not supply all three switch prices."
+    },
+    "routing": {
+      "protocol": "Multi-area OSPF",
+      "area_for_site": {
+        "CityA": 0,
+        "CityB": 1,
+        "CityC": 2,
+        "CityD": 3,
+        "Cloud": 0
+      },
+      "areas": {
+        "0": [
+          "10.64.0.0/22",
+          "10.64.10.0/24",
+          "10.64.11.0/30",
+          "10.64.11.4/30",
+          "10.64.11.8/30",
+          "10.64.11.12/30"
+        ],
+        "1": [
+          "10.64.4.0/23"
+        ],
+        "2": [
+          "10.64.6.0/23"
+        ],
+        "3": [
+          "10.64.8.0/23"
+        ]
+      },
+      "networks": [
+        {
+          "name": "CityA-IoT",
+          "network": "10.64.0.0",
+          "wildcard": "0.0.3.255",
+          "mask": "255.255.252.0",
+          "area": 0,
+          "cidr": "10.64.0.0/22",
+          "passive": true
+        },
+        {
+          "name": "CityB-IoT",
+          "network": "10.64.4.0",
+          "wildcard": "0.0.1.255",
+          "mask": "255.255.254.0",
+          "area": 1,
+          "cidr": "10.64.4.0/23",
+          "passive": true
+        },
+        {
+          "name": "CityC-IoT",
+          "network": "10.64.6.0",
+          "wildcard": "0.0.1.255",
+          "mask": "255.255.254.0",
+          "area": 2,
+          "cidr": "10.64.6.0/23",
+          "passive": true
+        },
+        {
+          "name": "CityD-IoT",
+          "network": "10.64.8.0",
+          "wildcard": "0.0.1.255",
+          "mask": "255.255.254.0",
+          "area": 3,
+          "cidr": "10.64.8.0/23",
+          "passive": true
+        },
+        {
+          "name": "Cloud-VPC",
+          "network": "10.64.10.0",
+          "wildcard": "0.0.0.255",
+          "mask": "255.255.255.0",
+          "area": 0,
+          "cidr": "10.64.10.0/24",
+          "passive": true
+        },
+        {
+          "name": "Link-A-B",
+          "network": "10.64.11.0",
+          "wildcard": "0.0.0.3",
+          "mask": "255.255.255.252",
+          "area": 0,
+          "cidr": "10.64.11.0/30",
+          "passive": false
+        },
+        {
+          "name": "Link-A-C",
+          "network": "10.64.11.4",
+          "wildcard": "0.0.0.3",
+          "mask": "255.255.255.252",
+          "area": 0,
+          "cidr": "10.64.11.4/30",
+          "passive": false
+        },
+        {
+          "name": "Link-A-D",
+          "network": "10.64.11.8",
+          "wildcard": "0.0.0.3",
+          "mask": "255.255.255.252",
+          "area": 0,
+          "cidr": "10.64.11.8/30",
+          "passive": false
+        },
+        {
+          "name": "Link-A-Cloud",
+          "network": "10.64.11.12",
+          "wildcard": "0.0.0.3",
+          "mask": "255.255.255.252",
+          "area": 0,
+          "cidr": "10.64.11.12/30",
+          "passive": false
+        }
+      ],
+      "summaries": [
+        {
+          "area": 1,
+          "site": "CityB",
+          "network": "10.64.4.0",
+          "mask": "255.255.254.0",
+          "cidr": "10.64.4.0/23",
+          "exact": false,
+          "reason": "Area 1 (CityB) is summarised as 10.64.4.0/23, the shortest prefix covering 1 block(s), and it does not contain another site."
+        },
+        {
+          "area": 2,
+          "site": "CityC",
+          "network": "10.64.6.0",
+          "mask": "255.255.254.0",
+          "cidr": "10.64.6.0/23",
+          "exact": false,
+          "reason": "Area 2 (CityC) is summarised as 10.64.6.0/23, the shortest prefix covering 1 block(s), and it does not contain another site."
+        },
+        {
+          "area": 3,
+          "site": "CityD",
+          "network": "10.64.8.0",
+          "mask": "255.255.254.0",
+          "cidr": "10.64.8.0/23",
+          "exact": false,
+          "reason": "Area 3 (CityD) is summarised as 10.64.8.0/23, the shortest prefix covering 1 block(s), and it does not contain another site."
+        }
+      ],
+      "bgp": false,
+      "local_asn": 65010,
+      "peer_asn": 64512,
+      "reason": "Selected multi-area OSPF because 5 sites and a longest link of 4800000 m exceed the 400 m single-site assumption, or the plan has 9 subnets (>= 50). Area 0 is the backbone; each remote site gets its own area and a summary, so a topology change in one site does not flood the others (RFC 2328).",
+      "violation": "Multi-area OSPF alone omits the eBGP boundary required by the cloud VPC or second autonomous system.",
+      "alternatives": [
+        "IS-IS is a link-state alternative, but OSPF is the Cisco-native choice for this course and Packet Tracer."
+      ]
+    },
+    "switching": {
+      "stp": "RSTP",
+      "stp_mode": "rapid-pvst",
+      "fhrp": "HSRP",
+      "fhrp_alternative": "VRRP (RFC 5798)",
+      "vlan_count": 5,
+      "switch_count": 44,
+      "native_vlan": 999,
+      "allowed_vlans": [
+        10,
+        20,
+        30,
+        40,
+        50
+      ],
+      "reason": "RSTP (IEEE 802.1w) is sufficient: 5 VLAN(s) <= 16 and 44 switch(es) < 50. Rapid PVST+ gives sub-second convergence per VLAN and Packet Tracer accepts it directly. HSRP is configured because the scenario is resilient: two cores share a virtual gateway, the first core uses priority 110, the second 100, and preemption returns traffic after a failure. VRRP (RFC 5798) is the open alternative. Trunk hardening: allowed VLANs 10, 20, 30, 40, 50, native VLAN 999.",
+      "hardening": [
+        "Every trunk lists allowed VLAN ids explicitly; 'switchport trunk allowed vlan all' is never emitted.",
+        "Native VLAN is 999 and is not in the allowed user list.",
+        "Access ports enable PortFast and BPDU Guard.",
+        "Management VTY lines accept SSH only and are filtered by an ACL."
+      ]
+    },
+    "decisions": [
+      {
+        "category": "Physical media (L1)",
+        "choice": "Cat6a copper / 10GBASE-T",
+        "reason": "Selected Cat6a copper with a 10GBASE-T transceiver because the access run (90 m) is within the 100 m 10GBASE-T channel limit (IEEE 802.3an). Category 6a supports 10 Gb/s over 100 m and is the lowest-cost medium at this distance.",
+        "standard": "IEEE 802.3an (10GBASE-T)",
+        "severity": "info",
+        "evidence": {
+          "limit_m": 100.0,
+          "distance_m": 90.0,
+          "headroom_m": 10.0
+        }
+      },
+      {
+        "category": "Physical media (L1)",
+        "choice": "OS2 single-mode fiber / 10GBASE-ER",
+        "reason": "Selected OS2 single-mode fiber with 10GBASE-ER because the wan run (650 km) exceeds the 400 m attenuation limit of OM4 multimode fiber. OS2 has a 9 µm core and carries 10GBASE-ER at 1550 nm (IEEE 802.3ae). Optical budget: 650.00 km x 0.35 dB/km + 2 connector(s) x 0.5 dB + 0 splice(s) x 0.1 dB + 3 dB margin = 231.50 dB against a 11.1 dB budget. Warning: the span exceeds the 40 km 10GBASE-ER catalogue reach, so it needs an amplifier or DWDM; estimated loss 231.50 dB exceeds the 11.1 dB 10GBASE-ER budget.",
+        "standard": "IEEE 802.3ae (10GBASE-ER)",
+        "severity": "warning",
+        "evidence": {
+          "mmf_limit_m": 400.0,
+          "distance_m": 650000.0,
+          "reach_m": 40000.0,
+          "wavelength_nm": 1550,
+          "attenuation_db_per_km": 0.35,
+          "connectors": 2,
+          "splices": 0,
+          "margin_db": 3.0,
+          "loss_db": 231.5,
+          "budget_db": 11.1,
+          "headroom_db": -220.4
+        }
+      },
+      {
+        "category": "Physical media (L1)",
+        "choice": "OS2 single-mode fiber / 10GBASE-ER",
+        "reason": "Selected OS2 single-mode fiber with 10GBASE-ER because the wan run (1200 km) exceeds the 400 m attenuation limit of OM4 multimode fiber. OS2 has a 9 µm core and carries 10GBASE-ER at 1550 nm (IEEE 802.3ae). Optical budget: 1200.00 km x 0.35 dB/km + 2 connector(s) x 0.5 dB + 0 splice(s) x 0.1 dB + 3 dB margin = 424.00 dB against a 11.1 dB budget. Warning: the span exceeds the 40 km 10GBASE-ER catalogue reach, so it needs an amplifier or DWDM; estimated loss 424.00 dB exceeds the 11.1 dB 10GBASE-ER budget.",
+        "standard": "IEEE 802.3ae (10GBASE-ER)",
+        "severity": "warning",
+        "evidence": {
+          "mmf_limit_m": 400.0,
+          "distance_m": 1200000.0,
+          "reach_m": 40000.0,
+          "wavelength_nm": 1550,
+          "attenuation_db_per_km": 0.35,
+          "connectors": 2,
+          "splices": 0,
+          "margin_db": 3.0,
+          "loss_db": 424.0,
+          "budget_db": 11.1,
+          "headroom_db": -412.9
+        }
+      },
+      {
+        "category": "Physical media (L1)",
+        "choice": "OS2 single-mode fiber / 10GBASE-ER",
+        "reason": "Selected OS2 single-mode fiber with 10GBASE-ER because the wan run (4800 km) exceeds the 400 m attenuation limit of OM4 multimode fiber. OS2 has a 9 µm core and carries 10GBASE-ER at 1550 nm (IEEE 802.3ae). Optical budget: 4800.00 km x 0.35 dB/km + 2 connector(s) x 0.5 dB + 0 splice(s) x 0.1 dB + 3 dB margin = 1684.00 dB against a 11.1 dB budget. Warning: the span exceeds the 40 km 10GBASE-ER catalogue reach, so it needs an amplifier or DWDM; estimated loss 1684.00 dB exceeds the 11.1 dB 10GBASE-ER budget.",
+        "standard": "IEEE 802.3ae (10GBASE-ER)",
+        "severity": "warning",
+        "evidence": {
+          "mmf_limit_m": 400.0,
+          "distance_m": 4800000.0,
+          "reach_m": 40000.0,
+          "wavelength_nm": 1550,
+          "attenuation_db_per_km": 0.35,
+          "connectors": 2,
+          "splices": 0,
+          "margin_db": 3.0,
+          "loss_db": 1684.0,
+          "budget_db": 11.1,
+          "headroom_db": -1672.9
+        }
+      },
+      {
+        "category": "Physical media (L1)",
+        "choice": "OS2 single-mode fiber / 10GBASE-ER",
+        "reason": "Selected OS2 single-mode fiber with 10GBASE-ER because the wan run (250 km) exceeds the 400 m attenuation limit of OM4 multimode fiber. OS2 has a 9 µm core and carries 10GBASE-ER at 1550 nm (IEEE 802.3ae). Optical budget: 250.00 km x 0.35 dB/km + 2 connector(s) x 0.5 dB + 0 splice(s) x 0.1 dB + 3 dB margin = 91.50 dB against a 11.1 dB budget. Warning: the span exceeds the 40 km 10GBASE-ER catalogue reach, so it needs an amplifier or DWDM; estimated loss 91.50 dB exceeds the 11.1 dB 10GBASE-ER budget.",
+        "standard": "IEEE 802.3ae (10GBASE-ER)",
+        "severity": "warning",
+        "evidence": {
+          "mmf_limit_m": 400.0,
+          "distance_m": 250000.0,
+          "reach_m": 40000.0,
+          "wavelength_nm": 1550,
+          "attenuation_db_per_km": 0.35,
+          "connectors": 2,
+          "splices": 0,
+          "margin_db": 3.0,
+          "loss_db": 91.5,
+          "budget_db": 11.1,
+          "headroom_db": -80.4
+        }
+      },
+      {
+        "category": "Addressing (VLSM)",
+        "choice": "10.64.0.0/14 -> 9 non-overlapping subnets",
+        "reason": "Allocated 9 subnets inside 10.64.0.0/14 by sorting host requests largest-first and aligning each block to its own power-of-two boundary. 2208 requested hosts occupy 2832 addresses (78.0% address utilisation, 78.5% of usable addresses). An independent range scan confirms no overlap. Plan: CityA-IoT 10.64.0.0/22, CityB-IoT 10.64.4.0/23, CityC-IoT 10.64.6.0/23, CityD-IoT 10.64.8.0/23, Cloud-VPC 10.64.10.0/24, Link-A-B 10.64.11.0/30, Link-A-C 10.64.11.4/30, Link-A-D 10.64.11.8/30, Link-A-Cloud 10.64.11.12/30.",
+        "standard": "RFC 1918 private addressing; RFC 4632 CIDR; RFC 3021 for /31",
+        "severity": "info",
+        "evidence": {
+          "root": "10.64.0.0/14",
+          "blocks": 9,
+          "requested_total": 2208,
+          "allocated_addresses": 2832,
+          "utilization": 77.97,
+          "usable_utilization": 78.46,
+          "wasted": 259312
+        }
+      },
+      {
+        "category": "Topology",
+        "choice": "Collapsed core (42 access, 0 distribution, 2 core)",
+        "reason": "Selected a collapsed core because endpoints (2000) are < 1000 and buildings (4) are < 4. The design uses 42 access switch(es) and 2 combined core/distribution switch(es). Oversubscription is (48 x 1 Gb/s) / (2 x 10 Gb/s) = 2.4:1. Cost was not scored because the scenario did not supply all three switch prices.",
+        "standard": "CIC-307 topology-tier rule; 48-port access switch sizing",
+        "severity": "violation",
+        "evidence": {
+          "tier": "Collapsed core",
+          "natural_tier": "Three-tier",
+          "access_switches": 42,
+          "distribution_switches": 0,
+          "core_switches": 2,
+          "switch_count": 44,
+          "oversubscription": 2.4,
+          "ratio": "2.4:1",
+          "violation": "Collapsed core violates the tier rule for 2000 endpoints and 4 buildings; three-tier is required at >= 1000 endpoints or >= 4 buildings.",
+          "reason": "Selected a collapsed core because endpoints (2000) are < 1000 and buildings (4) are < 4. The design uses 42 access switch(es) and 2 combined core/distribution switch(es). Oversubscription is (48 x 1 Gb/s) / (2 x 10 Gb/s) = 2.4:1.",
+          "advantages": [
+            "Fewer devices and lower capital cost.",
+            "Short, simple Layer-2 domains for a small site."
+          ],
+          "disadvantages": [
+            "Core and distribution functions share the same chassis.",
+            "Growth past the tier threshold forces a redesign, not an upgrade."
+          ],
+          "tradeoffs": [
+            "Lower cost now; limited scale and a single policy boundary."
+          ],
+          "cost": null,
+          "cost_note": "Cost was not scored because the scenario did not supply all three switch prices."
+        }
+      },
+      {
+        "category": "Routing (L3)",
+        "choice": "Multi-area OSPF",
+        "reason": "Selected multi-area OSPF because 5 sites and a longest link of 4800000 m exceed the 400 m single-site assumption, or the plan has 9 subnets (>= 50). Area 0 is the backbone; each remote site gets its own area and a summary, so a topology change in one site does not flood the others (RFC 2328).",
+        "standard": "RFC 2328 (OSPFv2); RFC 4271 (BGP-4)",
+        "severity": "violation",
+        "evidence": {
+          "protocol": "Multi-area OSPF",
+          "area_for_site": {
+            "CityA": 0,
+            "CityB": 1,
+            "CityC": 2,
+            "CityD": 3,
+            "Cloud": 0
+          },
+          "areas": {
+            "0": [
+              "10.64.0.0/22",
+              "10.64.10.0/24",
+              "10.64.11.0/30",
+              "10.64.11.4/30",
+              "10.64.11.8/30",
+              "10.64.11.12/30"
+            ],
+            "1": [
+              "10.64.4.0/23"
+            ],
+            "2": [
+              "10.64.6.0/23"
+            ],
+            "3": [
+              "10.64.8.0/23"
+            ]
+          },
+          "networks": [
+            {
+              "name": "CityA-IoT",
+              "network": "10.64.0.0",
+              "wildcard": "0.0.3.255",
+              "mask": "255.255.252.0",
+              "area": 0,
+              "cidr": "10.64.0.0/22",
+              "passive": true
+            },
+            {
+              "name": "CityB-IoT",
+              "network": "10.64.4.0",
+              "wildcard": "0.0.1.255",
+              "mask": "255.255.254.0",
+              "area": 1,
+              "cidr": "10.64.4.0/23",
+              "passive": true
+            },
+            {
+              "name": "CityC-IoT",
+              "network": "10.64.6.0",
+              "wildcard": "0.0.1.255",
+              "mask": "255.255.254.0",
+              "area": 2,
+              "cidr": "10.64.6.0/23",
+              "passive": true
+            },
+            {
+              "name": "CityD-IoT",
+              "network": "10.64.8.0",
+              "wildcard": "0.0.1.255",
+              "mask": "255.255.254.0",
+              "area": 3,
+              "cidr": "10.64.8.0/23",
+              "passive": true
+            },
+            {
+              "name": "Cloud-VPC",
+              "network": "10.64.10.0",
+              "wildcard": "0.0.0.255",
+              "mask": "255.255.255.0",
+              "area": 0,
+              "cidr": "10.64.10.0/24",
+              "passive": true
+            },
+            {
+              "name": "Link-A-B",
+              "network": "10.64.11.0",
+              "wildcard": "0.0.0.3",
+              "mask": "255.255.255.252",
+              "area": 0,
+              "cidr": "10.64.11.0/30",
+              "passive": false
+            },
+            {
+              "name": "Link-A-C",
+              "network": "10.64.11.4",
+              "wildcard": "0.0.0.3",
+              "mask": "255.255.255.252",
+              "area": 0,
+              "cidr": "10.64.11.4/30",
+              "passive": false
+            },
+            {
+              "name": "Link-A-D",
+              "network": "10.64.11.8",
+              "wildcard": "0.0.0.3",
+              "mask": "255.255.255.252",
+              "area": 0,
+              "cidr": "10.64.11.8/30",
+              "passive": false
+            },
+            {
+              "name": "Link-A-Cloud",
+              "network": "10.64.11.12",
+              "wildcard": "0.0.0.3",
+              "mask": "255.255.255.252",
+              "area": 0,
+              "cidr": "10.64.11.12/30",
+              "passive": false
+            }
+          ],
+          "summaries": [
+            {
+              "area": 1,
+              "site": "CityB",
+              "network": "10.64.4.0",
+              "mask": "255.255.254.0",
+              "cidr": "10.64.4.0/23",
+              "exact": false,
+              "reason": "Area 1 (CityB) is summarised as 10.64.4.0/23, the shortest prefix covering 1 block(s), and it does not contain another site."
+            },
+            {
+              "area": 2,
+              "site": "CityC",
+              "network": "10.64.6.0",
+              "mask": "255.255.254.0",
+              "cidr": "10.64.6.0/23",
+              "exact": false,
+              "reason": "Area 2 (CityC) is summarised as 10.64.6.0/23, the shortest prefix covering 1 block(s), and it does not contain another site."
+            },
+            {
+              "area": 3,
+              "site": "CityD",
+              "network": "10.64.8.0",
+              "mask": "255.255.254.0",
+              "cidr": "10.64.8.0/23",
+              "exact": false,
+              "reason": "Area 3 (CityD) is summarised as 10.64.8.0/23, the shortest prefix covering 1 block(s), and it does not contain another site."
+            }
+          ],
+          "bgp": false,
+          "local_asn": 65010,
+          "peer_asn": 64512,
+          "reason": "Selected multi-area OSPF because 5 sites and a longest link of 4800000 m exceed the 400 m single-site assumption, or the plan has 9 subnets (>= 50). Area 0 is the backbone; each remote site gets its own area and a summary, so a topology change in one site does not flood the others (RFC 2328).",
+          "violation": "Multi-area OSPF alone omits the eBGP boundary required by the cloud VPC or second autonomous system.",
+          "alternatives": [
+            "IS-IS is a link-state alternative, but OSPF is the Cisco-native choice for this course and Packet Tracer."
+          ]
+        }
+      },
+      {
+        "category": "Routing (L3)",
+        "choice": "Area 1 summary 10.64.4.0/23",
+        "reason": "Area 1 (CityB) is summarised as 10.64.4.0/23, the shortest prefix covering 1 block(s), and it does not contain another site.",
+        "standard": "RFC 2328 area range summarisation",
+        "severity": "info",
+        "evidence": {
+          "area": 1,
+          "site": "CityB",
+          "network": "10.64.4.0",
+          "mask": "255.255.254.0",
+          "cidr": "10.64.4.0/23",
+          "exact": false,
+          "reason": "Area 1 (CityB) is summarised as 10.64.4.0/23, the shortest prefix covering 1 block(s), and it does not contain another site."
+        }
+      },
+      {
+        "category": "Routing (L3)",
+        "choice": "Area 2 summary 10.64.6.0/23",
+        "reason": "Area 2 (CityC) is summarised as 10.64.6.0/23, the shortest prefix covering 1 block(s), and it does not contain another site.",
+        "standard": "RFC 2328 area range summarisation",
+        "severity": "info",
+        "evidence": {
+          "area": 2,
+          "site": "CityC",
+          "network": "10.64.6.0",
+          "mask": "255.255.254.0",
+          "cidr": "10.64.6.0/23",
+          "exact": false,
+          "reason": "Area 2 (CityC) is summarised as 10.64.6.0/23, the shortest prefix covering 1 block(s), and it does not contain another site."
+        }
+      },
+      {
+        "category": "Routing (L3)",
+        "choice": "Area 3 summary 10.64.8.0/23",
+        "reason": "Area 3 (CityD) is summarised as 10.64.8.0/23, the shortest prefix covering 1 block(s), and it does not contain another site.",
+        "standard": "RFC 2328 area range summarisation",
+        "severity": "info",
+        "evidence": {
+          "area": 3,
+          "site": "CityD",
+          "network": "10.64.8.0",
+          "mask": "255.255.254.0",
+          "cidr": "10.64.8.0/23",
+          "exact": false,
+          "reason": "Area 3 (CityD) is summarised as 10.64.8.0/23, the shortest prefix covering 1 block(s), and it does not contain another site."
+        }
+      },
+      {
+        "category": "Switching (L2)",
+        "choice": "RSTP + HSRP",
+        "reason": "RSTP (IEEE 802.1w) is sufficient: 5 VLAN(s) <= 16 and 44 switch(es) < 50. Rapid PVST+ gives sub-second convergence per VLAN and Packet Tracer accepts it directly. HSRP is configured because the scenario is resilient: two cores share a virtual gateway, the first core uses priority 110, the second 100, and preemption returns traffic after a failure. VRRP (RFC 5798) is the open alternative. Trunk hardening: allowed VLANs 10, 20, 30, 40, 50, native VLAN 999.",
+        "standard": "IEEE 802.1w; IEEE 802.1s; RFC 5798 (VRRP alternative)",
+        "severity": "info",
+        "evidence": {
+          "stp": "RSTP",
+          "stp_mode": "rapid-pvst",
+          "fhrp": "HSRP",
+          "fhrp_alternative": "VRRP (RFC 5798)",
+          "vlan_count": 5,
+          "switch_count": 44,
+          "native_vlan": 999,
+          "allowed_vlans": [
+            10,
+            20,
+            30,
+            40,
+            50
+          ],
+          "reason": "RSTP (IEEE 802.1w) is sufficient: 5 VLAN(s) <= 16 and 44 switch(es) < 50. Rapid PVST+ gives sub-second convergence per VLAN and Packet Tracer accepts it directly. HSRP is configured because the scenario is resilient: two cores share a virtual gateway, the first core uses priority 110, the second 100, and preemption returns traffic after a failure. VRRP (RFC 5798) is the open alternative. Trunk hardening: allowed VLANs 10, 20, 30, 40, 50, native VLAN 999.",
+          "hardening": [
+            "Every trunk lists allowed VLAN ids explicitly; 'switchport trunk allowed vlan all' is never emitted.",
+            "Native VLAN is 999 and is not in the allowed user list.",
+            "Access ports enable PortFast and BPDU Guard.",
+            "Management VTY lines accept SSH only and are filtered by an ACL."
+          ]
+        }
+      },
+      {
+        "category": "Security and hardening",
+        "choice": "Guest/server ACL, SSH-only VTY, site-to-site IPsec on the cloud-facing interface, and a QoS priority queue for latency-sensitive traffic",
+        "reason": "The Wi-Fi/guest subnet is denied reachability to the server subnet with an extended ACL, management access is restricted to SSH from the management subnet, and trunks use an explicit allowed-VLAN list with an unused native VLAN. The cloud boundary adds an ISAKMP/IPsec transform and crypto map because the traffic crosses an untrusted provider.",
+        "standard": "RFC 4301 (IPsec); Cisco IOS extended ACL syntax",
+        "severity": "info",
+        "evidence": {
+          "vlans": [
+            10,
+            20,
+            30,
+            40,
+            50
+          ],
+          "native_vlan": 999,
+          "ssh_only": true,
+          "ipsec": true
+        }
+      }
+    ],
+    "violations": [
+      "Collapsed core violates the tier rule for 2000 endpoints and 4 buildings; three-tier is required at >= 1000 endpoints or >= 4 buildings.",
+      "Multi-area OSPF alone omits the eBGP boundary required by the cloud VPC or second autonomous system.",
+      "City A to City B: Selected OS2 single-mode fiber with 10GBASE-ER because the wan run (650 km) exceeds the 400 m attenuation limit of OM4 multimode fiber. OS2 has a 9 µm core and carries 10GBASE-ER at 1550 nm (IEEE 802.3ae). Optical budget: 650.00 km x 0.35 dB/km + 2 connector(s) x 0.5 dB + 0 splice(s) x 0.1 dB + 3 dB margin = 231.50 dB against a 11.1 dB budget. Warning: the span exceeds the 40 km 10GBASE-ER catalogue reach, so it needs an amplifier or DWDM; estimated loss 231.50 dB exceeds the 11.1 dB 10GBASE-ER budget.",
+      "City A to City C: Selected OS2 single-mode fiber with 10GBASE-ER because the wan run (1200 km) exceeds the 400 m attenuation limit of OM4 multimode fiber. OS2 has a 9 µm core and carries 10GBASE-ER at 1550 nm (IEEE 802.3ae). Optical budget: 1200.00 km x 0.35 dB/km + 2 connector(s) x 0.5 dB + 0 splice(s) x 0.1 dB + 3 dB margin = 424.00 dB against a 11.1 dB budget. Warning: the span exceeds the 40 km 10GBASE-ER catalogue reach, so it needs an amplifier or DWDM; estimated loss 424.00 dB exceeds the 11.1 dB 10GBASE-ER budget.",
+      "City A to City D: Selected OS2 single-mode fiber with 10GBASE-ER because the wan run (4800 km) exceeds the 400 m attenuation limit of OM4 multimode fiber. OS2 has a 9 µm core and carries 10GBASE-ER at 1550 nm (IEEE 802.3ae). Optical budget: 4800.00 km x 0.35 dB/km + 2 connector(s) x 0.5 dB + 0 splice(s) x 0.1 dB + 3 dB margin = 1684.00 dB against a 11.1 dB budget. Warning: the span exceeds the 40 km 10GBASE-ER catalogue reach, so it needs an amplifier or DWDM; estimated loss 1684.00 dB exceeds the 11.1 dB 10GBASE-ER budget.",
+      "City A to Cloud VPC: Selected OS2 single-mode fiber with 10GBASE-ER because the wan run (250 km) exceeds the 400 m attenuation limit of OM4 multimode fiber. OS2 has a 9 µm core and carries 10GBASE-ER at 1550 nm (IEEE 802.3ae). Optical budget: 250.00 km x 0.35 dB/km + 2 connector(s) x 0.5 dB + 0 splice(s) x 0.1 dB + 3 dB margin = 91.50 dB against a 11.1 dB budget. Warning: the span exceeds the 40 km 10GBASE-ER catalogue reach, so it needs an amplifier or DWDM; estimated loss 91.50 dB exceeds the 11.1 dB 10GBASE-ER budget."
+    ]
+  },
+  "export_filename": "wan.txt",
+  "devices": [
+    "wan-citya-rtr",
+    "wan-citya-sw",
+    "wan-cityb-rtr",
+    "wan-cityb-sw",
+    "wan-cityc-rtr",
+    "wan-cityc-sw",
+    "wan-cityd-rtr",
+    "wan-cityd-sw",
+    "wan-cloud-rtr"
+  ],
+  "device_configs": {
+    "wan-citya-rtr": "! NetArchitect generated configuration\n! Device: wan-citya-rtr\n! Role: Hub router (OSPF ABR + eBGP speaker)\n! Scenario: wan\n! Lab credentials only; see README. Do not reuse in production.\n!\nhostname wan-citya-rtr\n!\nno ip domain-lookup\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\n!\nenable secret NetArchitect-Lab-123\nusername admin privilege 15 secret NetArchitect-Lab-123\n!\nip routing\n!\n! --- VLAN database ---\nvlan 10\n name CITYA-IOT\nvlan 20\n name CITYB-IOT\nvlan 30\n name CITYC-IOT\nvlan 40\n name CITYD-IOT\nvlan 50\n name CLOUD-VPC\n!\n! --- LAN trunk ---\ninterface GigabitEthernet0/0\n description LAN trunk\n no shutdown\n!\n! --- CityA-IoT ---\ninterface GigabitEthernet0/0.10\n description CityA-IoT\n ip address 10.64.0.1 255.255.252.0\n no shutdown\n!\n! --- WAN link to CityB ---\ninterface Serial0/0/0\n description WAN link to CityB\n ip address 10.64.11.1 255.255.255.252\n clock rate 1544000\n service-policy output WAN-QOS\n no shutdown\n!\n! --- WAN link to CityC ---\ninterface Serial0/1/0\n description WAN link to CityC\n ip address 10.64.11.5 255.255.255.252\n clock rate 1544000\n service-policy output WAN-QOS\n no shutdown\n!\n! --- WAN link to CityD ---\ninterface Serial0/2/0\n description WAN link to CityD\n ip address 10.64.11.9 255.255.255.252\n clock rate 1544000\n service-policy output WAN-QOS\n no shutdown\n!\n! --- Cloud VPC boundary ---\ninterface GigabitEthernet0/1\n description Cloud VPC boundary\n ip address 10.64.11.13 255.255.255.252\n crypto map WAN-MAP\n no shutdown\n!\n!\n! --- OSPF ---\nrouter ospf 1\n router-id 10.64.0.1\n network 10.64.0.0 0.0.3.255 area 0\n network 10.64.11.0 0.0.0.3 area 0\n network 10.64.11.4 0.0.0.3 area 0\n network 10.64.11.8 0.0.0.3 area 0\n network 10.64.11.12 0.0.0.3 area 0\n passive-interface GigabitEthernet0/0.10\n!\n! --- eBGP boundary ---\nrouter bgp 65010\n bgp log-neighbor-changes\n neighbor 10.64.11.14 remote-as 64512\n network 10.64.0.0 mask 255.255.252.0\n network 10.64.4.0 mask 255.255.254.0\n network 10.64.6.0 mask 255.255.254.0\n network 10.64.8.0 mask 255.255.254.0\n!\n! --- QoS: priority queue for latency-sensitive traffic ---\nclass-map match-any TRADING-CLASS\n match access-group name TRADING-TRAFFIC\npolicy-map WAN-QOS\n class TRADING-CLASS\n  priority percent 30\n class class-default\n  fair-queue\n!\nip access-list extended TRADING-TRAFFIC\n permit ip 10.64.0.0 0.0.3.255 any\n!\n! --- IPsec at the cloud boundary ---\ncrypto isakmp policy 10\n encr aes 256\n hash sha256\n authentication pre-share\n group 14\ncrypto isakmp key NetArchitect-Lab-Key address 10.64.11.14\n!\ncrypto ipsec transform-set TS esp-aes 256 esp-sha256-hmac\n mode tunnel\n!\nip access-list extended VPN-TRAFFIC\n permit ip 10.64.0.0 0.0.3.255 10.64.10.0 0.0.0.255\n!\ncrypto map WAN-MAP 10 ipsec-isakmp\n set peer 10.64.11.14\n set transform-set TS\n match address VPN-TRAFFIC\n!\nip access-list extended MGMT-ACCESS\n permit tcp 10.64.0.0 0.0.3.255 any eq 22\n deny ip any any\n!\nline con 0\n logging synchronous\nline vty 0 4\n login local\n transport input ssh\n access-class MGMT-ACCESS in\n!\nend\n",
+    "wan-cityb-rtr": "! NetArchitect generated configuration\n! Device: wan-cityb-rtr\n! Role: CityB router (ABR)\n! Scenario: wan\n! Lab credentials only; see README. Do not reuse in production.\n!\nhostname wan-cityb-rtr\n!\nno ip domain-lookup\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\n!\nenable secret NetArchitect-Lab-123\nusername admin privilege 15 secret NetArchitect-Lab-123\n!\nip routing\n!\n! --- VLAN database ---\nvlan 20\n name CITYB-IOT\n!\n! --- LAN trunk ---\ninterface GigabitEthernet0/0\n description LAN trunk\n no shutdown\n!\n! --- CityB-IoT ---\ninterface GigabitEthernet0/0.20\n description CityB-IoT\n ip address 10.64.4.1 255.255.254.0\n no shutdown\n!\n! --- WAN link to CityA ---\ninterface Serial0/0/0\n description WAN link to CityA\n ip address 10.64.11.2 255.255.255.252\n service-policy output WAN-QOS\n no shutdown\n!\n!\n! --- OSPF ---\nrouter ospf 1\n router-id 10.64.4.1\n network 10.64.4.0 0.0.1.255 area 1\n network 10.64.11.0 0.0.0.3 area 0\n passive-interface GigabitEthernet0/0.20\n area 1 range 10.64.4.0 255.255.254.0\n!\n! --- QoS: priority queue for latency-sensitive traffic ---\nclass-map match-any TRADING-CLASS\n match access-group name TRADING-TRAFFIC\npolicy-map WAN-QOS\n class TRADING-CLASS\n  priority percent 30\n class class-default\n  fair-queue\n!\nip access-list extended TRADING-TRAFFIC\n permit ip 10.64.4.0 0.0.1.255 any\n!\nip access-list extended MGMT-ACCESS\n permit tcp 10.64.0.0 0.0.3.255 any eq 22\n deny ip any any\n!\nline con 0\n logging synchronous\nline vty 0 4\n login local\n transport input ssh\n access-class MGMT-ACCESS in\n!\nend\n",
+    "wan-cityc-rtr": "! NetArchitect generated configuration\n! Device: wan-cityc-rtr\n! Role: CityC router (ABR)\n! Scenario: wan\n! Lab credentials only; see README. Do not reuse in production.\n!\nhostname wan-cityc-rtr\n!\nno ip domain-lookup\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\n!\nenable secret NetArchitect-Lab-123\nusername admin privilege 15 secret NetArchitect-Lab-123\n!\nip routing\n!\n! --- VLAN database ---\nvlan 30\n name CITYC-IOT\n!\n! --- LAN trunk ---\ninterface GigabitEthernet0/0\n description LAN trunk\n no shutdown\n!\n! --- CityC-IoT ---\ninterface GigabitEthernet0/0.30\n description CityC-IoT\n ip address 10.64.6.1 255.255.254.0\n no shutdown\n!\n! --- WAN link to CityA ---\ninterface Serial0/0/0\n description WAN link to CityA\n ip address 10.64.11.6 255.255.255.252\n service-policy output WAN-QOS\n no shutdown\n!\n!\n! --- OSPF ---\nrouter ospf 1\n router-id 10.64.6.1\n network 10.64.6.0 0.0.1.255 area 2\n network 10.64.11.4 0.0.0.3 area 0\n passive-interface GigabitEthernet0/0.30\n area 2 range 10.64.6.0 255.255.254.0\n!\n! --- QoS: priority queue for latency-sensitive traffic ---\nclass-map match-any TRADING-CLASS\n match access-group name TRADING-TRAFFIC\npolicy-map WAN-QOS\n class TRADING-CLASS\n  priority percent 30\n class class-default\n  fair-queue\n!\nip access-list extended TRADING-TRAFFIC\n permit ip 10.64.6.0 0.0.1.255 any\n!\nip access-list extended MGMT-ACCESS\n permit tcp 10.64.0.0 0.0.3.255 any eq 22\n deny ip any any\n!\nline con 0\n logging synchronous\nline vty 0 4\n login local\n transport input ssh\n access-class MGMT-ACCESS in\n!\nend\n",
+    "wan-cityd-rtr": "! NetArchitect generated configuration\n! Device: wan-cityd-rtr\n! Role: CityD router (ABR)\n! Scenario: wan\n! Lab credentials only; see README. Do not reuse in production.\n!\nhostname wan-cityd-rtr\n!\nno ip domain-lookup\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\n!\nenable secret NetArchitect-Lab-123\nusername admin privilege 15 secret NetArchitect-Lab-123\n!\nip routing\n!\n! --- VLAN database ---\nvlan 40\n name CITYD-IOT\n!\n! --- LAN trunk ---\ninterface GigabitEthernet0/0\n description LAN trunk\n no shutdown\n!\n! --- CityD-IoT ---\ninterface GigabitEthernet0/0.40\n description CityD-IoT\n ip address 10.64.8.1 255.255.254.0\n no shutdown\n!\n! --- WAN link to CityA ---\ninterface Serial0/0/0\n description WAN link to CityA\n ip address 10.64.11.10 255.255.255.252\n service-policy output WAN-QOS\n no shutdown\n!\n!\n! --- OSPF ---\nrouter ospf 1\n router-id 10.64.8.1\n network 10.64.8.0 0.0.1.255 area 3\n network 10.64.11.8 0.0.0.3 area 0\n passive-interface GigabitEthernet0/0.40\n area 3 range 10.64.8.0 255.255.254.0\n!\n! --- QoS: priority queue for latency-sensitive traffic ---\nclass-map match-any TRADING-CLASS\n match access-group name TRADING-TRAFFIC\npolicy-map WAN-QOS\n class TRADING-CLASS\n  priority percent 30\n class class-default\n  fair-queue\n!\nip access-list extended TRADING-TRAFFIC\n permit ip 10.64.8.0 0.0.1.255 any\n!\nip access-list extended MGMT-ACCESS\n permit tcp 10.64.0.0 0.0.3.255 any eq 22\n deny ip any any\n!\nline con 0\n logging synchronous\nline vty 0 4\n login local\n transport input ssh\n access-class MGMT-ACCESS in\n!\nend\n",
+    "wan-cloud-rtr": "! NetArchitect generated configuration\n! Device: wan-cloud-rtr\n! Role: Cloud VPC eBGP peer\n! Scenario: wan\n! Lab credentials only; see README. Do not reuse in production.\n!\nhostname wan-cloud-rtr\n!\nno ip domain-lookup\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\n!\nenable secret NetArchitect-Lab-123\nusername admin privilege 15 secret NetArchitect-Lab-123\n!\nip routing\n!\n! --- WAN link to CityA ---\ninterface GigabitEthernet0/0\n description WAN link to CityA\n ip address 10.64.11.14 255.255.255.252\n crypto map WAN-MAP\n no shutdown\n!\n! --- Cloud VPC loopback ---\ninterface Loopback0\n ip address 203.0.113.1 255.255.255.255\n no shutdown\n!\n!\n! --- eBGP boundary ---\nrouter bgp 64512\n bgp log-neighbor-changes\n neighbor 10.64.11.13 remote-as 65010\n network 10.64.10.0 mask 255.255.255.0\n!\n! --- IPsec at the cloud boundary ---\ncrypto isakmp policy 10\n encr aes 256\n hash sha256\n authentication pre-share\n group 14\ncrypto isakmp key NetArchitect-Lab-Key address 10.64.11.13\n!\ncrypto ipsec transform-set TS esp-aes 256 esp-sha256-hmac\n mode tunnel\n!\nip access-list extended VPN-TRAFFIC\n permit ip 10.64.10.0 0.0.0.255 10.64.0.0 0.0.3.255\n!\ncrypto map WAN-MAP 10 ipsec-isakmp\n set peer 10.64.11.13\n set transform-set TS\n match address VPN-TRAFFIC\n!\nip access-list extended MGMT-ACCESS\n permit tcp 10.64.0.0 0.0.3.255 any eq 22\n deny ip any any\n!\nline con 0\n logging synchronous\nline vty 0 4\n login local\n transport input ssh\n access-class MGMT-ACCESS in\n!\nend\n",
+    "wan-citya-sw": "! NetArchitect generated configuration\n! Device: wan-citya-sw\n! Role: CityA access switch\n! Scenario: wan\n! Lab credentials only; see README. Do not reuse in production.\n!\nhostname wan-citya-sw\n!\nno ip domain-lookup\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\n!\nenable secret NetArchitect-Lab-123\nusername admin privilege 15 secret NetArchitect-Lab-123\n!\n!\n! --- VLAN database ---\nvlan 10\n name CITYA-IOT\n!\n! --- Trunk to router ---\ninterface GigabitEthernet0/1\n switchport trunk encapsulation dot1q\n switchport mode trunk\n switchport trunk native vlan 999\n switchport trunk allowed vlan 10\n no shutdown\n!\n! --- Access port 1 ---\ninterface FastEthernet0/1\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 2 ---\ninterface FastEthernet0/2\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 3 ---\ninterface FastEthernet0/3\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 4 ---\ninterface FastEthernet0/4\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 5 ---\ninterface FastEthernet0/5\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 6 ---\ninterface FastEthernet0/6\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 7 ---\ninterface FastEthernet0/7\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 8 ---\ninterface FastEthernet0/8\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 9 ---\ninterface FastEthernet0/9\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 10 ---\ninterface FastEthernet0/10\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 11 ---\ninterface FastEthernet0/11\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 12 ---\ninterface FastEthernet0/12\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 13 ---\ninterface FastEthernet0/13\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 14 ---\ninterface FastEthernet0/14\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 15 ---\ninterface FastEthernet0/15\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 16 ---\ninterface FastEthernet0/16\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 17 ---\ninterface FastEthernet0/17\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 18 ---\ninterface FastEthernet0/18\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 19 ---\ninterface FastEthernet0/19\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 20 ---\ninterface FastEthernet0/20\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 21 ---\ninterface FastEthernet0/21\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 22 ---\ninterface FastEthernet0/22\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 23 ---\ninterface FastEthernet0/23\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 24 ---\ninterface FastEthernet0/24\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Management SVI ---\ninterface Vlan10\n description Management SVI\n ip address 10.64.0.10 255.255.252.0\n no shutdown\n!\n!\nspanning-tree mode rapid-pvst\n!\nip default-gateway 10.64.0.1\n!\nip access-list extended MGMT-ACCESS\n permit tcp 10.64.0.0 0.0.3.255 any eq 22\n deny ip any any\n!\nline con 0\n logging synchronous\nline vty 0 4\n login local\n transport input ssh\n access-class MGMT-ACCESS in\n!\nend\n",
+    "wan-cityb-sw": "! NetArchitect generated configuration\n! Device: wan-cityb-sw\n! Role: CityB access switch\n! Scenario: wan\n! Lab credentials only; see README. Do not reuse in production.\n!\nhostname wan-cityb-sw\n!\nno ip domain-lookup\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\n!\nenable secret NetArchitect-Lab-123\nusername admin privilege 15 secret NetArchitect-Lab-123\n!\n!\n! --- VLAN database ---\nvlan 20\n name CITYB-IOT\n!\n! --- Trunk to router ---\ninterface GigabitEthernet0/1\n switchport trunk encapsulation dot1q\n switchport mode trunk\n switchport trunk native vlan 999\n switchport trunk allowed vlan 20\n no shutdown\n!\n! --- Access port 1 ---\ninterface FastEthernet0/1\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 2 ---\ninterface FastEthernet0/2\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 3 ---\ninterface FastEthernet0/3\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 4 ---\ninterface FastEthernet0/4\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 5 ---\ninterface FastEthernet0/5\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 6 ---\ninterface FastEthernet0/6\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 7 ---\ninterface FastEthernet0/7\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 8 ---\ninterface FastEthernet0/8\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 9 ---\ninterface FastEthernet0/9\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 10 ---\ninterface FastEthernet0/10\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 11 ---\ninterface FastEthernet0/11\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 12 ---\ninterface FastEthernet0/12\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 13 ---\ninterface FastEthernet0/13\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 14 ---\ninterface FastEthernet0/14\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 15 ---\ninterface FastEthernet0/15\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 16 ---\ninterface FastEthernet0/16\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 17 ---\ninterface FastEthernet0/17\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 18 ---\ninterface FastEthernet0/18\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 19 ---\ninterface FastEthernet0/19\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 20 ---\ninterface FastEthernet0/20\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 21 ---\ninterface FastEthernet0/21\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 22 ---\ninterface FastEthernet0/22\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 23 ---\ninterface FastEthernet0/23\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 24 ---\ninterface FastEthernet0/24\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Management SVI ---\ninterface Vlan20\n description Management SVI\n ip address 10.64.4.10 255.255.254.0\n no shutdown\n!\n!\nspanning-tree mode rapid-pvst\n!\nip default-gateway 10.64.4.1\n!\nip access-list extended MGMT-ACCESS\n permit tcp 10.64.0.0 0.0.3.255 any eq 22\n deny ip any any\n!\nline con 0\n logging synchronous\nline vty 0 4\n login local\n transport input ssh\n access-class MGMT-ACCESS in\n!\nend\n",
+    "wan-cityc-sw": "! NetArchitect generated configuration\n! Device: wan-cityc-sw\n! Role: CityC access switch\n! Scenario: wan\n! Lab credentials only; see README. Do not reuse in production.\n!\nhostname wan-cityc-sw\n!\nno ip domain-lookup\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\n!\nenable secret NetArchitect-Lab-123\nusername admin privilege 15 secret NetArchitect-Lab-123\n!\n!\n! --- VLAN database ---\nvlan 30\n name CITYC-IOT\n!\n! --- Trunk to router ---\ninterface GigabitEthernet0/1\n switchport trunk encapsulation dot1q\n switchport mode trunk\n switchport trunk native vlan 999\n switchport trunk allowed vlan 30\n no shutdown\n!\n! --- Access port 1 ---\ninterface FastEthernet0/1\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 2 ---\ninterface FastEthernet0/2\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 3 ---\ninterface FastEthernet0/3\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 4 ---\ninterface FastEthernet0/4\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 5 ---\ninterface FastEthernet0/5\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 6 ---\ninterface FastEthernet0/6\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 7 ---\ninterface FastEthernet0/7\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 8 ---\ninterface FastEthernet0/8\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 9 ---\ninterface FastEthernet0/9\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 10 ---\ninterface FastEthernet0/10\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 11 ---\ninterface FastEthernet0/11\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 12 ---\ninterface FastEthernet0/12\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 13 ---\ninterface FastEthernet0/13\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 14 ---\ninterface FastEthernet0/14\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 15 ---\ninterface FastEthernet0/15\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 16 ---\ninterface FastEthernet0/16\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 17 ---\ninterface FastEthernet0/17\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 18 ---\ninterface FastEthernet0/18\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 19 ---\ninterface FastEthernet0/19\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 20 ---\ninterface FastEthernet0/20\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 21 ---\ninterface FastEthernet0/21\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 22 ---\ninterface FastEthernet0/22\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 23 ---\ninterface FastEthernet0/23\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 24 ---\ninterface FastEthernet0/24\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Management SVI ---\ninterface Vlan30\n description Management SVI\n ip address 10.64.6.10 255.255.254.0\n no shutdown\n!\n!\nspanning-tree mode rapid-pvst\n!\nip default-gateway 10.64.6.1\n!\nip access-list extended MGMT-ACCESS\n permit tcp 10.64.0.0 0.0.3.255 any eq 22\n deny ip any any\n!\nline con 0\n logging synchronous\nline vty 0 4\n login local\n transport input ssh\n access-class MGMT-ACCESS in\n!\nend\n",
+    "wan-cityd-sw": "! NetArchitect generated configuration\n! Device: wan-cityd-sw\n! Role: CityD access switch\n! Scenario: wan\n! Lab credentials only; see README. Do not reuse in production.\n!\nhostname wan-cityd-sw\n!\nno ip domain-lookup\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\n!\nenable secret NetArchitect-Lab-123\nusername admin privilege 15 secret NetArchitect-Lab-123\n!\n!\n! --- VLAN database ---\nvlan 40\n name CITYD-IOT\n!\n! --- Trunk to router ---\ninterface GigabitEthernet0/1\n switchport trunk encapsulation dot1q\n switchport mode trunk\n switchport trunk native vlan 999\n switchport trunk allowed vlan 40\n no shutdown\n!\n! --- Access port 1 ---\ninterface FastEthernet0/1\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 2 ---\ninterface FastEthernet0/2\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 3 ---\ninterface FastEthernet0/3\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 4 ---\ninterface FastEthernet0/4\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 5 ---\ninterface FastEthernet0/5\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 6 ---\ninterface FastEthernet0/6\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 7 ---\ninterface FastEthernet0/7\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 8 ---\ninterface FastEthernet0/8\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 9 ---\ninterface FastEthernet0/9\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 10 ---\ninterface FastEthernet0/10\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 11 ---\ninterface FastEthernet0/11\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 12 ---\ninterface FastEthernet0/12\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 13 ---\ninterface FastEthernet0/13\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 14 ---\ninterface FastEthernet0/14\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 15 ---\ninterface FastEthernet0/15\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 16 ---\ninterface FastEthernet0/16\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 17 ---\ninterface FastEthernet0/17\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 18 ---\ninterface FastEthernet0/18\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 19 ---\ninterface FastEthernet0/19\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 20 ---\ninterface FastEthernet0/20\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 21 ---\ninterface FastEthernet0/21\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 22 ---\ninterface FastEthernet0/22\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 23 ---\ninterface FastEthernet0/23\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 24 ---\ninterface FastEthernet0/24\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Management SVI ---\ninterface Vlan40\n description Management SVI\n ip address 10.64.8.10 255.255.254.0\n no shutdown\n!\n!\nspanning-tree mode rapid-pvst\n!\nip default-gateway 10.64.8.1\n!\nip access-list extended MGMT-ACCESS\n permit tcp 10.64.0.0 0.0.3.255 any eq 22\n deny ip any any\n!\nline con 0\n logging synchronous\nline vty 0 4\n login local\n transport input ssh\n access-class MGMT-ACCESS in\n!\nend\n"
+  }
+}
