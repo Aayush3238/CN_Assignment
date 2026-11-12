@@ -1,0 +1,974 @@
+! NetArchitect export
+! Preset: metro
+! Devices: 6
+! Split this file at each DEVICE banner and paste one block
+! per device, from the hostname line through end, in configuration mode.
+!
+
+! ===== DEVICE: metro-hq-rtr =====
+! NetArchitect generated configuration
+! Device: metro-hq-rtr
+! Role: HQ router (ABR)
+! Scenario: metro
+! Lab credentials only; see README. Do not reuse in production.
+!
+hostname metro-hq-rtr
+!
+no ip domain-lookup
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+enable secret NetArchitect-Lab-123
+username admin privilege 15 secret NetArchitect-Lab-123
+!
+ip routing
+!
+! --- VLAN database ---
+vlan 10
+ name HQ-USERS
+vlan 20
+ name TRADING
+vlan 30
+ name REMOTEA-USERS
+vlan 40
+ name REMOTEB-USERS
+vlan 50
+ name COLO
+!
+! --- LAN trunk ---
+interface GigabitEthernet0/0
+ description LAN trunk
+ no shutdown
+!
+! --- HQ-Users ---
+interface GigabitEthernet0/0.10
+ description HQ-Users
+ ip address 10.20.0.1 255.255.255.0
+ no shutdown
+!
+! --- Trading ---
+interface GigabitEthernet0/0.20
+ description Trading
+ ip address 10.20.1.1 255.255.255.128
+ no shutdown
+!
+! --- Colo ---
+interface GigabitEthernet0/0.50
+ description Colo
+ ip address 10.20.2.129 255.255.255.224
+ no shutdown
+!
+! --- WAN link to RemoteA ---
+interface Serial0/0/0
+ description WAN link to RemoteA
+ ip address 10.20.2.161 255.255.255.252
+ clock rate 1544000
+ service-policy output WAN-QOS
+ no shutdown
+!
+! --- WAN link to RemoteB ---
+interface Serial0/1/0
+ description WAN link to RemoteB
+ ip address 10.20.2.165 255.255.255.252
+ clock rate 1544000
+ service-policy output WAN-QOS
+ no shutdown
+!
+!
+! --- OSPF ---
+router ospf 1
+ router-id 10.20.0.1
+ network 10.20.0.0 0.0.0.255 area 0
+ network 10.20.1.0 0.0.0.127 area 0
+ network 10.20.2.128 0.0.0.31 area 0
+ network 10.20.2.160 0.0.0.3 area 0
+ network 10.20.2.164 0.0.0.3 area 0
+ passive-interface GigabitEthernet0/0.10
+ passive-interface GigabitEthernet0/0.20
+ passive-interface GigabitEthernet0/0.50
+!
+! --- QoS: priority queue for latency-sensitive traffic ---
+class-map match-any TRADING-CLASS
+ match access-group name TRADING-TRAFFIC
+policy-map WAN-QOS
+ class TRADING-CLASS
+  priority percent 30
+ class class-default
+  fair-queue
+!
+ip access-list extended TRADING-TRAFFIC
+ permit ip 10.20.1.0 0.0.0.127 any
+!
+ip access-list extended MGMT-ACCESS
+ permit tcp 10.20.0.0 0.0.0.255 any eq 22
+ deny ip any any
+!
+line con 0
+ logging synchronous
+line vty 0 4
+ login local
+ transport input ssh
+ access-class MGMT-ACCESS in
+!
+end
+
+! ===== DEVICE: metro-remotea-rtr =====
+! NetArchitect generated configuration
+! Device: metro-remotea-rtr
+! Role: RemoteA router (ABR)
+! Scenario: metro
+! Lab credentials only; see README. Do not reuse in production.
+!
+hostname metro-remotea-rtr
+!
+no ip domain-lookup
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+enable secret NetArchitect-Lab-123
+username admin privilege 15 secret NetArchitect-Lab-123
+!
+ip routing
+!
+! --- VLAN database ---
+vlan 30
+ name REMOTEA-USERS
+!
+! --- LAN trunk ---
+interface GigabitEthernet0/0
+ description LAN trunk
+ no shutdown
+!
+! --- RemoteA-Users ---
+interface GigabitEthernet0/0.30
+ description RemoteA-Users
+ ip address 10.20.1.129 255.255.255.128
+ no shutdown
+!
+! --- WAN link to HQ ---
+interface Serial0/0/0
+ description WAN link to HQ
+ ip address 10.20.2.162 255.255.255.252
+ no shutdown
+!
+!
+! --- OSPF ---
+router ospf 1
+ router-id 10.20.1.129
+ network 10.20.1.128 0.0.0.127 area 1
+ network 10.20.2.160 0.0.0.3 area 0
+ passive-interface GigabitEthernet0/0.30
+ area 1 range 10.20.1.128 255.255.255.128
+!
+ip access-list extended MGMT-ACCESS
+ permit tcp 10.20.0.0 0.0.0.255 any eq 22
+ deny ip any any
+!
+line con 0
+ logging synchronous
+line vty 0 4
+ login local
+ transport input ssh
+ access-class MGMT-ACCESS in
+!
+end
+
+! ===== DEVICE: metro-remoteb-rtr =====
+! NetArchitect generated configuration
+! Device: metro-remoteb-rtr
+! Role: RemoteB router (ABR)
+! Scenario: metro
+! Lab credentials only; see README. Do not reuse in production.
+!
+hostname metro-remoteb-rtr
+!
+no ip domain-lookup
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+enable secret NetArchitect-Lab-123
+username admin privilege 15 secret NetArchitect-Lab-123
+!
+ip routing
+!
+! --- VLAN database ---
+vlan 40
+ name REMOTEB-USERS
+!
+! --- LAN trunk ---
+interface GigabitEthernet0/0
+ description LAN trunk
+ no shutdown
+!
+! --- RemoteB-Users ---
+interface GigabitEthernet0/0.40
+ description RemoteB-Users
+ ip address 10.20.2.1 255.255.255.128
+ no shutdown
+!
+! --- WAN link to HQ ---
+interface Serial0/0/0
+ description WAN link to HQ
+ ip address 10.20.2.166 255.255.255.252
+ no shutdown
+!
+!
+! --- OSPF ---
+router ospf 1
+ router-id 10.20.2.1
+ network 10.20.2.0 0.0.0.127 area 2
+ network 10.20.2.164 0.0.0.3 area 0
+ passive-interface GigabitEthernet0/0.40
+ area 2 range 10.20.2.0 255.255.255.128
+!
+ip access-list extended MGMT-ACCESS
+ permit tcp 10.20.0.0 0.0.0.255 any eq 22
+ deny ip any any
+!
+line con 0
+ logging synchronous
+line vty 0 4
+ login local
+ transport input ssh
+ access-class MGMT-ACCESS in
+!
+end
+
+! ===== DEVICE: metro-hq-sw =====
+! NetArchitect generated configuration
+! Device: metro-hq-sw
+! Role: HQ access switch
+! Scenario: metro
+! Lab credentials only; see README. Do not reuse in production.
+!
+hostname metro-hq-sw
+!
+no ip domain-lookup
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+enable secret NetArchitect-Lab-123
+username admin privilege 15 secret NetArchitect-Lab-123
+!
+!
+! --- VLAN database ---
+vlan 10
+ name HQ-USERS
+vlan 20
+ name TRADING
+vlan 50
+ name COLO
+!
+! --- Trunk to router ---
+interface GigabitEthernet0/1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 10,20,50
+ no shutdown
+!
+! --- Access port 1 ---
+interface FastEthernet0/1
+ switchport mode access
+ switchport access vlan 10
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 2 ---
+interface FastEthernet0/2
+ switchport mode access
+ switchport access vlan 20
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 3 ---
+interface FastEthernet0/3
+ switchport mode access
+ switchport access vlan 50
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 4 ---
+interface FastEthernet0/4
+ switchport mode access
+ switchport access vlan 10
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 5 ---
+interface FastEthernet0/5
+ switchport mode access
+ switchport access vlan 20
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 6 ---
+interface FastEthernet0/6
+ switchport mode access
+ switchport access vlan 50
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 7 ---
+interface FastEthernet0/7
+ switchport mode access
+ switchport access vlan 10
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 8 ---
+interface FastEthernet0/8
+ switchport mode access
+ switchport access vlan 20
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 9 ---
+interface FastEthernet0/9
+ switchport mode access
+ switchport access vlan 50
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 10 ---
+interface FastEthernet0/10
+ switchport mode access
+ switchport access vlan 10
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 11 ---
+interface FastEthernet0/11
+ switchport mode access
+ switchport access vlan 20
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 12 ---
+interface FastEthernet0/12
+ switchport mode access
+ switchport access vlan 50
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 13 ---
+interface FastEthernet0/13
+ switchport mode access
+ switchport access vlan 10
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 14 ---
+interface FastEthernet0/14
+ switchport mode access
+ switchport access vlan 20
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 15 ---
+interface FastEthernet0/15
+ switchport mode access
+ switchport access vlan 50
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 16 ---
+interface FastEthernet0/16
+ switchport mode access
+ switchport access vlan 10
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 17 ---
+interface FastEthernet0/17
+ switchport mode access
+ switchport access vlan 20
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 18 ---
+interface FastEthernet0/18
+ switchport mode access
+ switchport access vlan 50
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 19 ---
+interface FastEthernet0/19
+ switchport mode access
+ switchport access vlan 10
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 20 ---
+interface FastEthernet0/20
+ switchport mode access
+ switchport access vlan 20
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 21 ---
+interface FastEthernet0/21
+ switchport mode access
+ switchport access vlan 50
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 22 ---
+interface FastEthernet0/22
+ switchport mode access
+ switchport access vlan 10
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 23 ---
+interface FastEthernet0/23
+ switchport mode access
+ switchport access vlan 20
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 24 ---
+interface FastEthernet0/24
+ switchport mode access
+ switchport access vlan 50
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Management SVI ---
+interface Vlan10
+ description Management SVI
+ ip address 10.20.0.10 255.255.255.0
+ no shutdown
+!
+!
+spanning-tree mode rapid-pvst
+!
+ip default-gateway 10.20.0.1
+!
+ip access-list extended MGMT-ACCESS
+ permit tcp 10.20.0.0 0.0.0.255 any eq 22
+ deny ip any any
+!
+line con 0
+ logging synchronous
+line vty 0 4
+ login local
+ transport input ssh
+ access-class MGMT-ACCESS in
+!
+end
+
+! ===== DEVICE: metro-remotea-sw =====
+! NetArchitect generated configuration
+! Device: metro-remotea-sw
+! Role: RemoteA access switch
+! Scenario: metro
+! Lab credentials only; see README. Do not reuse in production.
+!
+hostname metro-remotea-sw
+!
+no ip domain-lookup
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+enable secret NetArchitect-Lab-123
+username admin privilege 15 secret NetArchitect-Lab-123
+!
+!
+! --- VLAN database ---
+vlan 30
+ name REMOTEA-USERS
+!
+! --- Trunk to router ---
+interface GigabitEthernet0/1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 30
+ no shutdown
+!
+! --- Access port 1 ---
+interface FastEthernet0/1
+ switchport mode access
+ switchport access vlan 30
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 2 ---
+interface FastEthernet0/2
+ switchport mode access
+ switchport access vlan 30
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 3 ---
+interface FastEthernet0/3
+ switchport mode access
+ switchport access vlan 30
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 4 ---
+interface FastEthernet0/4
+ switchport mode access
+ switchport access vlan 30
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 5 ---
+interface FastEthernet0/5
+ switchport mode access
+ switchport access vlan 30
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 6 ---
+interface FastEthernet0/6
+ switchport mode access
+ switchport access vlan 30
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 7 ---
+interface FastEthernet0/7
+ switchport mode access
+ switchport access vlan 30
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 8 ---
+interface FastEthernet0/8
+ switchport mode access
+ switchport access vlan 30
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 9 ---
+interface FastEthernet0/9
+ switchport mode access
+ switchport access vlan 30
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 10 ---
+interface FastEthernet0/10
+ switchport mode access
+ switchport access vlan 30
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 11 ---
+interface FastEthernet0/11
+ switchport mode access
+ switchport access vlan 30
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 12 ---
+interface FastEthernet0/12
+ switchport mode access
+ switchport access vlan 30
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 13 ---
+interface FastEthernet0/13
+ switchport mode access
+ switchport access vlan 30
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 14 ---
+interface FastEthernet0/14
+ switchport mode access
+ switchport access vlan 30
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 15 ---
+interface FastEthernet0/15
+ switchport mode access
+ switchport access vlan 30
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 16 ---
+interface FastEthernet0/16
+ switchport mode access
+ switchport access vlan 30
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 17 ---
+interface FastEthernet0/17
+ switchport mode access
+ switchport access vlan 30
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 18 ---
+interface FastEthernet0/18
+ switchport mode access
+ switchport access vlan 30
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 19 ---
+interface FastEthernet0/19
+ switchport mode access
+ switchport access vlan 30
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 20 ---
+interface FastEthernet0/20
+ switchport mode access
+ switchport access vlan 30
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 21 ---
+interface FastEthernet0/21
+ switchport mode access
+ switchport access vlan 30
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 22 ---
+interface FastEthernet0/22
+ switchport mode access
+ switchport access vlan 30
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 23 ---
+interface FastEthernet0/23
+ switchport mode access
+ switchport access vlan 30
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 24 ---
+interface FastEthernet0/24
+ switchport mode access
+ switchport access vlan 30
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Management SVI ---
+interface Vlan30
+ description Management SVI
+ ip address 10.20.1.138 255.255.255.128
+ no shutdown
+!
+!
+spanning-tree mode rapid-pvst
+!
+ip default-gateway 10.20.1.129
+!
+ip access-list extended MGMT-ACCESS
+ permit tcp 10.20.0.0 0.0.0.255 any eq 22
+ deny ip any any
+!
+line con 0
+ logging synchronous
+line vty 0 4
+ login local
+ transport input ssh
+ access-class MGMT-ACCESS in
+!
+end
+
+! ===== DEVICE: metro-remoteb-sw =====
+! NetArchitect generated configuration
+! Device: metro-remoteb-sw
+! Role: RemoteB access switch
+! Scenario: metro
+! Lab credentials only; see README. Do not reuse in production.
+!
+hostname metro-remoteb-sw
+!
+no ip domain-lookup
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+enable secret NetArchitect-Lab-123
+username admin privilege 15 secret NetArchitect-Lab-123
+!
+!
+! --- VLAN database ---
+vlan 40
+ name REMOTEB-USERS
+!
+! --- Trunk to router ---
+interface GigabitEthernet0/1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 40
+ no shutdown
+!
+! --- Access port 1 ---
+interface FastEthernet0/1
+ switchport mode access
+ switchport access vlan 40
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 2 ---
+interface FastEthernet0/2
+ switchport mode access
+ switchport access vlan 40
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 3 ---
+interface FastEthernet0/3
+ switchport mode access
+ switchport access vlan 40
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 4 ---
+interface FastEthernet0/4
+ switchport mode access
+ switchport access vlan 40
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 5 ---
+interface FastEthernet0/5
+ switchport mode access
+ switchport access vlan 40
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 6 ---
+interface FastEthernet0/6
+ switchport mode access
+ switchport access vlan 40
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 7 ---
+interface FastEthernet0/7
+ switchport mode access
+ switchport access vlan 40
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 8 ---
+interface FastEthernet0/8
+ switchport mode access
+ switchport access vlan 40
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 9 ---
+interface FastEthernet0/9
+ switchport mode access
+ switchport access vlan 40
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 10 ---
+interface FastEthernet0/10
+ switchport mode access
+ switchport access vlan 40
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 11 ---
+interface FastEthernet0/11
+ switchport mode access
+ switchport access vlan 40
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 12 ---
+interface FastEthernet0/12
+ switchport mode access
+ switchport access vlan 40
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 13 ---
+interface FastEthernet0/13
+ switchport mode access
+ switchport access vlan 40
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 14 ---
+interface FastEthernet0/14
+ switchport mode access
+ switchport access vlan 40
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 15 ---
+interface FastEthernet0/15
+ switchport mode access
+ switchport access vlan 40
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 16 ---
+interface FastEthernet0/16
+ switchport mode access
+ switchport access vlan 40
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 17 ---
+interface FastEthernet0/17
+ switchport mode access
+ switchport access vlan 40
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 18 ---
+interface FastEthernet0/18
+ switchport mode access
+ switchport access vlan 40
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 19 ---
+interface FastEthernet0/19
+ switchport mode access
+ switchport access vlan 40
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 20 ---
+interface FastEthernet0/20
+ switchport mode access
+ switchport access vlan 40
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 21 ---
+interface FastEthernet0/21
+ switchport mode access
+ switchport access vlan 40
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 22 ---
+interface FastEthernet0/22
+ switchport mode access
+ switchport access vlan 40
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 23 ---
+interface FastEthernet0/23
+ switchport mode access
+ switchport access vlan 40
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Access port 24 ---
+interface FastEthernet0/24
+ switchport mode access
+ switchport access vlan 40
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Management SVI ---
+interface Vlan40
+ description Management SVI
+ ip address 10.20.2.10 255.255.255.128
+ no shutdown
+!
+!
+spanning-tree mode rapid-pvst
+!
+ip default-gateway 10.20.2.1
+!
+ip access-list extended MGMT-ACCESS
+ permit tcp 10.20.0.0 0.0.0.255 any eq 22
+ deny ip any any
+!
+line con 0
+ logging synchronous
+line vty 0 4
+ login local
+ transport input ssh
+ access-class MGMT-ACCESS in
+!
+end

@@ -1,0 +1,1785 @@
+{
+  "scenario": {
+    "name": "metro",
+    "description": "Metro MAN: headquarters plus two remote sites over 15 km and 35 km, OS2 single-mode, sub-5 ms QoS and dual-homed failover.",
+    "endpoints": 450,
+    "buildings": 3,
+    "links": [
+      {
+        "name": "HQ LAN access",
+        "distance_m": 90.0,
+        "kind": "access",
+        "media": "copper",
+        "connectors": 2,
+        "splices": 0
+      },
+      {
+        "name": "HQ to Remote A",
+        "distance_m": 15000.0,
+        "kind": "wan",
+        "media": "fiber",
+        "connectors": 2,
+        "splices": 0
+      },
+      {
+        "name": "HQ to Remote B",
+        "distance_m": 35000.0,
+        "kind": "wan",
+        "media": "fiber",
+        "connectors": 2,
+        "splices": 0
+      }
+    ],
+    "root_prefix": "10.20.0.0/16",
+    "subnets": [
+      {
+        "name": "HQ-Users",
+        "hosts": 200,
+        "mode": "lan",
+        "poe": false,
+        "vlan": 10,
+        "site": "HQ"
+      },
+      {
+        "name": "Trading",
+        "hosts": 100,
+        "mode": "lan",
+        "poe": false,
+        "vlan": 20,
+        "site": "HQ"
+      },
+      {
+        "name": "RemoteA-Users",
+        "hosts": 80,
+        "mode": "lan",
+        "poe": false,
+        "vlan": 30,
+        "site": "RemoteA"
+      },
+      {
+        "name": "RemoteB-Users",
+        "hosts": 70,
+        "mode": "lan",
+        "poe": false,
+        "vlan": 40,
+        "site": "RemoteB"
+      },
+      {
+        "name": "Colo",
+        "hosts": 20,
+        "mode": "lan",
+        "poe": false,
+        "vlan": 50,
+        "site": "HQ"
+      },
+      {
+        "name": "Link-HQ-RemoteA",
+        "hosts": 2,
+        "mode": "p2p30",
+        "poe": false,
+        "site": "HQ",
+        "between": [
+          "HQ",
+          "RemoteA"
+        ]
+      },
+      {
+        "name": "Link-HQ-RemoteB",
+        "hosts": 2,
+        "mode": "p2p30",
+        "poe": false,
+        "site": "HQ",
+        "between": [
+          "HQ",
+          "RemoteB"
+        ]
+      }
+    ],
+    "sites": [
+      {
+        "name": "HQ",
+        "subnets": [
+          "HQ-Users",
+          "Trading",
+          "Colo",
+          "Link-HQ-RemoteA",
+          "Link-HQ-RemoteB"
+        ],
+        "role": "hq"
+      },
+      {
+        "name": "RemoteA",
+        "subnets": [
+          "RemoteA-Users"
+        ],
+        "role": "site"
+      },
+      {
+        "name": "RemoteB",
+        "subnets": [
+          "RemoteB-Users"
+        ],
+        "role": "site"
+      }
+    ],
+    "resilient": true,
+    "single_as": true,
+    "cloud": false,
+    "local_asn": null,
+    "peer_asn": null,
+    "access_speed_gbps": 1,
+    "uplink_speed_gbps": 10,
+    "uplinks": 2,
+    "forced_tier": null,
+    "prices": null,
+    "native_vlan": 999
+  },
+  "selected": {
+    "scenario": {
+      "name": "metro",
+      "description": "Metro MAN: headquarters plus two remote sites over 15 km and 35 km, OS2 single-mode, sub-5 ms QoS and dual-homed failover.",
+      "endpoints": 450,
+      "buildings": 3,
+      "links": [
+        {
+          "name": "HQ LAN access",
+          "distance_m": 90.0,
+          "kind": "access",
+          "media": "copper",
+          "connectors": 2,
+          "splices": 0
+        },
+        {
+          "name": "HQ to Remote A",
+          "distance_m": 15000.0,
+          "kind": "wan",
+          "media": "fiber",
+          "connectors": 2,
+          "splices": 0
+        },
+        {
+          "name": "HQ to Remote B",
+          "distance_m": 35000.0,
+          "kind": "wan",
+          "media": "fiber",
+          "connectors": 2,
+          "splices": 0
+        }
+      ],
+      "root_prefix": "10.20.0.0/16",
+      "subnets": [
+        {
+          "name": "HQ-Users",
+          "hosts": 200,
+          "mode": "lan",
+          "poe": false,
+          "vlan": 10,
+          "site": "HQ"
+        },
+        {
+          "name": "Trading",
+          "hosts": 100,
+          "mode": "lan",
+          "poe": false,
+          "vlan": 20,
+          "site": "HQ"
+        },
+        {
+          "name": "RemoteA-Users",
+          "hosts": 80,
+          "mode": "lan",
+          "poe": false,
+          "vlan": 30,
+          "site": "RemoteA"
+        },
+        {
+          "name": "RemoteB-Users",
+          "hosts": 70,
+          "mode": "lan",
+          "poe": false,
+          "vlan": 40,
+          "site": "RemoteB"
+        },
+        {
+          "name": "Colo",
+          "hosts": 20,
+          "mode": "lan",
+          "poe": false,
+          "vlan": 50,
+          "site": "HQ"
+        },
+        {
+          "name": "Link-HQ-RemoteA",
+          "hosts": 2,
+          "mode": "p2p30",
+          "poe": false,
+          "site": "HQ",
+          "between": [
+            "HQ",
+            "RemoteA"
+          ]
+        },
+        {
+          "name": "Link-HQ-RemoteB",
+          "hosts": 2,
+          "mode": "p2p30",
+          "poe": false,
+          "site": "HQ",
+          "between": [
+            "HQ",
+            "RemoteB"
+          ]
+        }
+      ],
+      "sites": [
+        {
+          "name": "HQ",
+          "subnets": [
+            "HQ-Users",
+            "Trading",
+            "Colo",
+            "Link-HQ-RemoteA",
+            "Link-HQ-RemoteB"
+          ],
+          "role": "hq"
+        },
+        {
+          "name": "RemoteA",
+          "subnets": [
+            "RemoteA-Users"
+          ],
+          "role": "site"
+        },
+        {
+          "name": "RemoteB",
+          "subnets": [
+            "RemoteB-Users"
+          ],
+          "role": "site"
+        }
+      ],
+      "resilient": true,
+      "single_as": true,
+      "cloud": false,
+      "local_asn": null,
+      "peer_asn": null,
+      "access_speed_gbps": 1,
+      "uplink_speed_gbps": 10,
+      "uplinks": 2,
+      "forced_tier": null,
+      "prices": null,
+      "native_vlan": 999
+    },
+    "media": [
+      {
+        "link": "HQ LAN access",
+        "distance_m": 90.0,
+        "distance_label": "90 m",
+        "kind": "access",
+        "medium": "Cat6a copper",
+        "standard": "IEEE 802.3an (10GBASE-T)",
+        "transceiver": "10GBASE-T",
+        "wavelength_nm": null,
+        "reach_m": 100.0,
+        "budget_db": null,
+        "loss_db": null,
+        "severity": "info",
+        "reason": "Selected Cat6a copper with a 10GBASE-T transceiver because the access run (90 m) is within the 100 m 10GBASE-T channel limit (IEEE 802.3an). Category 6a supports 10 Gb/s over 100 m and is the lowest-cost medium at this distance.",
+        "evidence": {
+          "limit_m": 100.0,
+          "distance_m": 90.0,
+          "headroom_m": 10.0
+        }
+      },
+      {
+        "link": "HQ to Remote A",
+        "distance_m": 15000.0,
+        "distance_label": "15 km",
+        "kind": "wan",
+        "medium": "OS2 single-mode fiber",
+        "standard": "IEEE 802.3ae (10GBASE-ER)",
+        "transceiver": "10GBASE-ER",
+        "wavelength_nm": 1550,
+        "reach_m": 40000.0,
+        "budget_db": 11.1,
+        "loss_db": 9.25,
+        "severity": "info",
+        "reason": "Selected OS2 single-mode fiber with 10GBASE-ER because the wan run (15 km) exceeds the 400 m attenuation limit of OM4 multimode fiber. OS2 has a 9 µm core and carries 10GBASE-ER at 1550 nm (IEEE 802.3ae). Optical budget: 15.00 km x 0.35 dB/km + 2 connector(s) x 0.5 dB + 0 splice(s) x 0.1 dB + 3 dB margin = 9.25 dB against a 11.1 dB budget.",
+        "evidence": {
+          "mmf_limit_m": 400.0,
+          "distance_m": 15000.0,
+          "reach_m": 40000.0,
+          "wavelength_nm": 1550,
+          "attenuation_db_per_km": 0.35,
+          "connectors": 2,
+          "splices": 0,
+          "margin_db": 3.0,
+          "loss_db": 9.25,
+          "budget_db": 11.1,
+          "headroom_db": 1.85
+        }
+      },
+      {
+        "link": "HQ to Remote B",
+        "distance_m": 35000.0,
+        "distance_label": "35 km",
+        "kind": "wan",
+        "medium": "OS2 single-mode fiber",
+        "standard": "IEEE 802.3ae (10GBASE-ER)",
+        "transceiver": "10GBASE-ER",
+        "wavelength_nm": 1550,
+        "reach_m": 40000.0,
+        "budget_db": 11.1,
+        "loss_db": 16.25,
+        "severity": "warning",
+        "reason": "Selected OS2 single-mode fiber with 10GBASE-ER because the wan run (35 km) exceeds the 400 m attenuation limit of OM4 multimode fiber. OS2 has a 9 µm core and carries 10GBASE-ER at 1550 nm (IEEE 802.3ae). Optical budget: 35.00 km x 0.35 dB/km + 2 connector(s) x 0.5 dB + 0 splice(s) x 0.1 dB + 3 dB margin = 16.25 dB against a 11.1 dB budget. Warning: estimated loss 16.25 dB exceeds the 11.1 dB 10GBASE-ER budget.",
+        "evidence": {
+          "mmf_limit_m": 400.0,
+          "distance_m": 35000.0,
+          "reach_m": 40000.0,
+          "wavelength_nm": 1550,
+          "attenuation_db_per_km": 0.35,
+          "connectors": 2,
+          "splices": 0,
+          "margin_db": 3.0,
+          "loss_db": 16.25,
+          "budget_db": 11.1,
+          "headroom_db": -5.15
+        }
+      }
+    ],
+    "vlsm": {
+      "root": "10.20.0.0/16",
+      "blocks": [
+        {
+          "name": "HQ-Users",
+          "hosts": 200,
+          "prefix": 24,
+          "mode": "lan",
+          "vlan": 10,
+          "site": "HQ",
+          "between": null,
+          "poe": false,
+          "network": "10.20.0.0",
+          "mask": "255.255.255.0",
+          "wildcard": "0.0.0.255",
+          "broadcast": "10.20.0.255",
+          "first_usable": "10.20.0.1",
+          "last_usable": "10.20.0.254",
+          "gateway": "10.20.0.1",
+          "cidr": "10.20.0.0/24",
+          "usable": 254,
+          "size": 256,
+          "utilization": 78.7
+        },
+        {
+          "name": "Trading",
+          "hosts": 100,
+          "prefix": 25,
+          "mode": "lan",
+          "vlan": 20,
+          "site": "HQ",
+          "between": null,
+          "poe": false,
+          "network": "10.20.1.0",
+          "mask": "255.255.255.128",
+          "wildcard": "0.0.0.127",
+          "broadcast": "10.20.1.127",
+          "first_usable": "10.20.1.1",
+          "last_usable": "10.20.1.126",
+          "gateway": "10.20.1.1",
+          "cidr": "10.20.1.0/25",
+          "usable": 126,
+          "size": 128,
+          "utilization": 79.4
+        },
+        {
+          "name": "RemoteA-Users",
+          "hosts": 80,
+          "prefix": 25,
+          "mode": "lan",
+          "vlan": 30,
+          "site": "RemoteA",
+          "between": null,
+          "poe": false,
+          "network": "10.20.1.128",
+          "mask": "255.255.255.128",
+          "wildcard": "0.0.0.127",
+          "broadcast": "10.20.1.255",
+          "first_usable": "10.20.1.129",
+          "last_usable": "10.20.1.254",
+          "gateway": "10.20.1.129",
+          "cidr": "10.20.1.128/25",
+          "usable": 126,
+          "size": 128,
+          "utilization": 63.5
+        },
+        {
+          "name": "RemoteB-Users",
+          "hosts": 70,
+          "prefix": 25,
+          "mode": "lan",
+          "vlan": 40,
+          "site": "RemoteB",
+          "between": null,
+          "poe": false,
+          "network": "10.20.2.0",
+          "mask": "255.255.255.128",
+          "wildcard": "0.0.0.127",
+          "broadcast": "10.20.2.127",
+          "first_usable": "10.20.2.1",
+          "last_usable": "10.20.2.126",
+          "gateway": "10.20.2.1",
+          "cidr": "10.20.2.0/25",
+          "usable": 126,
+          "size": 128,
+          "utilization": 55.6
+        },
+        {
+          "name": "Colo",
+          "hosts": 20,
+          "prefix": 27,
+          "mode": "lan",
+          "vlan": 50,
+          "site": "HQ",
+          "between": null,
+          "poe": false,
+          "network": "10.20.2.128",
+          "mask": "255.255.255.224",
+          "wildcard": "0.0.0.31",
+          "broadcast": "10.20.2.159",
+          "first_usable": "10.20.2.129",
+          "last_usable": "10.20.2.158",
+          "gateway": "10.20.2.129",
+          "cidr": "10.20.2.128/27",
+          "usable": 30,
+          "size": 32,
+          "utilization": 66.7
+        },
+        {
+          "name": "Link-HQ-RemoteA",
+          "hosts": 2,
+          "prefix": 30,
+          "mode": "p2p30",
+          "vlan": null,
+          "site": "HQ",
+          "between": [
+            "HQ",
+            "RemoteA"
+          ],
+          "poe": false,
+          "network": "10.20.2.160",
+          "mask": "255.255.255.252",
+          "wildcard": "0.0.0.3",
+          "broadcast": "10.20.2.163",
+          "first_usable": "10.20.2.161",
+          "last_usable": "10.20.2.162",
+          "gateway": "10.20.2.161",
+          "cidr": "10.20.2.160/30",
+          "usable": 2,
+          "size": 4,
+          "utilization": 100.0
+        },
+        {
+          "name": "Link-HQ-RemoteB",
+          "hosts": 2,
+          "prefix": 30,
+          "mode": "p2p30",
+          "vlan": null,
+          "site": "HQ",
+          "between": [
+            "HQ",
+            "RemoteB"
+          ],
+          "poe": false,
+          "network": "10.20.2.164",
+          "mask": "255.255.255.252",
+          "wildcard": "0.0.0.3",
+          "broadcast": "10.20.2.167",
+          "first_usable": "10.20.2.165",
+          "last_usable": "10.20.2.166",
+          "gateway": "10.20.2.165",
+          "cidr": "10.20.2.164/30",
+          "usable": 2,
+          "size": 4,
+          "utilization": 100.0
+        }
+      ],
+      "requested_total": 474,
+      "allocated_addresses": 680,
+      "usable_total": 666,
+      "root_size": 65536,
+      "utilization": 69.71,
+      "usable_utilization": 71.17,
+      "wasted": 64856
+    },
+    "topology": {
+      "tier": "Collapsed core",
+      "natural_tier": "Collapsed core",
+      "access_switches": 10,
+      "distribution_switches": 0,
+      "core_switches": 2,
+      "switch_count": 12,
+      "oversubscription": 2.4,
+      "ratio": "2.4:1",
+      "violation": null,
+      "reason": "Selected a collapsed core because endpoints (450) are < 1000 and buildings (3) are < 4. The design uses 10 access switch(es) and 2 combined core/distribution switch(es). Oversubscription is (48 x 1 Gb/s) / (2 x 10 Gb/s) = 2.4:1.",
+      "advantages": [
+        "Fewer devices and lower capital cost.",
+        "Short, simple Layer-2 domains for a small site."
+      ],
+      "disadvantages": [
+        "Core and distribution functions share the same chassis.",
+        "Growth past the tier threshold forces a redesign, not an upgrade."
+      ],
+      "tradeoffs": [
+        "Lower cost now; limited scale and a single policy boundary."
+      ],
+      "cost": null,
+      "cost_note": "Cost was not scored because the scenario did not supply all three switch prices."
+    },
+    "routing": {
+      "protocol": "Multi-area OSPF",
+      "area_for_site": {
+        "HQ": 0,
+        "RemoteA": 1,
+        "RemoteB": 2
+      },
+      "areas": {
+        "0": [
+          "10.20.0.0/24",
+          "10.20.1.0/25",
+          "10.20.2.128/27",
+          "10.20.2.160/30",
+          "10.20.2.164/30"
+        ],
+        "1": [
+          "10.20.1.128/25"
+        ],
+        "2": [
+          "10.20.2.0/25"
+        ]
+      },
+      "networks": [
+        {
+          "name": "HQ-Users",
+          "network": "10.20.0.0",
+          "wildcard": "0.0.0.255",
+          "mask": "255.255.255.0",
+          "area": 0,
+          "cidr": "10.20.0.0/24",
+          "passive": true
+        },
+        {
+          "name": "Trading",
+          "network": "10.20.1.0",
+          "wildcard": "0.0.0.127",
+          "mask": "255.255.255.128",
+          "area": 0,
+          "cidr": "10.20.1.0/25",
+          "passive": true
+        },
+        {
+          "name": "RemoteA-Users",
+          "network": "10.20.1.128",
+          "wildcard": "0.0.0.127",
+          "mask": "255.255.255.128",
+          "area": 1,
+          "cidr": "10.20.1.128/25",
+          "passive": true
+        },
+        {
+          "name": "RemoteB-Users",
+          "network": "10.20.2.0",
+          "wildcard": "0.0.0.127",
+          "mask": "255.255.255.128",
+          "area": 2,
+          "cidr": "10.20.2.0/25",
+          "passive": true
+        },
+        {
+          "name": "Colo",
+          "network": "10.20.2.128",
+          "wildcard": "0.0.0.31",
+          "mask": "255.255.255.224",
+          "area": 0,
+          "cidr": "10.20.2.128/27",
+          "passive": true
+        },
+        {
+          "name": "Link-HQ-RemoteA",
+          "network": "10.20.2.160",
+          "wildcard": "0.0.0.3",
+          "mask": "255.255.255.252",
+          "area": 0,
+          "cidr": "10.20.2.160/30",
+          "passive": false
+        },
+        {
+          "name": "Link-HQ-RemoteB",
+          "network": "10.20.2.164",
+          "wildcard": "0.0.0.3",
+          "mask": "255.255.255.252",
+          "area": 0,
+          "cidr": "10.20.2.164/30",
+          "passive": false
+        }
+      ],
+      "summaries": [
+        {
+          "area": 1,
+          "site": "RemoteA",
+          "network": "10.20.1.128",
+          "mask": "255.255.255.128",
+          "cidr": "10.20.1.128/25",
+          "exact": false,
+          "reason": "Area 1 (RemoteA) is summarised as 10.20.1.128/25, the shortest prefix covering 1 block(s), and it does not contain another site."
+        },
+        {
+          "area": 2,
+          "site": "RemoteB",
+          "network": "10.20.2.0",
+          "mask": "255.255.255.128",
+          "cidr": "10.20.2.0/25",
+          "exact": false,
+          "reason": "Area 2 (RemoteB) is summarised as 10.20.2.0/25, the shortest prefix covering 1 block(s), and it does not contain another site."
+        }
+      ],
+      "bgp": false,
+      "local_asn": null,
+      "peer_asn": null,
+      "reason": "Selected multi-area OSPF because 3 sites and a longest link of 35000 m exceed the 400 m single-site assumption, or the plan has 7 subnets (>= 50). Area 0 is the backbone; each remote site gets its own area and a summary, so a topology change in one site does not flood the others (RFC 2328).",
+      "violation": null,
+      "alternatives": [
+        "IS-IS is a link-state alternative, but OSPF is the Cisco-native choice for this course and Packet Tracer."
+      ]
+    },
+    "switching": {
+      "stp": "RSTP",
+      "stp_mode": "rapid-pvst",
+      "fhrp": "HSRP",
+      "fhrp_alternative": "VRRP (RFC 5798)",
+      "vlan_count": 5,
+      "switch_count": 12,
+      "native_vlan": 999,
+      "allowed_vlans": [
+        10,
+        20,
+        30,
+        40,
+        50
+      ],
+      "reason": "RSTP (IEEE 802.1w) is sufficient: 5 VLAN(s) <= 16 and 12 switch(es) < 50. Rapid PVST+ gives sub-second convergence per VLAN and Packet Tracer accepts it directly. HSRP is configured because the scenario is resilient: two cores share a virtual gateway, the first core uses priority 110, the second 100, and preemption returns traffic after a failure. VRRP (RFC 5798) is the open alternative. Trunk hardening: allowed VLANs 10, 20, 30, 40, 50, native VLAN 999.",
+      "hardening": [
+        "Every trunk lists allowed VLAN ids explicitly; 'switchport trunk allowed vlan all' is never emitted.",
+        "Native VLAN is 999 and is not in the allowed user list.",
+        "Access ports enable PortFast and BPDU Guard.",
+        "Management VTY lines accept SSH only and are filtered by an ACL."
+      ]
+    },
+    "decisions": [
+      {
+        "category": "Physical media (L1)",
+        "choice": "Cat6a copper / 10GBASE-T",
+        "reason": "Selected Cat6a copper with a 10GBASE-T transceiver because the access run (90 m) is within the 100 m 10GBASE-T channel limit (IEEE 802.3an). Category 6a supports 10 Gb/s over 100 m and is the lowest-cost medium at this distance.",
+        "standard": "IEEE 802.3an (10GBASE-T)",
+        "severity": "info",
+        "evidence": {
+          "limit_m": 100.0,
+          "distance_m": 90.0,
+          "headroom_m": 10.0
+        }
+      },
+      {
+        "category": "Physical media (L1)",
+        "choice": "OS2 single-mode fiber / 10GBASE-ER",
+        "reason": "Selected OS2 single-mode fiber with 10GBASE-ER because the wan run (15 km) exceeds the 400 m attenuation limit of OM4 multimode fiber. OS2 has a 9 µm core and carries 10GBASE-ER at 1550 nm (IEEE 802.3ae). Optical budget: 15.00 km x 0.35 dB/km + 2 connector(s) x 0.5 dB + 0 splice(s) x 0.1 dB + 3 dB margin = 9.25 dB against a 11.1 dB budget.",
+        "standard": "IEEE 802.3ae (10GBASE-ER)",
+        "severity": "info",
+        "evidence": {
+          "mmf_limit_m": 400.0,
+          "distance_m": 15000.0,
+          "reach_m": 40000.0,
+          "wavelength_nm": 1550,
+          "attenuation_db_per_km": 0.35,
+          "connectors": 2,
+          "splices": 0,
+          "margin_db": 3.0,
+          "loss_db": 9.25,
+          "budget_db": 11.1,
+          "headroom_db": 1.85
+        }
+      },
+      {
+        "category": "Physical media (L1)",
+        "choice": "OS2 single-mode fiber / 10GBASE-ER",
+        "reason": "Selected OS2 single-mode fiber with 10GBASE-ER because the wan run (35 km) exceeds the 400 m attenuation limit of OM4 multimode fiber. OS2 has a 9 µm core and carries 10GBASE-ER at 1550 nm (IEEE 802.3ae). Optical budget: 35.00 km x 0.35 dB/km + 2 connector(s) x 0.5 dB + 0 splice(s) x 0.1 dB + 3 dB margin = 16.25 dB against a 11.1 dB budget. Warning: estimated loss 16.25 dB exceeds the 11.1 dB 10GBASE-ER budget.",
+        "standard": "IEEE 802.3ae (10GBASE-ER)",
+        "severity": "warning",
+        "evidence": {
+          "mmf_limit_m": 400.0,
+          "distance_m": 35000.0,
+          "reach_m": 40000.0,
+          "wavelength_nm": 1550,
+          "attenuation_db_per_km": 0.35,
+          "connectors": 2,
+          "splices": 0,
+          "margin_db": 3.0,
+          "loss_db": 16.25,
+          "budget_db": 11.1,
+          "headroom_db": -5.15
+        }
+      },
+      {
+        "category": "Addressing (VLSM)",
+        "choice": "10.20.0.0/16 -> 7 non-overlapping subnets",
+        "reason": "Allocated 7 subnets inside 10.20.0.0/16 by sorting host requests largest-first and aligning each block to its own power-of-two boundary. 474 requested hosts occupy 680 addresses (69.7% address utilisation, 71.2% of usable addresses). An independent range scan confirms no overlap. Plan: HQ-Users 10.20.0.0/24, Trading 10.20.1.0/25, RemoteA-Users 10.20.1.128/25, RemoteB-Users 10.20.2.0/25, Colo 10.20.2.128/27, Link-HQ-RemoteA 10.20.2.160/30, Link-HQ-RemoteB 10.20.2.164/30.",
+        "standard": "RFC 1918 private addressing; RFC 4632 CIDR; RFC 3021 for /31",
+        "severity": "info",
+        "evidence": {
+          "root": "10.20.0.0/16",
+          "blocks": 7,
+          "requested_total": 474,
+          "allocated_addresses": 680,
+          "utilization": 69.71,
+          "usable_utilization": 71.17,
+          "wasted": 64856
+        }
+      },
+      {
+        "category": "Topology",
+        "choice": "Collapsed core (10 access, 0 distribution, 2 core)",
+        "reason": "Selected a collapsed core because endpoints (450) are < 1000 and buildings (3) are < 4. The design uses 10 access switch(es) and 2 combined core/distribution switch(es). Oversubscription is (48 x 1 Gb/s) / (2 x 10 Gb/s) = 2.4:1. Cost was not scored because the scenario did not supply all three switch prices.",
+        "standard": "CIC-307 topology-tier rule; 48-port access switch sizing",
+        "severity": "info",
+        "evidence": {
+          "tier": "Collapsed core",
+          "natural_tier": "Collapsed core",
+          "access_switches": 10,
+          "distribution_switches": 0,
+          "core_switches": 2,
+          "switch_count": 12,
+          "oversubscription": 2.4,
+          "ratio": "2.4:1",
+          "violation": null,
+          "reason": "Selected a collapsed core because endpoints (450) are < 1000 and buildings (3) are < 4. The design uses 10 access switch(es) and 2 combined core/distribution switch(es). Oversubscription is (48 x 1 Gb/s) / (2 x 10 Gb/s) = 2.4:1.",
+          "advantages": [
+            "Fewer devices and lower capital cost.",
+            "Short, simple Layer-2 domains for a small site."
+          ],
+          "disadvantages": [
+            "Core and distribution functions share the same chassis.",
+            "Growth past the tier threshold forces a redesign, not an upgrade."
+          ],
+          "tradeoffs": [
+            "Lower cost now; limited scale and a single policy boundary."
+          ],
+          "cost": null,
+          "cost_note": "Cost was not scored because the scenario did not supply all three switch prices."
+        }
+      },
+      {
+        "category": "Routing (L3)",
+        "choice": "Multi-area OSPF",
+        "reason": "Selected multi-area OSPF because 3 sites and a longest link of 35000 m exceed the 400 m single-site assumption, or the plan has 7 subnets (>= 50). Area 0 is the backbone; each remote site gets its own area and a summary, so a topology change in one site does not flood the others (RFC 2328).",
+        "standard": "RFC 2328 (OSPFv2); RFC 4271 (BGP-4)",
+        "severity": "info",
+        "evidence": {
+          "protocol": "Multi-area OSPF",
+          "area_for_site": {
+            "HQ": 0,
+            "RemoteA": 1,
+            "RemoteB": 2
+          },
+          "areas": {
+            "0": [
+              "10.20.0.0/24",
+              "10.20.1.0/25",
+              "10.20.2.128/27",
+              "10.20.2.160/30",
+              "10.20.2.164/30"
+            ],
+            "1": [
+              "10.20.1.128/25"
+            ],
+            "2": [
+              "10.20.2.0/25"
+            ]
+          },
+          "networks": [
+            {
+              "name": "HQ-Users",
+              "network": "10.20.0.0",
+              "wildcard": "0.0.0.255",
+              "mask": "255.255.255.0",
+              "area": 0,
+              "cidr": "10.20.0.0/24",
+              "passive": true
+            },
+            {
+              "name": "Trading",
+              "network": "10.20.1.0",
+              "wildcard": "0.0.0.127",
+              "mask": "255.255.255.128",
+              "area": 0,
+              "cidr": "10.20.1.0/25",
+              "passive": true
+            },
+            {
+              "name": "RemoteA-Users",
+              "network": "10.20.1.128",
+              "wildcard": "0.0.0.127",
+              "mask": "255.255.255.128",
+              "area": 1,
+              "cidr": "10.20.1.128/25",
+              "passive": true
+            },
+            {
+              "name": "RemoteB-Users",
+              "network": "10.20.2.0",
+              "wildcard": "0.0.0.127",
+              "mask": "255.255.255.128",
+              "area": 2,
+              "cidr": "10.20.2.0/25",
+              "passive": true
+            },
+            {
+              "name": "Colo",
+              "network": "10.20.2.128",
+              "wildcard": "0.0.0.31",
+              "mask": "255.255.255.224",
+              "area": 0,
+              "cidr": "10.20.2.128/27",
+              "passive": true
+            },
+            {
+              "name": "Link-HQ-RemoteA",
+              "network": "10.20.2.160",
+              "wildcard": "0.0.0.3",
+              "mask": "255.255.255.252",
+              "area": 0,
+              "cidr": "10.20.2.160/30",
+              "passive": false
+            },
+            {
+              "name": "Link-HQ-RemoteB",
+              "network": "10.20.2.164",
+              "wildcard": "0.0.0.3",
+              "mask": "255.255.255.252",
+              "area": 0,
+              "cidr": "10.20.2.164/30",
+              "passive": false
+            }
+          ],
+          "summaries": [
+            {
+              "area": 1,
+              "site": "RemoteA",
+              "network": "10.20.1.128",
+              "mask": "255.255.255.128",
+              "cidr": "10.20.1.128/25",
+              "exact": false,
+              "reason": "Area 1 (RemoteA) is summarised as 10.20.1.128/25, the shortest prefix covering 1 block(s), and it does not contain another site."
+            },
+            {
+              "area": 2,
+              "site": "RemoteB",
+              "network": "10.20.2.0",
+              "mask": "255.255.255.128",
+              "cidr": "10.20.2.0/25",
+              "exact": false,
+              "reason": "Area 2 (RemoteB) is summarised as 10.20.2.0/25, the shortest prefix covering 1 block(s), and it does not contain another site."
+            }
+          ],
+          "bgp": false,
+          "local_asn": null,
+          "peer_asn": null,
+          "reason": "Selected multi-area OSPF because 3 sites and a longest link of 35000 m exceed the 400 m single-site assumption, or the plan has 7 subnets (>= 50). Area 0 is the backbone; each remote site gets its own area and a summary, so a topology change in one site does not flood the others (RFC 2328).",
+          "violation": null,
+          "alternatives": [
+            "IS-IS is a link-state alternative, but OSPF is the Cisco-native choice for this course and Packet Tracer."
+          ]
+        }
+      },
+      {
+        "category": "Routing (L3)",
+        "choice": "Area 1 summary 10.20.1.128/25",
+        "reason": "Area 1 (RemoteA) is summarised as 10.20.1.128/25, the shortest prefix covering 1 block(s), and it does not contain another site.",
+        "standard": "RFC 2328 area range summarisation",
+        "severity": "info",
+        "evidence": {
+          "area": 1,
+          "site": "RemoteA",
+          "network": "10.20.1.128",
+          "mask": "255.255.255.128",
+          "cidr": "10.20.1.128/25",
+          "exact": false,
+          "reason": "Area 1 (RemoteA) is summarised as 10.20.1.128/25, the shortest prefix covering 1 block(s), and it does not contain another site."
+        }
+      },
+      {
+        "category": "Routing (L3)",
+        "choice": "Area 2 summary 10.20.2.0/25",
+        "reason": "Area 2 (RemoteB) is summarised as 10.20.2.0/25, the shortest prefix covering 1 block(s), and it does not contain another site.",
+        "standard": "RFC 2328 area range summarisation",
+        "severity": "info",
+        "evidence": {
+          "area": 2,
+          "site": "RemoteB",
+          "network": "10.20.2.0",
+          "mask": "255.255.255.128",
+          "cidr": "10.20.2.0/25",
+          "exact": false,
+          "reason": "Area 2 (RemoteB) is summarised as 10.20.2.0/25, the shortest prefix covering 1 block(s), and it does not contain another site."
+        }
+      },
+      {
+        "category": "Switching (L2)",
+        "choice": "RSTP + HSRP",
+        "reason": "RSTP (IEEE 802.1w) is sufficient: 5 VLAN(s) <= 16 and 12 switch(es) < 50. Rapid PVST+ gives sub-second convergence per VLAN and Packet Tracer accepts it directly. HSRP is configured because the scenario is resilient: two cores share a virtual gateway, the first core uses priority 110, the second 100, and preemption returns traffic after a failure. VRRP (RFC 5798) is the open alternative. Trunk hardening: allowed VLANs 10, 20, 30, 40, 50, native VLAN 999.",
+        "standard": "IEEE 802.1w; IEEE 802.1s; RFC 5798 (VRRP alternative)",
+        "severity": "info",
+        "evidence": {
+          "stp": "RSTP",
+          "stp_mode": "rapid-pvst",
+          "fhrp": "HSRP",
+          "fhrp_alternative": "VRRP (RFC 5798)",
+          "vlan_count": 5,
+          "switch_count": 12,
+          "native_vlan": 999,
+          "allowed_vlans": [
+            10,
+            20,
+            30,
+            40,
+            50
+          ],
+          "reason": "RSTP (IEEE 802.1w) is sufficient: 5 VLAN(s) <= 16 and 12 switch(es) < 50. Rapid PVST+ gives sub-second convergence per VLAN and Packet Tracer accepts it directly. HSRP is configured because the scenario is resilient: two cores share a virtual gateway, the first core uses priority 110, the second 100, and preemption returns traffic after a failure. VRRP (RFC 5798) is the open alternative. Trunk hardening: allowed VLANs 10, 20, 30, 40, 50, native VLAN 999.",
+          "hardening": [
+            "Every trunk lists allowed VLAN ids explicitly; 'switchport trunk allowed vlan all' is never emitted.",
+            "Native VLAN is 999 and is not in the allowed user list.",
+            "Access ports enable PortFast and BPDU Guard.",
+            "Management VTY lines accept SSH only and are filtered by an ACL."
+          ]
+        }
+      },
+      {
+        "category": "Security and hardening",
+        "choice": "Guest/server ACL, SSH-only VTY, and explicit trunk hardening",
+        "reason": "The Wi-Fi/guest subnet is denied reachability to the server subnet with an extended ACL, management access is restricted to SSH from the management subnet, and trunks use an explicit allowed-VLAN list with an unused native VLAN. No IPsec policy is generated because there is no cloud or WAN boundary in this scenario.",
+        "standard": "Cisco IOS extended ACL syntax; IEEE 802.1Q",
+        "severity": "info",
+        "evidence": {
+          "vlans": [
+            10,
+            20,
+            30,
+            40,
+            50
+          ],
+          "native_vlan": 999,
+          "ssh_only": true,
+          "ipsec": false
+        }
+      }
+    ],
+    "violations": [
+      "HQ to Remote B: Selected OS2 single-mode fiber with 10GBASE-ER because the wan run (35 km) exceeds the 400 m attenuation limit of OM4 multimode fiber. OS2 has a 9 µm core and carries 10GBASE-ER at 1550 nm (IEEE 802.3ae). Optical budget: 35.00 km x 0.35 dB/km + 2 connector(s) x 0.5 dB + 0 splice(s) x 0.1 dB + 3 dB margin = 16.25 dB against a 11.1 dB budget. Warning: estimated loss 16.25 dB exceeds the 11.1 dB 10GBASE-ER budget."
+    ]
+  },
+  "alternate": {
+    "scenario": {
+      "name": "metro",
+      "description": "Metro MAN: headquarters plus two remote sites over 15 km and 35 km, OS2 single-mode, sub-5 ms QoS and dual-homed failover.",
+      "endpoints": 450,
+      "buildings": 3,
+      "links": [
+        {
+          "name": "HQ LAN access",
+          "distance_m": 90.0,
+          "kind": "access",
+          "media": "copper",
+          "connectors": 2,
+          "splices": 0
+        },
+        {
+          "name": "HQ to Remote A",
+          "distance_m": 15000.0,
+          "kind": "wan",
+          "media": "fiber",
+          "connectors": 2,
+          "splices": 0
+        },
+        {
+          "name": "HQ to Remote B",
+          "distance_m": 35000.0,
+          "kind": "wan",
+          "media": "fiber",
+          "connectors": 2,
+          "splices": 0
+        }
+      ],
+      "root_prefix": "10.20.0.0/16",
+      "subnets": [
+        {
+          "name": "HQ-Users",
+          "hosts": 200,
+          "mode": "lan",
+          "poe": false,
+          "vlan": 10,
+          "site": "HQ"
+        },
+        {
+          "name": "Trading",
+          "hosts": 100,
+          "mode": "lan",
+          "poe": false,
+          "vlan": 20,
+          "site": "HQ"
+        },
+        {
+          "name": "RemoteA-Users",
+          "hosts": 80,
+          "mode": "lan",
+          "poe": false,
+          "vlan": 30,
+          "site": "RemoteA"
+        },
+        {
+          "name": "RemoteB-Users",
+          "hosts": 70,
+          "mode": "lan",
+          "poe": false,
+          "vlan": 40,
+          "site": "RemoteB"
+        },
+        {
+          "name": "Colo",
+          "hosts": 20,
+          "mode": "lan",
+          "poe": false,
+          "vlan": 50,
+          "site": "HQ"
+        },
+        {
+          "name": "Link-HQ-RemoteA",
+          "hosts": 2,
+          "mode": "p2p30",
+          "poe": false,
+          "site": "HQ",
+          "between": [
+            "HQ",
+            "RemoteA"
+          ]
+        },
+        {
+          "name": "Link-HQ-RemoteB",
+          "hosts": 2,
+          "mode": "p2p30",
+          "poe": false,
+          "site": "HQ",
+          "between": [
+            "HQ",
+            "RemoteB"
+          ]
+        }
+      ],
+      "sites": [
+        {
+          "name": "HQ",
+          "subnets": [
+            "HQ-Users",
+            "Trading",
+            "Colo",
+            "Link-HQ-RemoteA",
+            "Link-HQ-RemoteB"
+          ],
+          "role": "hq"
+        },
+        {
+          "name": "RemoteA",
+          "subnets": [
+            "RemoteA-Users"
+          ],
+          "role": "site"
+        },
+        {
+          "name": "RemoteB",
+          "subnets": [
+            "RemoteB-Users"
+          ],
+          "role": "site"
+        }
+      ],
+      "resilient": true,
+      "single_as": true,
+      "cloud": false,
+      "local_asn": null,
+      "peer_asn": null,
+      "access_speed_gbps": 1,
+      "uplink_speed_gbps": 10,
+      "uplinks": 2,
+      "forced_tier": null,
+      "prices": null,
+      "native_vlan": 999
+    },
+    "media": [
+      {
+        "link": "HQ LAN access",
+        "distance_m": 90.0,
+        "distance_label": "90 m",
+        "kind": "access",
+        "medium": "Cat6a copper",
+        "standard": "IEEE 802.3an (10GBASE-T)",
+        "transceiver": "10GBASE-T",
+        "wavelength_nm": null,
+        "reach_m": 100.0,
+        "budget_db": null,
+        "loss_db": null,
+        "severity": "info",
+        "reason": "Selected Cat6a copper with a 10GBASE-T transceiver because the access run (90 m) is within the 100 m 10GBASE-T channel limit (IEEE 802.3an). Category 6a supports 10 Gb/s over 100 m and is the lowest-cost medium at this distance.",
+        "evidence": {
+          "limit_m": 100.0,
+          "distance_m": 90.0,
+          "headroom_m": 10.0
+        }
+      },
+      {
+        "link": "HQ to Remote A",
+        "distance_m": 15000.0,
+        "distance_label": "15 km",
+        "kind": "wan",
+        "medium": "OS2 single-mode fiber",
+        "standard": "IEEE 802.3ae (10GBASE-ER)",
+        "transceiver": "10GBASE-ER",
+        "wavelength_nm": 1550,
+        "reach_m": 40000.0,
+        "budget_db": 11.1,
+        "loss_db": 9.25,
+        "severity": "info",
+        "reason": "Selected OS2 single-mode fiber with 10GBASE-ER because the wan run (15 km) exceeds the 400 m attenuation limit of OM4 multimode fiber. OS2 has a 9 µm core and carries 10GBASE-ER at 1550 nm (IEEE 802.3ae). Optical budget: 15.00 km x 0.35 dB/km + 2 connector(s) x 0.5 dB + 0 splice(s) x 0.1 dB + 3 dB margin = 9.25 dB against a 11.1 dB budget.",
+        "evidence": {
+          "mmf_limit_m": 400.0,
+          "distance_m": 15000.0,
+          "reach_m": 40000.0,
+          "wavelength_nm": 1550,
+          "attenuation_db_per_km": 0.35,
+          "connectors": 2,
+          "splices": 0,
+          "margin_db": 3.0,
+          "loss_db": 9.25,
+          "budget_db": 11.1,
+          "headroom_db": 1.85
+        }
+      },
+      {
+        "link": "HQ to Remote B",
+        "distance_m": 35000.0,
+        "distance_label": "35 km",
+        "kind": "wan",
+        "medium": "OS2 single-mode fiber",
+        "standard": "IEEE 802.3ae (10GBASE-ER)",
+        "transceiver": "10GBASE-ER",
+        "wavelength_nm": 1550,
+        "reach_m": 40000.0,
+        "budget_db": 11.1,
+        "loss_db": 16.25,
+        "severity": "warning",
+        "reason": "Selected OS2 single-mode fiber with 10GBASE-ER because the wan run (35 km) exceeds the 400 m attenuation limit of OM4 multimode fiber. OS2 has a 9 µm core and carries 10GBASE-ER at 1550 nm (IEEE 802.3ae). Optical budget: 35.00 km x 0.35 dB/km + 2 connector(s) x 0.5 dB + 0 splice(s) x 0.1 dB + 3 dB margin = 16.25 dB against a 11.1 dB budget. Warning: estimated loss 16.25 dB exceeds the 11.1 dB 10GBASE-ER budget.",
+        "evidence": {
+          "mmf_limit_m": 400.0,
+          "distance_m": 35000.0,
+          "reach_m": 40000.0,
+          "wavelength_nm": 1550,
+          "attenuation_db_per_km": 0.35,
+          "connectors": 2,
+          "splices": 0,
+          "margin_db": 3.0,
+          "loss_db": 16.25,
+          "budget_db": 11.1,
+          "headroom_db": -5.15
+        }
+      }
+    ],
+    "vlsm": {
+      "root": "10.20.0.0/16",
+      "blocks": [
+        {
+          "name": "HQ-Users",
+          "hosts": 200,
+          "prefix": 24,
+          "mode": "lan",
+          "vlan": 10,
+          "site": "HQ",
+          "between": null,
+          "poe": false,
+          "network": "10.20.0.0",
+          "mask": "255.255.255.0",
+          "wildcard": "0.0.0.255",
+          "broadcast": "10.20.0.255",
+          "first_usable": "10.20.0.1",
+          "last_usable": "10.20.0.254",
+          "gateway": "10.20.0.1",
+          "cidr": "10.20.0.0/24",
+          "usable": 254,
+          "size": 256,
+          "utilization": 78.7
+        },
+        {
+          "name": "Trading",
+          "hosts": 100,
+          "prefix": 25,
+          "mode": "lan",
+          "vlan": 20,
+          "site": "HQ",
+          "between": null,
+          "poe": false,
+          "network": "10.20.1.0",
+          "mask": "255.255.255.128",
+          "wildcard": "0.0.0.127",
+          "broadcast": "10.20.1.127",
+          "first_usable": "10.20.1.1",
+          "last_usable": "10.20.1.126",
+          "gateway": "10.20.1.1",
+          "cidr": "10.20.1.0/25",
+          "usable": 126,
+          "size": 128,
+          "utilization": 79.4
+        },
+        {
+          "name": "RemoteA-Users",
+          "hosts": 80,
+          "prefix": 25,
+          "mode": "lan",
+          "vlan": 30,
+          "site": "RemoteA",
+          "between": null,
+          "poe": false,
+          "network": "10.20.1.128",
+          "mask": "255.255.255.128",
+          "wildcard": "0.0.0.127",
+          "broadcast": "10.20.1.255",
+          "first_usable": "10.20.1.129",
+          "last_usable": "10.20.1.254",
+          "gateway": "10.20.1.129",
+          "cidr": "10.20.1.128/25",
+          "usable": 126,
+          "size": 128,
+          "utilization": 63.5
+        },
+        {
+          "name": "RemoteB-Users",
+          "hosts": 70,
+          "prefix": 25,
+          "mode": "lan",
+          "vlan": 40,
+          "site": "RemoteB",
+          "between": null,
+          "poe": false,
+          "network": "10.20.2.0",
+          "mask": "255.255.255.128",
+          "wildcard": "0.0.0.127",
+          "broadcast": "10.20.2.127",
+          "first_usable": "10.20.2.1",
+          "last_usable": "10.20.2.126",
+          "gateway": "10.20.2.1",
+          "cidr": "10.20.2.0/25",
+          "usable": 126,
+          "size": 128,
+          "utilization": 55.6
+        },
+        {
+          "name": "Colo",
+          "hosts": 20,
+          "prefix": 27,
+          "mode": "lan",
+          "vlan": 50,
+          "site": "HQ",
+          "between": null,
+          "poe": false,
+          "network": "10.20.2.128",
+          "mask": "255.255.255.224",
+          "wildcard": "0.0.0.31",
+          "broadcast": "10.20.2.159",
+          "first_usable": "10.20.2.129",
+          "last_usable": "10.20.2.158",
+          "gateway": "10.20.2.129",
+          "cidr": "10.20.2.128/27",
+          "usable": 30,
+          "size": 32,
+          "utilization": 66.7
+        },
+        {
+          "name": "Link-HQ-RemoteA",
+          "hosts": 2,
+          "prefix": 30,
+          "mode": "p2p30",
+          "vlan": null,
+          "site": "HQ",
+          "between": [
+            "HQ",
+            "RemoteA"
+          ],
+          "poe": false,
+          "network": "10.20.2.160",
+          "mask": "255.255.255.252",
+          "wildcard": "0.0.0.3",
+          "broadcast": "10.20.2.163",
+          "first_usable": "10.20.2.161",
+          "last_usable": "10.20.2.162",
+          "gateway": "10.20.2.161",
+          "cidr": "10.20.2.160/30",
+          "usable": 2,
+          "size": 4,
+          "utilization": 100.0
+        },
+        {
+          "name": "Link-HQ-RemoteB",
+          "hosts": 2,
+          "prefix": 30,
+          "mode": "p2p30",
+          "vlan": null,
+          "site": "HQ",
+          "between": [
+            "HQ",
+            "RemoteB"
+          ],
+          "poe": false,
+          "network": "10.20.2.164",
+          "mask": "255.255.255.252",
+          "wildcard": "0.0.0.3",
+          "broadcast": "10.20.2.167",
+          "first_usable": "10.20.2.165",
+          "last_usable": "10.20.2.166",
+          "gateway": "10.20.2.165",
+          "cidr": "10.20.2.164/30",
+          "usable": 2,
+          "size": 4,
+          "utilization": 100.0
+        }
+      ],
+      "requested_total": 474,
+      "allocated_addresses": 680,
+      "usable_total": 666,
+      "root_size": 65536,
+      "utilization": 69.71,
+      "usable_utilization": 71.17,
+      "wasted": 64856
+    },
+    "topology": {
+      "tier": "Three-tier",
+      "natural_tier": "Collapsed core",
+      "access_switches": 10,
+      "distribution_switches": 3,
+      "core_switches": 2,
+      "switch_count": 15,
+      "oversubscription": 2.4,
+      "ratio": "2.4:1",
+      "violation": null,
+      "reason": "Selected three-tier because endpoints (450) are >= 1000 or buildings (3) are >= 4. The design uses 10 access switch(es) at 48 ports each, 3 distribution switch(es), and 2 core switch(es). Oversubscription is (48 x 1 Gb/s) / (2 x 10 Gb/s) = 2.4:1.",
+      "advantages": [
+        "Fault domains and broadcast domains stay small.",
+        "Distribution switches summarise routes and enforce policy.",
+        "Core links can be sized and upgraded independently."
+      ],
+      "disadvantages": [
+        "More switches and more cabling than a collapsed core.",
+        "More OSPF adjacencies and more configuration surface."
+      ],
+      "tradeoffs": [
+        "Higher capital cost; cleaner growth path and predictable convergence."
+      ],
+      "cost": null,
+      "cost_note": "Cost was not scored because the scenario did not supply all three switch prices."
+    },
+    "routing": {
+      "protocol": "OSPF Area 0",
+      "area_for_site": {
+        "HQ": 0,
+        "RemoteA": 0,
+        "RemoteB": 0
+      },
+      "areas": {
+        "0": [
+          "10.20.0.0/24",
+          "10.20.1.0/25",
+          "10.20.1.128/25",
+          "10.20.2.0/25",
+          "10.20.2.128/27",
+          "10.20.2.160/30",
+          "10.20.2.164/30"
+        ]
+      },
+      "networks": [
+        {
+          "name": "HQ-Users",
+          "network": "10.20.0.0",
+          "wildcard": "0.0.0.255",
+          "mask": "255.255.255.0",
+          "area": 0,
+          "cidr": "10.20.0.0/24",
+          "passive": true
+        },
+        {
+          "name": "Trading",
+          "network": "10.20.1.0",
+          "wildcard": "0.0.0.127",
+          "mask": "255.255.255.128",
+          "area": 0,
+          "cidr": "10.20.1.0/25",
+          "passive": true
+        },
+        {
+          "name": "RemoteA-Users",
+          "network": "10.20.1.128",
+          "wildcard": "0.0.0.127",
+          "mask": "255.255.255.128",
+          "area": 0,
+          "cidr": "10.20.1.128/25",
+          "passive": true
+        },
+        {
+          "name": "RemoteB-Users",
+          "network": "10.20.2.0",
+          "wildcard": "0.0.0.127",
+          "mask": "255.255.255.128",
+          "area": 0,
+          "cidr": "10.20.2.0/25",
+          "passive": true
+        },
+        {
+          "name": "Colo",
+          "network": "10.20.2.128",
+          "wildcard": "0.0.0.31",
+          "mask": "255.255.255.224",
+          "area": 0,
+          "cidr": "10.20.2.128/27",
+          "passive": true
+        },
+        {
+          "name": "Link-HQ-RemoteA",
+          "network": "10.20.2.160",
+          "wildcard": "0.0.0.3",
+          "mask": "255.255.255.252",
+          "area": 0,
+          "cidr": "10.20.2.160/30",
+          "passive": false
+        },
+        {
+          "name": "Link-HQ-RemoteB",
+          "network": "10.20.2.164",
+          "wildcard": "0.0.0.3",
+          "mask": "255.255.255.252",
+          "area": 0,
+          "cidr": "10.20.2.164/30",
+          "passive": false
+        }
+      ],
+      "summaries": [],
+      "bgp": false,
+      "local_asn": null,
+      "peer_asn": null,
+      "reason": "Selected single-area OSPF Area 0 because the scenario has one site, one autonomous system, 7 subnets (< 50), and no inter-site link longer than 400 m. A single link-state area converges quickly and keeps the design simple (RFC 2328).",
+      "violation": "Single-area OSPF ignores the multi-site rule: more than one site with a link longer than 400 m, or 50 or more subnets.",
+      "alternatives": [
+        "IS-IS is a link-state alternative, but OSPF is the Cisco-native choice for this course and Packet Tracer."
+      ]
+    },
+    "switching": {
+      "stp": "RSTP",
+      "stp_mode": "rapid-pvst",
+      "fhrp": "HSRP",
+      "fhrp_alternative": "VRRP (RFC 5798)",
+      "vlan_count": 5,
+      "switch_count": 15,
+      "native_vlan": 999,
+      "allowed_vlans": [
+        10,
+        20,
+        30,
+        40,
+        50
+      ],
+      "reason": "RSTP (IEEE 802.1w) is sufficient: 5 VLAN(s) <= 16 and 15 switch(es) < 50. Rapid PVST+ gives sub-second convergence per VLAN and Packet Tracer accepts it directly. HSRP is configured because the scenario is resilient: two cores share a virtual gateway, the first core uses priority 110, the second 100, and preemption returns traffic after a failure. VRRP (RFC 5798) is the open alternative. Trunk hardening: allowed VLANs 10, 20, 30, 40, 50, native VLAN 999.",
+      "hardening": [
+        "Every trunk lists allowed VLAN ids explicitly; 'switchport trunk allowed vlan all' is never emitted.",
+        "Native VLAN is 999 and is not in the allowed user list.",
+        "Access ports enable PortFast and BPDU Guard.",
+        "Management VTY lines accept SSH only and are filtered by an ACL."
+      ]
+    },
+    "decisions": [
+      {
+        "category": "Physical media (L1)",
+        "choice": "Cat6a copper / 10GBASE-T",
+        "reason": "Selected Cat6a copper with a 10GBASE-T transceiver because the access run (90 m) is within the 100 m 10GBASE-T channel limit (IEEE 802.3an). Category 6a supports 10 Gb/s over 100 m and is the lowest-cost medium at this distance.",
+        "standard": "IEEE 802.3an (10GBASE-T)",
+        "severity": "info",
+        "evidence": {
+          "limit_m": 100.0,
+          "distance_m": 90.0,
+          "headroom_m": 10.0
+        }
+      },
+      {
+        "category": "Physical media (L1)",
+        "choice": "OS2 single-mode fiber / 10GBASE-ER",
+        "reason": "Selected OS2 single-mode fiber with 10GBASE-ER because the wan run (15 km) exceeds the 400 m attenuation limit of OM4 multimode fiber. OS2 has a 9 µm core and carries 10GBASE-ER at 1550 nm (IEEE 802.3ae). Optical budget: 15.00 km x 0.35 dB/km + 2 connector(s) x 0.5 dB + 0 splice(s) x 0.1 dB + 3 dB margin = 9.25 dB against a 11.1 dB budget.",
+        "standard": "IEEE 802.3ae (10GBASE-ER)",
+        "severity": "info",
+        "evidence": {
+          "mmf_limit_m": 400.0,
+          "distance_m": 15000.0,
+          "reach_m": 40000.0,
+          "wavelength_nm": 1550,
+          "attenuation_db_per_km": 0.35,
+          "connectors": 2,
+          "splices": 0,
+          "margin_db": 3.0,
+          "loss_db": 9.25,
+          "budget_db": 11.1,
+          "headroom_db": 1.85
+        }
+      },
+      {
+        "category": "Physical media (L1)",
+        "choice": "OS2 single-mode fiber / 10GBASE-ER",
+        "reason": "Selected OS2 single-mode fiber with 10GBASE-ER because the wan run (35 km) exceeds the 400 m attenuation limit of OM4 multimode fiber. OS2 has a 9 µm core and carries 10GBASE-ER at 1550 nm (IEEE 802.3ae). Optical budget: 35.00 km x 0.35 dB/km + 2 connector(s) x 0.5 dB + 0 splice(s) x 0.1 dB + 3 dB margin = 16.25 dB against a 11.1 dB budget. Warning: estimated loss 16.25 dB exceeds the 11.1 dB 10GBASE-ER budget.",
+        "standard": "IEEE 802.3ae (10GBASE-ER)",
+        "severity": "warning",
+        "evidence": {
+          "mmf_limit_m": 400.0,
+          "distance_m": 35000.0,
+          "reach_m": 40000.0,
+          "wavelength_nm": 1550,
+          "attenuation_db_per_km": 0.35,
+          "connectors": 2,
+          "splices": 0,
+          "margin_db": 3.0,
+          "loss_db": 16.25,
+          "budget_db": 11.1,
+          "headroom_db": -5.15
+        }
+      },
+      {
+        "category": "Addressing (VLSM)",
+        "choice": "10.20.0.0/16 -> 7 non-overlapping subnets",
+        "reason": "Allocated 7 subnets inside 10.20.0.0/16 by sorting host requests largest-first and aligning each block to its own power-of-two boundary. 474 requested hosts occupy 680 addresses (69.7% address utilisation, 71.2% of usable addresses). An independent range scan confirms no overlap. Plan: HQ-Users 10.20.0.0/24, Trading 10.20.1.0/25, RemoteA-Users 10.20.1.128/25, RemoteB-Users 10.20.2.0/25, Colo 10.20.2.128/27, Link-HQ-RemoteA 10.20.2.160/30, Link-HQ-RemoteB 10.20.2.164/30.",
+        "standard": "RFC 1918 private addressing; RFC 4632 CIDR; RFC 3021 for /31",
+        "severity": "info",
+        "evidence": {
+          "root": "10.20.0.0/16",
+          "blocks": 7,
+          "requested_total": 474,
+          "allocated_addresses": 680,
+          "utilization": 69.71,
+          "usable_utilization": 71.17,
+          "wasted": 64856
+        }
+      },
+      {
+        "category": "Topology",
+        "choice": "Three-tier (10 access, 3 distribution, 2 core)",
+        "reason": "Selected three-tier because endpoints (450) are >= 1000 or buildings (3) are >= 4. The design uses 10 access switch(es) at 48 ports each, 3 distribution switch(es), and 2 core switch(es). Oversubscription is (48 x 1 Gb/s) / (2 x 10 Gb/s) = 2.4:1. Cost was not scored because the scenario did not supply all three switch prices.",
+        "standard": "CIC-307 topology-tier rule; 48-port access switch sizing",
+        "severity": "info",
+        "evidence": {
+          "tier": "Three-tier",
+          "natural_tier": "Collapsed core",
+          "access_switches": 10,
+          "distribution_switches": 3,
+          "core_switches": 2,
+          "switch_count": 15,
+          "oversubscription": 2.4,
+          "ratio": "2.4:1",
+          "violation": null,
+          "reason": "Selected three-tier because endpoints (450) are >= 1000 or buildings (3) are >= 4. The design uses 10 access switch(es) at 48 ports each, 3 distribution switch(es), and 2 core switch(es). Oversubscription is (48 x 1 Gb/s) / (2 x 10 Gb/s) = 2.4:1.",
+          "advantages": [
+            "Fault domains and broadcast domains stay small.",
+            "Distribution switches summarise routes and enforce policy.",
+            "Core links can be sized and upgraded independently."
+          ],
+          "disadvantages": [
+            "More switches and more cabling than a collapsed core.",
+            "More OSPF adjacencies and more configuration surface."
+          ],
+          "tradeoffs": [
+            "Higher capital cost; cleaner growth path and predictable convergence."
+          ],
+          "cost": null,
+          "cost_note": "Cost was not scored because the scenario did not supply all three switch prices."
+        }
+      },
+      {
+        "category": "Routing (L3)",
+        "choice": "OSPF Area 0",
+        "reason": "Selected single-area OSPF Area 0 because the scenario has one site, one autonomous system, 7 subnets (< 50), and no inter-site link longer than 400 m. A single link-state area converges quickly and keeps the design simple (RFC 2328).",
+        "standard": "RFC 2328 (OSPFv2); RFC 4271 (BGP-4)",
+        "severity": "violation",
+        "evidence": {
+          "protocol": "OSPF Area 0",
+          "area_for_site": {
+            "HQ": 0,
+            "RemoteA": 0,
+            "RemoteB": 0
+          },
+          "areas": {
+            "0": [
+              "10.20.0.0/24",
+              "10.20.1.0/25",
+              "10.20.1.128/25",
+              "10.20.2.0/25",
+              "10.20.2.128/27",
+              "10.20.2.160/30",
+              "10.20.2.164/30"
+            ]
+          },
+          "networks": [
+            {
+              "name": "HQ-Users",
+              "network": "10.20.0.0",
+              "wildcard": "0.0.0.255",
+              "mask": "255.255.255.0",
+              "area": 0,
+              "cidr": "10.20.0.0/24",
+              "passive": true
+            },
+            {
+              "name": "Trading",
+              "network": "10.20.1.0",
+              "wildcard": "0.0.0.127",
+              "mask": "255.255.255.128",
+              "area": 0,
+              "cidr": "10.20.1.0/25",
+              "passive": true
+            },
+            {
+              "name": "RemoteA-Users",
+              "network": "10.20.1.128",
+              "wildcard": "0.0.0.127",
+              "mask": "255.255.255.128",
+              "area": 0,
+              "cidr": "10.20.1.128/25",
+              "passive": true
+            },
+            {
+              "name": "RemoteB-Users",
+              "network": "10.20.2.0",
+              "wildcard": "0.0.0.127",
+              "mask": "255.255.255.128",
+              "area": 0,
+              "cidr": "10.20.2.0/25",
+              "passive": true
+            },
+            {
+              "name": "Colo",
+              "network": "10.20.2.128",
+              "wildcard": "0.0.0.31",
+              "mask": "255.255.255.224",
+              "area": 0,
+              "cidr": "10.20.2.128/27",
+              "passive": true
+            },
+            {
+              "name": "Link-HQ-RemoteA",
+              "network": "10.20.2.160",
+              "wildcard": "0.0.0.3",
+              "mask": "255.255.255.252",
+              "area": 0,
+              "cidr": "10.20.2.160/30",
+              "passive": false
+            },
+            {
+              "name": "Link-HQ-RemoteB",
+              "network": "10.20.2.164",
+              "wildcard": "0.0.0.3",
+              "mask": "255.255.255.252",
+              "area": 0,
+              "cidr": "10.20.2.164/30",
+              "passive": false
+            }
+          ],
+          "summaries": [],
+          "bgp": false,
+          "local_asn": null,
+          "peer_asn": null,
+          "reason": "Selected single-area OSPF Area 0 because the scenario has one site, one autonomous system, 7 subnets (< 50), and no inter-site link longer than 400 m. A single link-state area converges quickly and keeps the design simple (RFC 2328).",
+          "violation": "Single-area OSPF ignores the multi-site rule: more than one site with a link longer than 400 m, or 50 or more subnets.",
+          "alternatives": [
+            "IS-IS is a link-state alternative, but OSPF is the Cisco-native choice for this course and Packet Tracer."
+          ]
+        }
+      },
+      {
+        "category": "Switching (L2)",
+        "choice": "RSTP + HSRP",
+        "reason": "RSTP (IEEE 802.1w) is sufficient: 5 VLAN(s) <= 16 and 15 switch(es) < 50. Rapid PVST+ gives sub-second convergence per VLAN and Packet Tracer accepts it directly. HSRP is configured because the scenario is resilient: two cores share a virtual gateway, the first core uses priority 110, the second 100, and preemption returns traffic after a failure. VRRP (RFC 5798) is the open alternative. Trunk hardening: allowed VLANs 10, 20, 30, 40, 50, native VLAN 999.",
+        "standard": "IEEE 802.1w; IEEE 802.1s; RFC 5798 (VRRP alternative)",
+        "severity": "info",
+        "evidence": {
+          "stp": "RSTP",
+          "stp_mode": "rapid-pvst",
+          "fhrp": "HSRP",
+          "fhrp_alternative": "VRRP (RFC 5798)",
+          "vlan_count": 5,
+          "switch_count": 15,
+          "native_vlan": 999,
+          "allowed_vlans": [
+            10,
+            20,
+            30,
+            40,
+            50
+          ],
+          "reason": "RSTP (IEEE 802.1w) is sufficient: 5 VLAN(s) <= 16 and 15 switch(es) < 50. Rapid PVST+ gives sub-second convergence per VLAN and Packet Tracer accepts it directly. HSRP is configured because the scenario is resilient: two cores share a virtual gateway, the first core uses priority 110, the second 100, and preemption returns traffic after a failure. VRRP (RFC 5798) is the open alternative. Trunk hardening: allowed VLANs 10, 20, 30, 40, 50, native VLAN 999.",
+          "hardening": [
+            "Every trunk lists allowed VLAN ids explicitly; 'switchport trunk allowed vlan all' is never emitted.",
+            "Native VLAN is 999 and is not in the allowed user list.",
+            "Access ports enable PortFast and BPDU Guard.",
+            "Management VTY lines accept SSH only and are filtered by an ACL."
+          ]
+        }
+      },
+      {
+        "category": "Security and hardening",
+        "choice": "Guest/server ACL, SSH-only VTY, and explicit trunk hardening",
+        "reason": "The Wi-Fi/guest subnet is denied reachability to the server subnet with an extended ACL, management access is restricted to SSH from the management subnet, and trunks use an explicit allowed-VLAN list with an unused native VLAN. No IPsec policy is generated because there is no cloud or WAN boundary in this scenario.",
+        "standard": "Cisco IOS extended ACL syntax; IEEE 802.1Q",
+        "severity": "info",
+        "evidence": {
+          "vlans": [
+            10,
+            20,
+            30,
+            40,
+            50
+          ],
+          "native_vlan": 999,
+          "ssh_only": true,
+          "ipsec": false
+        }
+      }
+    ],
+    "violations": [
+      "Single-area OSPF ignores the multi-site rule: more than one site with a link longer than 400 m, or 50 or more subnets.",
+      "HQ to Remote B: Selected OS2 single-mode fiber with 10GBASE-ER because the wan run (35 km) exceeds the 400 m attenuation limit of OM4 multimode fiber. OS2 has a 9 µm core and carries 10GBASE-ER at 1550 nm (IEEE 802.3ae). Optical budget: 35.00 km x 0.35 dB/km + 2 connector(s) x 0.5 dB + 0 splice(s) x 0.1 dB + 3 dB margin = 16.25 dB against a 11.1 dB budget. Warning: estimated loss 16.25 dB exceeds the 11.1 dB 10GBASE-ER budget."
+    ]
+  },
+  "export_filename": "metro.txt",
+  "devices": [
+    "metro-hq-rtr",
+    "metro-hq-sw",
+    "metro-remotea-rtr",
+    "metro-remotea-sw",
+    "metro-remoteb-rtr",
+    "metro-remoteb-sw"
+  ],
+  "device_configs": {
+    "metro-hq-rtr": "! NetArchitect generated configuration\n! Device: metro-hq-rtr\n! Role: HQ router (ABR)\n! Scenario: metro\n! Lab credentials only; see README. Do not reuse in production.\n!\nhostname metro-hq-rtr\n!\nno ip domain-lookup\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\n!\nenable secret NetArchitect-Lab-123\nusername admin privilege 15 secret NetArchitect-Lab-123\n!\nip routing\n!\n! --- VLAN database ---\nvlan 10\n name HQ-USERS\nvlan 20\n name TRADING\nvlan 30\n name REMOTEA-USERS\nvlan 40\n name REMOTEB-USERS\nvlan 50\n name COLO\n!\n! --- LAN trunk ---\ninterface GigabitEthernet0/0\n description LAN trunk\n no shutdown\n!\n! --- HQ-Users ---\ninterface GigabitEthernet0/0.10\n description HQ-Users\n ip address 10.20.0.1 255.255.255.0\n no shutdown\n!\n! --- Trading ---\ninterface GigabitEthernet0/0.20\n description Trading\n ip address 10.20.1.1 255.255.255.128\n no shutdown\n!\n! --- Colo ---\ninterface GigabitEthernet0/0.50\n description Colo\n ip address 10.20.2.129 255.255.255.224\n no shutdown\n!\n! --- WAN link to RemoteA ---\ninterface Serial0/0/0\n description WAN link to RemoteA\n ip address 10.20.2.161 255.255.255.252\n clock rate 1544000\n service-policy output WAN-QOS\n no shutdown\n!\n! --- WAN link to RemoteB ---\ninterface Serial0/1/0\n description WAN link to RemoteB\n ip address 10.20.2.165 255.255.255.252\n clock rate 1544000\n service-policy output WAN-QOS\n no shutdown\n!\n!\n! --- OSPF ---\nrouter ospf 1\n router-id 10.20.0.1\n network 10.20.0.0 0.0.0.255 area 0\n network 10.20.1.0 0.0.0.127 area 0\n network 10.20.2.128 0.0.0.31 area 0\n network 10.20.2.160 0.0.0.3 area 0\n network 10.20.2.164 0.0.0.3 area 0\n passive-interface GigabitEthernet0/0.10\n passive-interface GigabitEthernet0/0.20\n passive-interface GigabitEthernet0/0.50\n!\n! --- QoS: priority queue for latency-sensitive traffic ---\nclass-map match-any TRADING-CLASS\n match access-group name TRADING-TRAFFIC\npolicy-map WAN-QOS\n class TRADING-CLASS\n  priority percent 30\n class class-default\n  fair-queue\n!\nip access-list extended TRADING-TRAFFIC\n permit ip 10.20.1.0 0.0.0.127 any\n!\nip access-list extended MGMT-ACCESS\n permit tcp 10.20.0.0 0.0.0.255 any eq 22\n deny ip any any\n!\nline con 0\n logging synchronous\nline vty 0 4\n login local\n transport input ssh\n access-class MGMT-ACCESS in\n!\nend\n",
+    "metro-remotea-rtr": "! NetArchitect generated configuration\n! Device: metro-remotea-rtr\n! Role: RemoteA router (ABR)\n! Scenario: metro\n! Lab credentials only; see README. Do not reuse in production.\n!\nhostname metro-remotea-rtr\n!\nno ip domain-lookup\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\n!\nenable secret NetArchitect-Lab-123\nusername admin privilege 15 secret NetArchitect-Lab-123\n!\nip routing\n!\n! --- VLAN database ---\nvlan 30\n name REMOTEA-USERS\n!\n! --- LAN trunk ---\ninterface GigabitEthernet0/0\n description LAN trunk\n no shutdown\n!\n! --- RemoteA-Users ---\ninterface GigabitEthernet0/0.30\n description RemoteA-Users\n ip address 10.20.1.129 255.255.255.128\n no shutdown\n!\n! --- WAN link to HQ ---\ninterface Serial0/0/0\n description WAN link to HQ\n ip address 10.20.2.162 255.255.255.252\n no shutdown\n!\n!\n! --- OSPF ---\nrouter ospf 1\n router-id 10.20.1.129\n network 10.20.1.128 0.0.0.127 area 1\n network 10.20.2.160 0.0.0.3 area 0\n passive-interface GigabitEthernet0/0.30\n area 1 range 10.20.1.128 255.255.255.128\n!\nip access-list extended MGMT-ACCESS\n permit tcp 10.20.0.0 0.0.0.255 any eq 22\n deny ip any any\n!\nline con 0\n logging synchronous\nline vty 0 4\n login local\n transport input ssh\n access-class MGMT-ACCESS in\n!\nend\n",
+    "metro-remoteb-rtr": "! NetArchitect generated configuration\n! Device: metro-remoteb-rtr\n! Role: RemoteB router (ABR)\n! Scenario: metro\n! Lab credentials only; see README. Do not reuse in production.\n!\nhostname metro-remoteb-rtr\n!\nno ip domain-lookup\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\n!\nenable secret NetArchitect-Lab-123\nusername admin privilege 15 secret NetArchitect-Lab-123\n!\nip routing\n!\n! --- VLAN database ---\nvlan 40\n name REMOTEB-USERS\n!\n! --- LAN trunk ---\ninterface GigabitEthernet0/0\n description LAN trunk\n no shutdown\n!\n! --- RemoteB-Users ---\ninterface GigabitEthernet0/0.40\n description RemoteB-Users\n ip address 10.20.2.1 255.255.255.128\n no shutdown\n!\n! --- WAN link to HQ ---\ninterface Serial0/0/0\n description WAN link to HQ\n ip address 10.20.2.166 255.255.255.252\n no shutdown\n!\n!\n! --- OSPF ---\nrouter ospf 1\n router-id 10.20.2.1\n network 10.20.2.0 0.0.0.127 area 2\n network 10.20.2.164 0.0.0.3 area 0\n passive-interface GigabitEthernet0/0.40\n area 2 range 10.20.2.0 255.255.255.128\n!\nip access-list extended MGMT-ACCESS\n permit tcp 10.20.0.0 0.0.0.255 any eq 22\n deny ip any any\n!\nline con 0\n logging synchronous\nline vty 0 4\n login local\n transport input ssh\n access-class MGMT-ACCESS in\n!\nend\n",
+    "metro-hq-sw": "! NetArchitect generated configuration\n! Device: metro-hq-sw\n! Role: HQ access switch\n! Scenario: metro\n! Lab credentials only; see README. Do not reuse in production.\n!\nhostname metro-hq-sw\n!\nno ip domain-lookup\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\n!\nenable secret NetArchitect-Lab-123\nusername admin privilege 15 secret NetArchitect-Lab-123\n!\n!\n! --- VLAN database ---\nvlan 10\n name HQ-USERS\nvlan 20\n name TRADING\nvlan 50\n name COLO\n!\n! --- Trunk to router ---\ninterface GigabitEthernet0/1\n switchport trunk encapsulation dot1q\n switchport mode trunk\n switchport trunk native vlan 999\n switchport trunk allowed vlan 10,20,50\n no shutdown\n!\n! --- Access port 1 ---\ninterface FastEthernet0/1\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 2 ---\ninterface FastEthernet0/2\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 3 ---\ninterface FastEthernet0/3\n switchport mode access\n switchport access vlan 50\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 4 ---\ninterface FastEthernet0/4\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 5 ---\ninterface FastEthernet0/5\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 6 ---\ninterface FastEthernet0/6\n switchport mode access\n switchport access vlan 50\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 7 ---\ninterface FastEthernet0/7\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 8 ---\ninterface FastEthernet0/8\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 9 ---\ninterface FastEthernet0/9\n switchport mode access\n switchport access vlan 50\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 10 ---\ninterface FastEthernet0/10\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 11 ---\ninterface FastEthernet0/11\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 12 ---\ninterface FastEthernet0/12\n switchport mode access\n switchport access vlan 50\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 13 ---\ninterface FastEthernet0/13\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 14 ---\ninterface FastEthernet0/14\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 15 ---\ninterface FastEthernet0/15\n switchport mode access\n switchport access vlan 50\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 16 ---\ninterface FastEthernet0/16\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 17 ---\ninterface FastEthernet0/17\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 18 ---\ninterface FastEthernet0/18\n switchport mode access\n switchport access vlan 50\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 19 ---\ninterface FastEthernet0/19\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 20 ---\ninterface FastEthernet0/20\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 21 ---\ninterface FastEthernet0/21\n switchport mode access\n switchport access vlan 50\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 22 ---\ninterface FastEthernet0/22\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 23 ---\ninterface FastEthernet0/23\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 24 ---\ninterface FastEthernet0/24\n switchport mode access\n switchport access vlan 50\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Management SVI ---\ninterface Vlan10\n description Management SVI\n ip address 10.20.0.10 255.255.255.0\n no shutdown\n!\n!\nspanning-tree mode rapid-pvst\n!\nip default-gateway 10.20.0.1\n!\nip access-list extended MGMT-ACCESS\n permit tcp 10.20.0.0 0.0.0.255 any eq 22\n deny ip any any\n!\nline con 0\n logging synchronous\nline vty 0 4\n login local\n transport input ssh\n access-class MGMT-ACCESS in\n!\nend\n",
+    "metro-remotea-sw": "! NetArchitect generated configuration\n! Device: metro-remotea-sw\n! Role: RemoteA access switch\n! Scenario: metro\n! Lab credentials only; see README. Do not reuse in production.\n!\nhostname metro-remotea-sw\n!\nno ip domain-lookup\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\n!\nenable secret NetArchitect-Lab-123\nusername admin privilege 15 secret NetArchitect-Lab-123\n!\n!\n! --- VLAN database ---\nvlan 30\n name REMOTEA-USERS\n!\n! --- Trunk to router ---\ninterface GigabitEthernet0/1\n switchport trunk encapsulation dot1q\n switchport mode trunk\n switchport trunk native vlan 999\n switchport trunk allowed vlan 30\n no shutdown\n!\n! --- Access port 1 ---\ninterface FastEthernet0/1\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 2 ---\ninterface FastEthernet0/2\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 3 ---\ninterface FastEthernet0/3\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 4 ---\ninterface FastEthernet0/4\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 5 ---\ninterface FastEthernet0/5\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 6 ---\ninterface FastEthernet0/6\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 7 ---\ninterface FastEthernet0/7\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 8 ---\ninterface FastEthernet0/8\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 9 ---\ninterface FastEthernet0/9\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 10 ---\ninterface FastEthernet0/10\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 11 ---\ninterface FastEthernet0/11\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 12 ---\ninterface FastEthernet0/12\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 13 ---\ninterface FastEthernet0/13\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 14 ---\ninterface FastEthernet0/14\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 15 ---\ninterface FastEthernet0/15\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 16 ---\ninterface FastEthernet0/16\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 17 ---\ninterface FastEthernet0/17\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 18 ---\ninterface FastEthernet0/18\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 19 ---\ninterface FastEthernet0/19\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 20 ---\ninterface FastEthernet0/20\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 21 ---\ninterface FastEthernet0/21\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 22 ---\ninterface FastEthernet0/22\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 23 ---\ninterface FastEthernet0/23\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 24 ---\ninterface FastEthernet0/24\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Management SVI ---\ninterface Vlan30\n description Management SVI\n ip address 10.20.1.138 255.255.255.128\n no shutdown\n!\n!\nspanning-tree mode rapid-pvst\n!\nip default-gateway 10.20.1.129\n!\nip access-list extended MGMT-ACCESS\n permit tcp 10.20.0.0 0.0.0.255 any eq 22\n deny ip any any\n!\nline con 0\n logging synchronous\nline vty 0 4\n login local\n transport input ssh\n access-class MGMT-ACCESS in\n!\nend\n",
+    "metro-remoteb-sw": "! NetArchitect generated configuration\n! Device: metro-remoteb-sw\n! Role: RemoteB access switch\n! Scenario: metro\n! Lab credentials only; see README. Do not reuse in production.\n!\nhostname metro-remoteb-sw\n!\nno ip domain-lookup\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\n!\nenable secret NetArchitect-Lab-123\nusername admin privilege 15 secret NetArchitect-Lab-123\n!\n!\n! --- VLAN database ---\nvlan 40\n name REMOTEB-USERS\n!\n! --- Trunk to router ---\ninterface GigabitEthernet0/1\n switchport trunk encapsulation dot1q\n switchport mode trunk\n switchport trunk native vlan 999\n switchport trunk allowed vlan 40\n no shutdown\n!\n! --- Access port 1 ---\ninterface FastEthernet0/1\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 2 ---\ninterface FastEthernet0/2\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 3 ---\ninterface FastEthernet0/3\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 4 ---\ninterface FastEthernet0/4\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 5 ---\ninterface FastEthernet0/5\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 6 ---\ninterface FastEthernet0/6\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 7 ---\ninterface FastEthernet0/7\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 8 ---\ninterface FastEthernet0/8\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 9 ---\ninterface FastEthernet0/9\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 10 ---\ninterface FastEthernet0/10\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 11 ---\ninterface FastEthernet0/11\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 12 ---\ninterface FastEthernet0/12\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 13 ---\ninterface FastEthernet0/13\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 14 ---\ninterface FastEthernet0/14\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 15 ---\ninterface FastEthernet0/15\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 16 ---\ninterface FastEthernet0/16\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 17 ---\ninterface FastEthernet0/17\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 18 ---\ninterface FastEthernet0/18\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 19 ---\ninterface FastEthernet0/19\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 20 ---\ninterface FastEthernet0/20\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 21 ---\ninterface FastEthernet0/21\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 22 ---\ninterface FastEthernet0/22\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 23 ---\ninterface FastEthernet0/23\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 24 ---\ninterface FastEthernet0/24\n switchport mode access\n switchport access vlan 40\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Management SVI ---\ninterface Vlan40\n description Management SVI\n ip address 10.20.2.10 255.255.255.128\n no shutdown\n!\n!\nspanning-tree mode rapid-pvst\n!\nip default-gateway 10.20.2.1\n!\nip access-list extended MGMT-ACCESS\n permit tcp 10.20.0.0 0.0.0.255 any eq 22\n deny ip any any\n!\nline con 0\n logging synchronous\nline vty 0 4\n login local\n transport input ssh\n access-class MGMT-ACCESS in\n!\nend\n"
+  }
+}
