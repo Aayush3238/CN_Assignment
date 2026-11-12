@@ -1,0 +1,42 @@
+{
+  "name": "wan",
+  "description": "Global WAN: four cities and a cloud VPC, 2,000 IoT endpoints, multi-area OSPF plus eBGP and IPsec at the cloud boundary.",
+  "endpoints": 2000,
+  "buildings": 4,
+  "links": [
+    {"name": "City A LAN access", "distance_m": 90, "kind": "access", "media": "copper"},
+    {"name": "City A to City B", "distance_m": 650000, "kind": "wan", "media": "fiber"},
+    {"name": "City A to City C", "distance_m": 1200000, "kind": "wan", "media": "fiber"},
+    {"name": "City A to City D", "distance_m": 4800000, "kind": "wan", "media": "fiber"},
+    {"name": "City A to Cloud VPC", "distance_m": 250000, "kind": "wan", "media": "fiber"}
+  ],
+  "root_prefix": "10.64.0.0/14",
+  "subnets": [
+    {"name": "CityA-IoT", "hosts": 600, "vlan": 10, "site": "CityA"},
+    {"name": "CityB-IoT", "hosts": 500, "vlan": 20, "site": "CityB"},
+    {"name": "CityC-IoT", "hosts": 500, "vlan": 30, "site": "CityC"},
+    {"name": "CityD-IoT", "hosts": 400, "vlan": 40, "site": "CityD"},
+    {"name": "Cloud-VPC", "hosts": 200, "vlan": 50, "site": "Cloud"},
+    {"name": "Link-A-B", "hosts": 2, "mode": "p2p30", "site": "CityA", "between": ["CityA", "CityB"]},
+    {"name": "Link-A-C", "hosts": 2, "mode": "p2p30", "site": "CityA", "between": ["CityA", "CityC"]},
+    {"name": "Link-A-D", "hosts": 2, "mode": "p2p30", "site": "CityA", "between": ["CityA", "CityD"]},
+    {"name": "Link-A-Cloud", "hosts": 2, "mode": "p2p30", "site": "CityA", "between": ["CityA", "Cloud"]}
+  ],
+  "sites": [
+    {"name": "CityA", "subnets": ["CityA-IoT", "Link-A-B", "Link-A-C", "Link-A-D", "Link-A-Cloud"], "role": "hub"},
+    {"name": "CityB", "subnets": ["CityB-IoT"], "role": "site"},
+    {"name": "CityC", "subnets": ["CityC-IoT"], "role": "site"},
+    {"name": "CityD", "subnets": ["CityD-IoT"], "role": "site"},
+    {"name": "Cloud", "subnets": ["Cloud-VPC"], "role": "cloud"}
+  ],
+  "resilient": true,
+  "single_as": false,
+  "cloud": true,
+  "local_asn": 65010,
+  "peer_asn": 64512,
+  "access_speed_gbps": 1,
+  "uplink_speed_gbps": 10,
+  "uplinks": 2,
+  "forced_tier": null,
+  "prices": null
+}
