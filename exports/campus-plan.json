@@ -1,0 +1,1268 @@
+{
+  "scenario": {
+    "name": "campus",
+    "description": "Campus LAN: three buildings inside 400 m, 1,600 endpoints, PoE access points, Cat6a access and OM4 backbone.",
+    "endpoints": 1600,
+    "buildings": 3,
+    "links": [
+      {
+        "name": "LAN access",
+        "distance_m": 90.0,
+        "kind": "access",
+        "media": "copper",
+        "connectors": 2,
+        "splices": 0
+      },
+      {
+        "name": "Building backbone",
+        "distance_m": 320.0,
+        "kind": "backbone",
+        "media": "auto",
+        "connectors": 2,
+        "splices": 0
+      }
+    ],
+    "root_prefix": "10.10.0.0/16",
+    "subnets": [
+      {
+        "name": "Data",
+        "hosts": 700,
+        "mode": "lan",
+        "poe": false,
+        "vlan": 10,
+        "site": "Campus"
+      },
+      {
+        "name": "Voice",
+        "hosts": 300,
+        "mode": "lan",
+        "poe": true,
+        "vlan": 20,
+        "site": "Campus"
+      },
+      {
+        "name": "Wi-Fi",
+        "hosts": 400,
+        "mode": "lan",
+        "poe": true,
+        "vlan": 30,
+        "site": "Campus"
+      },
+      {
+        "name": "Management",
+        "hosts": 100,
+        "mode": "lan",
+        "poe": false,
+        "vlan": 40,
+        "site": "Campus"
+      },
+      {
+        "name": "Servers",
+        "hosts": 100,
+        "mode": "lan",
+        "poe": false,
+        "vlan": 50,
+        "site": "Campus"
+      }
+    ],
+    "sites": [
+      {
+        "name": "Campus",
+        "subnets": [
+          "Data",
+          "Voice",
+          "Wi-Fi",
+          "Management",
+          "Servers"
+        ],
+        "role": "hq"
+      }
+    ],
+    "resilient": true,
+    "single_as": true,
+    "cloud": false,
+    "local_asn": null,
+    "peer_asn": null,
+    "access_speed_gbps": 1,
+    "uplink_speed_gbps": 10,
+    "uplinks": 2,
+    "forced_tier": null,
+    "prices": null,
+    "native_vlan": 999
+  },
+  "selected": {
+    "scenario": {
+      "name": "campus",
+      "description": "Campus LAN: three buildings inside 400 m, 1,600 endpoints, PoE access points, Cat6a access and OM4 backbone.",
+      "endpoints": 1600,
+      "buildings": 3,
+      "links": [
+        {
+          "name": "LAN access",
+          "distance_m": 90.0,
+          "kind": "access",
+          "media": "copper",
+          "connectors": 2,
+          "splices": 0
+        },
+        {
+          "name": "Building backbone",
+          "distance_m": 320.0,
+          "kind": "backbone",
+          "media": "auto",
+          "connectors": 2,
+          "splices": 0
+        }
+      ],
+      "root_prefix": "10.10.0.0/16",
+      "subnets": [
+        {
+          "name": "Data",
+          "hosts": 700,
+          "mode": "lan",
+          "poe": false,
+          "vlan": 10,
+          "site": "Campus"
+        },
+        {
+          "name": "Voice",
+          "hosts": 300,
+          "mode": "lan",
+          "poe": true,
+          "vlan": 20,
+          "site": "Campus"
+        },
+        {
+          "name": "Wi-Fi",
+          "hosts": 400,
+          "mode": "lan",
+          "poe": true,
+          "vlan": 30,
+          "site": "Campus"
+        },
+        {
+          "name": "Management",
+          "hosts": 100,
+          "mode": "lan",
+          "poe": false,
+          "vlan": 40,
+          "site": "Campus"
+        },
+        {
+          "name": "Servers",
+          "hosts": 100,
+          "mode": "lan",
+          "poe": false,
+          "vlan": 50,
+          "site": "Campus"
+        }
+      ],
+      "sites": [
+        {
+          "name": "Campus",
+          "subnets": [
+            "Data",
+            "Voice",
+            "Wi-Fi",
+            "Management",
+            "Servers"
+          ],
+          "role": "hq"
+        }
+      ],
+      "resilient": true,
+      "single_as": true,
+      "cloud": false,
+      "local_asn": null,
+      "peer_asn": null,
+      "access_speed_gbps": 1,
+      "uplink_speed_gbps": 10,
+      "uplinks": 2,
+      "forced_tier": null,
+      "prices": null,
+      "native_vlan": 999
+    },
+    "media": [
+      {
+        "link": "LAN access",
+        "distance_m": 90.0,
+        "distance_label": "90 m",
+        "kind": "access",
+        "medium": "Cat6a copper",
+        "standard": "IEEE 802.3an (10GBASE-T)",
+        "transceiver": "10GBASE-T",
+        "wavelength_nm": null,
+        "reach_m": 100.0,
+        "budget_db": null,
+        "loss_db": null,
+        "severity": "info",
+        "reason": "Selected Cat6a copper with a 10GBASE-T transceiver because the access run (90 m) is within the 100 m 10GBASE-T channel limit (IEEE 802.3an). Category 6a supports 10 Gb/s over 100 m and is the lowest-cost medium at this distance.",
+        "evidence": {
+          "limit_m": 100.0,
+          "distance_m": 90.0,
+          "headroom_m": 10.0
+        }
+      },
+      {
+        "link": "Building backbone",
+        "distance_m": 320.0,
+        "distance_label": "320 m",
+        "kind": "backbone",
+        "medium": "OM4 multimode fiber",
+        "standard": "IEEE 802.3ae (10GBASE-SR)",
+        "transceiver": "10GBASE-SR",
+        "wavelength_nm": 850,
+        "reach_m": 400.0,
+        "budget_db": null,
+        "loss_db": null,
+        "severity": "info",
+        "reason": "Selected OM4 multimode fiber because the backbone run (320 m): it exceeds the 100 m Cat6a limit and stays inside the 400 m reach of 10GBASE-SR at 850 nm (IEEE 802.3ae). Modal dispersion limits multimode reach, so the design stays within the 400 m OM4 catalogue distance.",
+        "evidence": {
+          "copper_limit_m": 100.0,
+          "mmf_limit_m": 400.0,
+          "distance_m": 320.0,
+          "headroom_m": 80.0
+        }
+      }
+    ],
+    "vlsm": {
+      "root": "10.10.0.0/16",
+      "blocks": [
+        {
+          "name": "Data",
+          "hosts": 700,
+          "prefix": 22,
+          "mode": "lan",
+          "vlan": 10,
+          "site": "Campus",
+          "between": null,
+          "poe": false,
+          "network": "10.10.0.0",
+          "mask": "255.255.252.0",
+          "wildcard": "0.0.3.255",
+          "broadcast": "10.10.3.255",
+          "first_usable": "10.10.0.1",
+          "last_usable": "10.10.3.254",
+          "gateway": "10.10.0.1",
+          "cidr": "10.10.0.0/22",
+          "usable": 1022,
+          "size": 1024,
+          "utilization": 68.5
+        },
+        {
+          "name": "Wi-Fi",
+          "hosts": 400,
+          "prefix": 23,
+          "mode": "lan",
+          "vlan": 30,
+          "site": "Campus",
+          "between": null,
+          "poe": true,
+          "network": "10.10.4.0",
+          "mask": "255.255.254.0",
+          "wildcard": "0.0.1.255",
+          "broadcast": "10.10.5.255",
+          "first_usable": "10.10.4.1",
+          "last_usable": "10.10.5.254",
+          "gateway": "10.10.4.1",
+          "cidr": "10.10.4.0/23",
+          "usable": 510,
+          "size": 512,
+          "utilization": 78.4
+        },
+        {
+          "name": "Voice",
+          "hosts": 300,
+          "prefix": 23,
+          "mode": "lan",
+          "vlan": 20,
+          "site": "Campus",
+          "between": null,
+          "poe": true,
+          "network": "10.10.6.0",
+          "mask": "255.255.254.0",
+          "wildcard": "0.0.1.255",
+          "broadcast": "10.10.7.255",
+          "first_usable": "10.10.6.1",
+          "last_usable": "10.10.7.254",
+          "gateway": "10.10.6.1",
+          "cidr": "10.10.6.0/23",
+          "usable": 510,
+          "size": 512,
+          "utilization": 58.8
+        },
+        {
+          "name": "Management",
+          "hosts": 100,
+          "prefix": 25,
+          "mode": "lan",
+          "vlan": 40,
+          "site": "Campus",
+          "between": null,
+          "poe": false,
+          "network": "10.10.8.0",
+          "mask": "255.255.255.128",
+          "wildcard": "0.0.0.127",
+          "broadcast": "10.10.8.127",
+          "first_usable": "10.10.8.1",
+          "last_usable": "10.10.8.126",
+          "gateway": "10.10.8.1",
+          "cidr": "10.10.8.0/25",
+          "usable": 126,
+          "size": 128,
+          "utilization": 79.4
+        },
+        {
+          "name": "Servers",
+          "hosts": 100,
+          "prefix": 25,
+          "mode": "lan",
+          "vlan": 50,
+          "site": "Campus",
+          "between": null,
+          "poe": false,
+          "network": "10.10.8.128",
+          "mask": "255.255.255.128",
+          "wildcard": "0.0.0.127",
+          "broadcast": "10.10.8.255",
+          "first_usable": "10.10.8.129",
+          "last_usable": "10.10.8.254",
+          "gateway": "10.10.8.129",
+          "cidr": "10.10.8.128/25",
+          "usable": 126,
+          "size": 128,
+          "utilization": 79.4
+        }
+      ],
+      "requested_total": 1600,
+      "allocated_addresses": 2304,
+      "usable_total": 2294,
+      "root_size": 65536,
+      "utilization": 69.44,
+      "usable_utilization": 69.75,
+      "wasted": 63232
+    },
+    "topology": {
+      "tier": "Three-tier",
+      "natural_tier": "Three-tier",
+      "access_switches": 34,
+      "distribution_switches": 3,
+      "core_switches": 2,
+      "switch_count": 39,
+      "oversubscription": 2.4,
+      "ratio": "2.4:1",
+      "violation": null,
+      "reason": "Selected three-tier because endpoints (1600) are >= 1000 or buildings (3) are >= 4. The design uses 34 access switch(es) at 48 ports each, 3 distribution switch(es), and 2 core switch(es). Oversubscription is (48 x 1 Gb/s) / (2 x 10 Gb/s) = 2.4:1.",
+      "advantages": [
+        "Fault domains and broadcast domains stay small.",
+        "Distribution switches summarise routes and enforce policy.",
+        "Core links can be sized and upgraded independently."
+      ],
+      "disadvantages": [
+        "More switches and more cabling than a collapsed core.",
+        "More OSPF adjacencies and more configuration surface."
+      ],
+      "tradeoffs": [
+        "Higher capital cost; cleaner growth path and predictable convergence."
+      ],
+      "cost": null,
+      "cost_note": "Cost was not scored because the scenario did not supply all three switch prices."
+    },
+    "routing": {
+      "protocol": "OSPF Area 0",
+      "area_for_site": {
+        "Campus": 0
+      },
+      "areas": {
+        "0": [
+          "10.10.0.0/22",
+          "10.10.4.0/23",
+          "10.10.6.0/23",
+          "10.10.8.0/25",
+          "10.10.8.128/25"
+        ]
+      },
+      "networks": [
+        {
+          "name": "Data",
+          "network": "10.10.0.0",
+          "wildcard": "0.0.3.255",
+          "mask": "255.255.252.0",
+          "area": 0,
+          "cidr": "10.10.0.0/22",
+          "passive": true
+        },
+        {
+          "name": "Wi-Fi",
+          "network": "10.10.4.0",
+          "wildcard": "0.0.1.255",
+          "mask": "255.255.254.0",
+          "area": 0,
+          "cidr": "10.10.4.0/23",
+          "passive": true
+        },
+        {
+          "name": "Voice",
+          "network": "10.10.6.0",
+          "wildcard": "0.0.1.255",
+          "mask": "255.255.254.0",
+          "area": 0,
+          "cidr": "10.10.6.0/23",
+          "passive": true
+        },
+        {
+          "name": "Management",
+          "network": "10.10.8.0",
+          "wildcard": "0.0.0.127",
+          "mask": "255.255.255.128",
+          "area": 0,
+          "cidr": "10.10.8.0/25",
+          "passive": true
+        },
+        {
+          "name": "Servers",
+          "network": "10.10.8.128",
+          "wildcard": "0.0.0.127",
+          "mask": "255.255.255.128",
+          "area": 0,
+          "cidr": "10.10.8.128/25",
+          "passive": true
+        }
+      ],
+      "summaries": [],
+      "bgp": false,
+      "local_asn": null,
+      "peer_asn": null,
+      "reason": "Selected single-area OSPF Area 0 because the scenario has one site, one autonomous system, 5 subnets (< 50), and no inter-site link longer than 400 m. A single link-state area converges quickly and keeps the design simple (RFC 2328).",
+      "violation": null,
+      "alternatives": [
+        "IS-IS is a link-state alternative, but OSPF is the Cisco-native choice for this course and Packet Tracer."
+      ]
+    },
+    "switching": {
+      "stp": "RSTP",
+      "stp_mode": "rapid-pvst",
+      "fhrp": "HSRP",
+      "fhrp_alternative": "VRRP (RFC 5798)",
+      "vlan_count": 5,
+      "switch_count": 39,
+      "native_vlan": 999,
+      "allowed_vlans": [
+        10,
+        20,
+        30,
+        40,
+        50
+      ],
+      "reason": "RSTP (IEEE 802.1w) is sufficient: 5 VLAN(s) <= 16 and 39 switch(es) < 50. Rapid PVST+ gives sub-second convergence per VLAN and Packet Tracer accepts it directly. HSRP is configured because the scenario is resilient: two cores share a virtual gateway, the first core uses priority 110, the second 100, and preemption returns traffic after a failure. VRRP (RFC 5798) is the open alternative. Trunk hardening: allowed VLANs 10, 20, 30, 40, 50, native VLAN 999.",
+      "hardening": [
+        "Every trunk lists allowed VLAN ids explicitly; 'switchport trunk allowed vlan all' is never emitted.",
+        "Native VLAN is 999 and is not in the allowed user list.",
+        "Access ports enable PortFast and BPDU Guard.",
+        "Management VTY lines accept SSH only and are filtered by an ACL."
+      ]
+    },
+    "decisions": [
+      {
+        "category": "Physical media (L1)",
+        "choice": "Cat6a copper / 10GBASE-T",
+        "reason": "Selected Cat6a copper with a 10GBASE-T transceiver because the access run (90 m) is within the 100 m 10GBASE-T channel limit (IEEE 802.3an). Category 6a supports 10 Gb/s over 100 m and is the lowest-cost medium at this distance.",
+        "standard": "IEEE 802.3an (10GBASE-T)",
+        "severity": "info",
+        "evidence": {
+          "limit_m": 100.0,
+          "distance_m": 90.0,
+          "headroom_m": 10.0
+        }
+      },
+      {
+        "category": "Physical media (L1)",
+        "choice": "OM4 multimode fiber / 10GBASE-SR",
+        "reason": "Selected OM4 multimode fiber because the backbone run (320 m): it exceeds the 100 m Cat6a limit and stays inside the 400 m reach of 10GBASE-SR at 850 nm (IEEE 802.3ae). Modal dispersion limits multimode reach, so the design stays within the 400 m OM4 catalogue distance.",
+        "standard": "IEEE 802.3ae (10GBASE-SR)",
+        "severity": "info",
+        "evidence": {
+          "copper_limit_m": 100.0,
+          "mmf_limit_m": 400.0,
+          "distance_m": 320.0,
+          "headroom_m": 80.0
+        }
+      },
+      {
+        "category": "Addressing (VLSM)",
+        "choice": "10.10.0.0/16 -> 5 non-overlapping subnets",
+        "reason": "Allocated 5 subnets inside 10.10.0.0/16 by sorting host requests largest-first and aligning each block to its own power-of-two boundary. 1600 requested hosts occupy 2304 addresses (69.4% address utilisation, 69.7% of usable addresses). An independent range scan confirms no overlap. Plan: Data 10.10.0.0/22, Wi-Fi 10.10.4.0/23, Voice 10.10.6.0/23, Management 10.10.8.0/25, Servers 10.10.8.128/25.",
+        "standard": "RFC 1918 private addressing; RFC 4632 CIDR; RFC 3021 for /31",
+        "severity": "info",
+        "evidence": {
+          "root": "10.10.0.0/16",
+          "blocks": 5,
+          "requested_total": 1600,
+          "allocated_addresses": 2304,
+          "utilization": 69.44,
+          "usable_utilization": 69.75,
+          "wasted": 63232
+        }
+      },
+      {
+        "category": "Topology",
+        "choice": "Three-tier (34 access, 3 distribution, 2 core)",
+        "reason": "Selected three-tier because endpoints (1600) are >= 1000 or buildings (3) are >= 4. The design uses 34 access switch(es) at 48 ports each, 3 distribution switch(es), and 2 core switch(es). Oversubscription is (48 x 1 Gb/s) / (2 x 10 Gb/s) = 2.4:1. Cost was not scored because the scenario did not supply all three switch prices.",
+        "standard": "CIC-307 topology-tier rule; 48-port access switch sizing",
+        "severity": "info",
+        "evidence": {
+          "tier": "Three-tier",
+          "natural_tier": "Three-tier",
+          "access_switches": 34,
+          "distribution_switches": 3,
+          "core_switches": 2,
+          "switch_count": 39,
+          "oversubscription": 2.4,
+          "ratio": "2.4:1",
+          "violation": null,
+          "reason": "Selected three-tier because endpoints (1600) are >= 1000 or buildings (3) are >= 4. The design uses 34 access switch(es) at 48 ports each, 3 distribution switch(es), and 2 core switch(es). Oversubscription is (48 x 1 Gb/s) / (2 x 10 Gb/s) = 2.4:1.",
+          "advantages": [
+            "Fault domains and broadcast domains stay small.",
+            "Distribution switches summarise routes and enforce policy.",
+            "Core links can be sized and upgraded independently."
+          ],
+          "disadvantages": [
+            "More switches and more cabling than a collapsed core.",
+            "More OSPF adjacencies and more configuration surface."
+          ],
+          "tradeoffs": [
+            "Higher capital cost; cleaner growth path and predictable convergence."
+          ],
+          "cost": null,
+          "cost_note": "Cost was not scored because the scenario did not supply all three switch prices."
+        }
+      },
+      {
+        "category": "Routing (L3)",
+        "choice": "OSPF Area 0",
+        "reason": "Selected single-area OSPF Area 0 because the scenario has one site, one autonomous system, 5 subnets (< 50), and no inter-site link longer than 400 m. A single link-state area converges quickly and keeps the design simple (RFC 2328).",
+        "standard": "RFC 2328 (OSPFv2); RFC 4271 (BGP-4)",
+        "severity": "info",
+        "evidence": {
+          "protocol": "OSPF Area 0",
+          "area_for_site": {
+            "Campus": 0
+          },
+          "areas": {
+            "0": [
+              "10.10.0.0/22",
+              "10.10.4.0/23",
+              "10.10.6.0/23",
+              "10.10.8.0/25",
+              "10.10.8.128/25"
+            ]
+          },
+          "networks": [
+            {
+              "name": "Data",
+              "network": "10.10.0.0",
+              "wildcard": "0.0.3.255",
+              "mask": "255.255.252.0",
+              "area": 0,
+              "cidr": "10.10.0.0/22",
+              "passive": true
+            },
+            {
+              "name": "Wi-Fi",
+              "network": "10.10.4.0",
+              "wildcard": "0.0.1.255",
+              "mask": "255.255.254.0",
+              "area": 0,
+              "cidr": "10.10.4.0/23",
+              "passive": true
+            },
+            {
+              "name": "Voice",
+              "network": "10.10.6.0",
+              "wildcard": "0.0.1.255",
+              "mask": "255.255.254.0",
+              "area": 0,
+              "cidr": "10.10.6.0/23",
+              "passive": true
+            },
+            {
+              "name": "Management",
+              "network": "10.10.8.0",
+              "wildcard": "0.0.0.127",
+              "mask": "255.255.255.128",
+              "area": 0,
+              "cidr": "10.10.8.0/25",
+              "passive": true
+            },
+            {
+              "name": "Servers",
+              "network": "10.10.8.128",
+              "wildcard": "0.0.0.127",
+              "mask": "255.255.255.128",
+              "area": 0,
+              "cidr": "10.10.8.128/25",
+              "passive": true
+            }
+          ],
+          "summaries": [],
+          "bgp": false,
+          "local_asn": null,
+          "peer_asn": null,
+          "reason": "Selected single-area OSPF Area 0 because the scenario has one site, one autonomous system, 5 subnets (< 50), and no inter-site link longer than 400 m. A single link-state area converges quickly and keeps the design simple (RFC 2328).",
+          "violation": null,
+          "alternatives": [
+            "IS-IS is a link-state alternative, but OSPF is the Cisco-native choice for this course and Packet Tracer."
+          ]
+        }
+      },
+      {
+        "category": "Switching (L2)",
+        "choice": "RSTP + HSRP",
+        "reason": "RSTP (IEEE 802.1w) is sufficient: 5 VLAN(s) <= 16 and 39 switch(es) < 50. Rapid PVST+ gives sub-second convergence per VLAN and Packet Tracer accepts it directly. HSRP is configured because the scenario is resilient: two cores share a virtual gateway, the first core uses priority 110, the second 100, and preemption returns traffic after a failure. VRRP (RFC 5798) is the open alternative. Trunk hardening: allowed VLANs 10, 20, 30, 40, 50, native VLAN 999.",
+        "standard": "IEEE 802.1w; IEEE 802.1s; RFC 5798 (VRRP alternative)",
+        "severity": "info",
+        "evidence": {
+          "stp": "RSTP",
+          "stp_mode": "rapid-pvst",
+          "fhrp": "HSRP",
+          "fhrp_alternative": "VRRP (RFC 5798)",
+          "vlan_count": 5,
+          "switch_count": 39,
+          "native_vlan": 999,
+          "allowed_vlans": [
+            10,
+            20,
+            30,
+            40,
+            50
+          ],
+          "reason": "RSTP (IEEE 802.1w) is sufficient: 5 VLAN(s) <= 16 and 39 switch(es) < 50. Rapid PVST+ gives sub-second convergence per VLAN and Packet Tracer accepts it directly. HSRP is configured because the scenario is resilient: two cores share a virtual gateway, the first core uses priority 110, the second 100, and preemption returns traffic after a failure. VRRP (RFC 5798) is the open alternative. Trunk hardening: allowed VLANs 10, 20, 30, 40, 50, native VLAN 999.",
+          "hardening": [
+            "Every trunk lists allowed VLAN ids explicitly; 'switchport trunk allowed vlan all' is never emitted.",
+            "Native VLAN is 999 and is not in the allowed user list.",
+            "Access ports enable PortFast and BPDU Guard.",
+            "Management VTY lines accept SSH only and are filtered by an ACL."
+          ]
+        }
+      },
+      {
+        "category": "Security and hardening",
+        "choice": "Guest/server ACL, SSH-only VTY, and explicit trunk hardening",
+        "reason": "The Wi-Fi/guest subnet is denied reachability to the server subnet with an extended ACL, management access is restricted to SSH from the management subnet, and trunks use an explicit allowed-VLAN list with an unused native VLAN. No IPsec policy is generated because there is no cloud or WAN boundary in this scenario.",
+        "standard": "Cisco IOS extended ACL syntax; IEEE 802.1Q",
+        "severity": "info",
+        "evidence": {
+          "vlans": [
+            10,
+            20,
+            30,
+            40,
+            50
+          ],
+          "native_vlan": 999,
+          "ssh_only": true,
+          "ipsec": false
+        }
+      }
+    ],
+    "violations": []
+  },
+  "alternate": {
+    "scenario": {
+      "name": "campus",
+      "description": "Campus LAN: three buildings inside 400 m, 1,600 endpoints, PoE access points, Cat6a access and OM4 backbone.",
+      "endpoints": 1600,
+      "buildings": 3,
+      "links": [
+        {
+          "name": "LAN access",
+          "distance_m": 90.0,
+          "kind": "access",
+          "media": "copper",
+          "connectors": 2,
+          "splices": 0
+        },
+        {
+          "name": "Building backbone",
+          "distance_m": 320.0,
+          "kind": "backbone",
+          "media": "auto",
+          "connectors": 2,
+          "splices": 0
+        }
+      ],
+      "root_prefix": "10.10.0.0/16",
+      "subnets": [
+        {
+          "name": "Data",
+          "hosts": 700,
+          "mode": "lan",
+          "poe": false,
+          "vlan": 10,
+          "site": "Campus"
+        },
+        {
+          "name": "Voice",
+          "hosts": 300,
+          "mode": "lan",
+          "poe": true,
+          "vlan": 20,
+          "site": "Campus"
+        },
+        {
+          "name": "Wi-Fi",
+          "hosts": 400,
+          "mode": "lan",
+          "poe": true,
+          "vlan": 30,
+          "site": "Campus"
+        },
+        {
+          "name": "Management",
+          "hosts": 100,
+          "mode": "lan",
+          "poe": false,
+          "vlan": 40,
+          "site": "Campus"
+        },
+        {
+          "name": "Servers",
+          "hosts": 100,
+          "mode": "lan",
+          "poe": false,
+          "vlan": 50,
+          "site": "Campus"
+        }
+      ],
+      "sites": [
+        {
+          "name": "Campus",
+          "subnets": [
+            "Data",
+            "Voice",
+            "Wi-Fi",
+            "Management",
+            "Servers"
+          ],
+          "role": "hq"
+        }
+      ],
+      "resilient": true,
+      "single_as": true,
+      "cloud": false,
+      "local_asn": null,
+      "peer_asn": null,
+      "access_speed_gbps": 1,
+      "uplink_speed_gbps": 10,
+      "uplinks": 2,
+      "forced_tier": null,
+      "prices": null,
+      "native_vlan": 999
+    },
+    "media": [
+      {
+        "link": "LAN access",
+        "distance_m": 90.0,
+        "distance_label": "90 m",
+        "kind": "access",
+        "medium": "Cat6a copper",
+        "standard": "IEEE 802.3an (10GBASE-T)",
+        "transceiver": "10GBASE-T",
+        "wavelength_nm": null,
+        "reach_m": 100.0,
+        "budget_db": null,
+        "loss_db": null,
+        "severity": "info",
+        "reason": "Selected Cat6a copper with a 10GBASE-T transceiver because the access run (90 m) is within the 100 m 10GBASE-T channel limit (IEEE 802.3an). Category 6a supports 10 Gb/s over 100 m and is the lowest-cost medium at this distance.",
+        "evidence": {
+          "limit_m": 100.0,
+          "distance_m": 90.0,
+          "headroom_m": 10.0
+        }
+      },
+      {
+        "link": "Building backbone",
+        "distance_m": 320.0,
+        "distance_label": "320 m",
+        "kind": "backbone",
+        "medium": "OM4 multimode fiber",
+        "standard": "IEEE 802.3ae (10GBASE-SR)",
+        "transceiver": "10GBASE-SR",
+        "wavelength_nm": 850,
+        "reach_m": 400.0,
+        "budget_db": null,
+        "loss_db": null,
+        "severity": "info",
+        "reason": "Selected OM4 multimode fiber because the backbone run (320 m): it exceeds the 100 m Cat6a limit and stays inside the 400 m reach of 10GBASE-SR at 850 nm (IEEE 802.3ae). Modal dispersion limits multimode reach, so the design stays within the 400 m OM4 catalogue distance.",
+        "evidence": {
+          "copper_limit_m": 100.0,
+          "mmf_limit_m": 400.0,
+          "distance_m": 320.0,
+          "headroom_m": 80.0
+        }
+      }
+    ],
+    "vlsm": {
+      "root": "10.10.0.0/16",
+      "blocks": [
+        {
+          "name": "Data",
+          "hosts": 700,
+          "prefix": 22,
+          "mode": "lan",
+          "vlan": 10,
+          "site": "Campus",
+          "between": null,
+          "poe": false,
+          "network": "10.10.0.0",
+          "mask": "255.255.252.0",
+          "wildcard": "0.0.3.255",
+          "broadcast": "10.10.3.255",
+          "first_usable": "10.10.0.1",
+          "last_usable": "10.10.3.254",
+          "gateway": "10.10.0.1",
+          "cidr": "10.10.0.0/22",
+          "usable": 1022,
+          "size": 1024,
+          "utilization": 68.5
+        },
+        {
+          "name": "Wi-Fi",
+          "hosts": 400,
+          "prefix": 23,
+          "mode": "lan",
+          "vlan": 30,
+          "site": "Campus",
+          "between": null,
+          "poe": true,
+          "network": "10.10.4.0",
+          "mask": "255.255.254.0",
+          "wildcard": "0.0.1.255",
+          "broadcast": "10.10.5.255",
+          "first_usable": "10.10.4.1",
+          "last_usable": "10.10.5.254",
+          "gateway": "10.10.4.1",
+          "cidr": "10.10.4.0/23",
+          "usable": 510,
+          "size": 512,
+          "utilization": 78.4
+        },
+        {
+          "name": "Voice",
+          "hosts": 300,
+          "prefix": 23,
+          "mode": "lan",
+          "vlan": 20,
+          "site": "Campus",
+          "between": null,
+          "poe": true,
+          "network": "10.10.6.0",
+          "mask": "255.255.254.0",
+          "wildcard": "0.0.1.255",
+          "broadcast": "10.10.7.255",
+          "first_usable": "10.10.6.1",
+          "last_usable": "10.10.7.254",
+          "gateway": "10.10.6.1",
+          "cidr": "10.10.6.0/23",
+          "usable": 510,
+          "size": 512,
+          "utilization": 58.8
+        },
+        {
+          "name": "Management",
+          "hosts": 100,
+          "prefix": 25,
+          "mode": "lan",
+          "vlan": 40,
+          "site": "Campus",
+          "between": null,
+          "poe": false,
+          "network": "10.10.8.0",
+          "mask": "255.255.255.128",
+          "wildcard": "0.0.0.127",
+          "broadcast": "10.10.8.127",
+          "first_usable": "10.10.8.1",
+          "last_usable": "10.10.8.126",
+          "gateway": "10.10.8.1",
+          "cidr": "10.10.8.0/25",
+          "usable": 126,
+          "size": 128,
+          "utilization": 79.4
+        },
+        {
+          "name": "Servers",
+          "hosts": 100,
+          "prefix": 25,
+          "mode": "lan",
+          "vlan": 50,
+          "site": "Campus",
+          "between": null,
+          "poe": false,
+          "network": "10.10.8.128",
+          "mask": "255.255.255.128",
+          "wildcard": "0.0.0.127",
+          "broadcast": "10.10.8.255",
+          "first_usable": "10.10.8.129",
+          "last_usable": "10.10.8.254",
+          "gateway": "10.10.8.129",
+          "cidr": "10.10.8.128/25",
+          "usable": 126,
+          "size": 128,
+          "utilization": 79.4
+        }
+      ],
+      "requested_total": 1600,
+      "allocated_addresses": 2304,
+      "usable_total": 2294,
+      "root_size": 65536,
+      "utilization": 69.44,
+      "usable_utilization": 69.75,
+      "wasted": 63232
+    },
+    "topology": {
+      "tier": "Collapsed core",
+      "natural_tier": "Three-tier",
+      "access_switches": 34,
+      "distribution_switches": 0,
+      "core_switches": 2,
+      "switch_count": 36,
+      "oversubscription": 2.4,
+      "ratio": "2.4:1",
+      "violation": "Collapsed core violates the tier rule for 1600 endpoints and 3 buildings; three-tier is required at >= 1000 endpoints or >= 4 buildings.",
+      "reason": "Selected a collapsed core because endpoints (1600) are < 1000 and buildings (3) are < 4. The design uses 34 access switch(es) and 2 combined core/distribution switch(es). Oversubscription is (48 x 1 Gb/s) / (2 x 10 Gb/s) = 2.4:1.",
+      "advantages": [
+        "Fewer devices and lower capital cost.",
+        "Short, simple Layer-2 domains for a small site."
+      ],
+      "disadvantages": [
+        "Core and distribution functions share the same chassis.",
+        "Growth past the tier threshold forces a redesign, not an upgrade."
+      ],
+      "tradeoffs": [
+        "Lower cost now; limited scale and a single policy boundary."
+      ],
+      "cost": null,
+      "cost_note": "Cost was not scored because the scenario did not supply all three switch prices."
+    },
+    "routing": {
+      "protocol": "Multi-area OSPF",
+      "area_for_site": {
+        "Campus": 0
+      },
+      "areas": {
+        "0": [
+          "10.10.0.0/22",
+          "10.10.4.0/23",
+          "10.10.6.0/23",
+          "10.10.8.0/25",
+          "10.10.8.128/25"
+        ]
+      },
+      "networks": [
+        {
+          "name": "Data",
+          "network": "10.10.0.0",
+          "wildcard": "0.0.3.255",
+          "mask": "255.255.252.0",
+          "area": 0,
+          "cidr": "10.10.0.0/22",
+          "passive": true
+        },
+        {
+          "name": "Wi-Fi",
+          "network": "10.10.4.0",
+          "wildcard": "0.0.1.255",
+          "mask": "255.255.254.0",
+          "area": 0,
+          "cidr": "10.10.4.0/23",
+          "passive": true
+        },
+        {
+          "name": "Voice",
+          "network": "10.10.6.0",
+          "wildcard": "0.0.1.255",
+          "mask": "255.255.254.0",
+          "area": 0,
+          "cidr": "10.10.6.0/23",
+          "passive": true
+        },
+        {
+          "name": "Management",
+          "network": "10.10.8.0",
+          "wildcard": "0.0.0.127",
+          "mask": "255.255.255.128",
+          "area": 0,
+          "cidr": "10.10.8.0/25",
+          "passive": true
+        },
+        {
+          "name": "Servers",
+          "network": "10.10.8.128",
+          "wildcard": "0.0.0.127",
+          "mask": "255.255.255.128",
+          "area": 0,
+          "cidr": "10.10.8.128/25",
+          "passive": true
+        }
+      ],
+      "summaries": [],
+      "bgp": false,
+      "local_asn": null,
+      "peer_asn": null,
+      "reason": "Selected multi-area OSPF because 1 sites and a longest link of 320 m exceed the 400 m single-site assumption, or the plan has 5 subnets (>= 50). Area 0 is the backbone; each remote site gets its own area and a summary, so a topology change in one site does not flood the others (RFC 2328).",
+      "violation": null,
+      "alternatives": [
+        "IS-IS is a link-state alternative, but OSPF is the Cisco-native choice for this course and Packet Tracer."
+      ]
+    },
+    "switching": {
+      "stp": "RSTP",
+      "stp_mode": "rapid-pvst",
+      "fhrp": "HSRP",
+      "fhrp_alternative": "VRRP (RFC 5798)",
+      "vlan_count": 5,
+      "switch_count": 36,
+      "native_vlan": 999,
+      "allowed_vlans": [
+        10,
+        20,
+        30,
+        40,
+        50
+      ],
+      "reason": "RSTP (IEEE 802.1w) is sufficient: 5 VLAN(s) <= 16 and 36 switch(es) < 50. Rapid PVST+ gives sub-second convergence per VLAN and Packet Tracer accepts it directly. HSRP is configured because the scenario is resilient: two cores share a virtual gateway, the first core uses priority 110, the second 100, and preemption returns traffic after a failure. VRRP (RFC 5798) is the open alternative. Trunk hardening: allowed VLANs 10, 20, 30, 40, 50, native VLAN 999.",
+      "hardening": [
+        "Every trunk lists allowed VLAN ids explicitly; 'switchport trunk allowed vlan all' is never emitted.",
+        "Native VLAN is 999 and is not in the allowed user list.",
+        "Access ports enable PortFast and BPDU Guard.",
+        "Management VTY lines accept SSH only and are filtered by an ACL."
+      ]
+    },
+    "decisions": [
+      {
+        "category": "Physical media (L1)",
+        "choice": "Cat6a copper / 10GBASE-T",
+        "reason": "Selected Cat6a copper with a 10GBASE-T transceiver because the access run (90 m) is within the 100 m 10GBASE-T channel limit (IEEE 802.3an). Category 6a supports 10 Gb/s over 100 m and is the lowest-cost medium at this distance.",
+        "standard": "IEEE 802.3an (10GBASE-T)",
+        "severity": "info",
+        "evidence": {
+          "limit_m": 100.0,
+          "distance_m": 90.0,
+          "headroom_m": 10.0
+        }
+      },
+      {
+        "category": "Physical media (L1)",
+        "choice": "OM4 multimode fiber / 10GBASE-SR",
+        "reason": "Selected OM4 multimode fiber because the backbone run (320 m): it exceeds the 100 m Cat6a limit and stays inside the 400 m reach of 10GBASE-SR at 850 nm (IEEE 802.3ae). Modal dispersion limits multimode reach, so the design stays within the 400 m OM4 catalogue distance.",
+        "standard": "IEEE 802.3ae (10GBASE-SR)",
+        "severity": "info",
+        "evidence": {
+          "copper_limit_m": 100.0,
+          "mmf_limit_m": 400.0,
+          "distance_m": 320.0,
+          "headroom_m": 80.0
+        }
+      },
+      {
+        "category": "Addressing (VLSM)",
+        "choice": "10.10.0.0/16 -> 5 non-overlapping subnets",
+        "reason": "Allocated 5 subnets inside 10.10.0.0/16 by sorting host requests largest-first and aligning each block to its own power-of-two boundary. 1600 requested hosts occupy 2304 addresses (69.4% address utilisation, 69.7% of usable addresses). An independent range scan confirms no overlap. Plan: Data 10.10.0.0/22, Wi-Fi 10.10.4.0/23, Voice 10.10.6.0/23, Management 10.10.8.0/25, Servers 10.10.8.128/25.",
+        "standard": "RFC 1918 private addressing; RFC 4632 CIDR; RFC 3021 for /31",
+        "severity": "info",
+        "evidence": {
+          "root": "10.10.0.0/16",
+          "blocks": 5,
+          "requested_total": 1600,
+          "allocated_addresses": 2304,
+          "utilization": 69.44,
+          "usable_utilization": 69.75,
+          "wasted": 63232
+        }
+      },
+      {
+        "category": "Topology",
+        "choice": "Collapsed core (34 access, 0 distribution, 2 core)",
+        "reason": "Selected a collapsed core because endpoints (1600) are < 1000 and buildings (3) are < 4. The design uses 34 access switch(es) and 2 combined core/distribution switch(es). Oversubscription is (48 x 1 Gb/s) / (2 x 10 Gb/s) = 2.4:1. Cost was not scored because the scenario did not supply all three switch prices.",
+        "standard": "CIC-307 topology-tier rule; 48-port access switch sizing",
+        "severity": "violation",
+        "evidence": {
+          "tier": "Collapsed core",
+          "natural_tier": "Three-tier",
+          "access_switches": 34,
+          "distribution_switches": 0,
+          "core_switches": 2,
+          "switch_count": 36,
+          "oversubscription": 2.4,
+          "ratio": "2.4:1",
+          "violation": "Collapsed core violates the tier rule for 1600 endpoints and 3 buildings; three-tier is required at >= 1000 endpoints or >= 4 buildings.",
+          "reason": "Selected a collapsed core because endpoints (1600) are < 1000 and buildings (3) are < 4. The design uses 34 access switch(es) and 2 combined core/distribution switch(es). Oversubscription is (48 x 1 Gb/s) / (2 x 10 Gb/s) = 2.4:1.",
+          "advantages": [
+            "Fewer devices and lower capital cost.",
+            "Short, simple Layer-2 domains for a small site."
+          ],
+          "disadvantages": [
+            "Core and distribution functions share the same chassis.",
+            "Growth past the tier threshold forces a redesign, not an upgrade."
+          ],
+          "tradeoffs": [
+            "Lower cost now; limited scale and a single policy boundary."
+          ],
+          "cost": null,
+          "cost_note": "Cost was not scored because the scenario did not supply all three switch prices."
+        }
+      },
+      {
+        "category": "Routing (L3)",
+        "choice": "Multi-area OSPF",
+        "reason": "Selected multi-area OSPF because 1 sites and a longest link of 320 m exceed the 400 m single-site assumption, or the plan has 5 subnets (>= 50). Area 0 is the backbone; each remote site gets its own area and a summary, so a topology change in one site does not flood the others (RFC 2328).",
+        "standard": "RFC 2328 (OSPFv2); RFC 4271 (BGP-4)",
+        "severity": "info",
+        "evidence": {
+          "protocol": "Multi-area OSPF",
+          "area_for_site": {
+            "Campus": 0
+          },
+          "areas": {
+            "0": [
+              "10.10.0.0/22",
+              "10.10.4.0/23",
+              "10.10.6.0/23",
+              "10.10.8.0/25",
+              "10.10.8.128/25"
+            ]
+          },
+          "networks": [
+            {
+              "name": "Data",
+              "network": "10.10.0.0",
+              "wildcard": "0.0.3.255",
+              "mask": "255.255.252.0",
+              "area": 0,
+              "cidr": "10.10.0.0/22",
+              "passive": true
+            },
+            {
+              "name": "Wi-Fi",
+              "network": "10.10.4.0",
+              "wildcard": "0.0.1.255",
+              "mask": "255.255.254.0",
+              "area": 0,
+              "cidr": "10.10.4.0/23",
+              "passive": true
+            },
+            {
+              "name": "Voice",
+              "network": "10.10.6.0",
+              "wildcard": "0.0.1.255",
+              "mask": "255.255.254.0",
+              "area": 0,
+              "cidr": "10.10.6.0/23",
+              "passive": true
+            },
+            {
+              "name": "Management",
+              "network": "10.10.8.0",
+              "wildcard": "0.0.0.127",
+              "mask": "255.255.255.128",
+              "area": 0,
+              "cidr": "10.10.8.0/25",
+              "passive": true
+            },
+            {
+              "name": "Servers",
+              "network": "10.10.8.128",
+              "wildcard": "0.0.0.127",
+              "mask": "255.255.255.128",
+              "area": 0,
+              "cidr": "10.10.8.128/25",
+              "passive": true
+            }
+          ],
+          "summaries": [],
+          "bgp": false,
+          "local_asn": null,
+          "peer_asn": null,
+          "reason": "Selected multi-area OSPF because 1 sites and a longest link of 320 m exceed the 400 m single-site assumption, or the plan has 5 subnets (>= 50). Area 0 is the backbone; each remote site gets its own area and a summary, so a topology change in one site does not flood the others (RFC 2328).",
+          "violation": null,
+          "alternatives": [
+            "IS-IS is a link-state alternative, but OSPF is the Cisco-native choice for this course and Packet Tracer."
+          ]
+        }
+      },
+      {
+        "category": "Switching (L2)",
+        "choice": "RSTP + HSRP",
+        "reason": "RSTP (IEEE 802.1w) is sufficient: 5 VLAN(s) <= 16 and 36 switch(es) < 50. Rapid PVST+ gives sub-second convergence per VLAN and Packet Tracer accepts it directly. HSRP is configured because the scenario is resilient: two cores share a virtual gateway, the first core uses priority 110, the second 100, and preemption returns traffic after a failure. VRRP (RFC 5798) is the open alternative. Trunk hardening: allowed VLANs 10, 20, 30, 40, 50, native VLAN 999.",
+        "standard": "IEEE 802.1w; IEEE 802.1s; RFC 5798 (VRRP alternative)",
+        "severity": "info",
+        "evidence": {
+          "stp": "RSTP",
+          "stp_mode": "rapid-pvst",
+          "fhrp": "HSRP",
+          "fhrp_alternative": "VRRP (RFC 5798)",
+          "vlan_count": 5,
+          "switch_count": 36,
+          "native_vlan": 999,
+          "allowed_vlans": [
+            10,
+            20,
+            30,
+            40,
+            50
+          ],
+          "reason": "RSTP (IEEE 802.1w) is sufficient: 5 VLAN(s) <= 16 and 36 switch(es) < 50. Rapid PVST+ gives sub-second convergence per VLAN and Packet Tracer accepts it directly. HSRP is configured because the scenario is resilient: two cores share a virtual gateway, the first core uses priority 110, the second 100, and preemption returns traffic after a failure. VRRP (RFC 5798) is the open alternative. Trunk hardening: allowed VLANs 10, 20, 30, 40, 50, native VLAN 999.",
+          "hardening": [
+            "Every trunk lists allowed VLAN ids explicitly; 'switchport trunk allowed vlan all' is never emitted.",
+            "Native VLAN is 999 and is not in the allowed user list.",
+            "Access ports enable PortFast and BPDU Guard.",
+            "Management VTY lines accept SSH only and are filtered by an ACL."
+          ]
+        }
+      },
+      {
+        "category": "Security and hardening",
+        "choice": "Guest/server ACL, SSH-only VTY, and explicit trunk hardening",
+        "reason": "The Wi-Fi/guest subnet is denied reachability to the server subnet with an extended ACL, management access is restricted to SSH from the management subnet, and trunks use an explicit allowed-VLAN list with an unused native VLAN. No IPsec policy is generated because there is no cloud or WAN boundary in this scenario.",
+        "standard": "Cisco IOS extended ACL syntax; IEEE 802.1Q",
+        "severity": "info",
+        "evidence": {
+          "vlans": [
+            10,
+            20,
+            30,
+            40,
+            50
+          ],
+          "native_vlan": 999,
+          "ssh_only": true,
+          "ipsec": false
+        }
+      }
+    ],
+    "violations": [
+      "Collapsed core violates the tier rule for 1600 endpoints and 3 buildings; three-tier is required at >= 1000 endpoints or >= 4 buildings."
+    ]
+  },
+  "export_filename": "campus.txt",
+  "devices": [
+    "campus-acc1",
+    "campus-acc2",
+    "campus-acc3",
+    "campus-core1",
+    "campus-core2",
+    "campus-dist1",
+    "campus-dist2",
+    "campus-dist3"
+  ],
+  "device_configs": {
+    "campus-core1": "! NetArchitect generated configuration\n! Device: campus-core1\n! Role: Layer-3 core switch\n! Scenario: campus\n! Lab credentials only; see README. Do not reuse in production.\n!\nhostname campus-core1\n!\nno ip domain-lookup\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\n!\nenable secret NetArchitect-Lab-123\nusername admin privilege 15 secret NetArchitect-Lab-123\n!\nip routing\n!\n! --- VLAN database ---\nvlan 10\n name DATA\nvlan 20\n name VOICE\nvlan 30\n name WI-FI\nvlan 40\n name MANAGEMENT\nvlan 50\n name SERVERS\n!\n! --- Trunk to distribution 1 ---\ninterface GigabitEthernet1/0/1\n switchport trunk encapsulation dot1q\n switchport mode trunk\n switchport trunk native vlan 999\n switchport trunk allowed vlan 10,20,30,40,50\n no shutdown\n!\n! --- Trunk to distribution 2 ---\ninterface GigabitEthernet1/0/2\n switchport trunk encapsulation dot1q\n switchport mode trunk\n switchport trunk native vlan 999\n switchport trunk allowed vlan 10,20,30,40,50\n no shutdown\n!\n! --- Trunk to distribution 3 ---\ninterface GigabitEthernet1/0/3\n switchport trunk encapsulation dot1q\n switchport mode trunk\n switchport trunk native vlan 999\n switchport trunk allowed vlan 10,20,30,40,50\n no shutdown\n!\n! --- Data ---\ninterface Vlan10\n description Data\n ip address 10.10.0.2 255.255.252.0\n standby 10 ip 10.10.0.1\n standby 10 priority 110\n standby 10 preempt\n no shutdown\n!\n! --- Wi-Fi ---\ninterface Vlan30\n description Wi-Fi\n ip address 10.10.4.2 255.255.254.0\n standby 30 ip 10.10.4.1\n standby 30 priority 110\n standby 30 preempt\n no shutdown\n!\n! --- Voice ---\ninterface Vlan20\n description Voice\n ip address 10.10.6.2 255.255.254.0\n standby 20 ip 10.10.6.1\n standby 20 priority 110\n standby 20 preempt\n no shutdown\n!\n! --- Management ---\ninterface Vlan40\n description Management\n ip address 10.10.8.2 255.255.255.128\n standby 40 ip 10.10.8.1\n standby 40 priority 110\n standby 40 preempt\n no shutdown\n!\n! --- Servers ---\ninterface Vlan50\n description Servers\n ip address 10.10.8.130 255.255.255.128\n standby 50 ip 10.10.8.129\n standby 50 priority 110\n standby 50 preempt\n no shutdown\n!\n!\nspanning-tree mode rapid-pvst\nspanning-tree vlan 10,20,30,40,50 priority 4096\n!\n! --- OSPF ---\nrouter ospf 1\n router-id 10.10.8.2\n network 10.10.0.0 0.0.3.255 area 0\n network 10.10.4.0 0.0.1.255 area 0\n network 10.10.6.0 0.0.1.255 area 0\n network 10.10.8.0 0.0.0.127 area 0\n network 10.10.8.128 0.0.0.127 area 0\n passive-interface Vlan10\n passive-interface Vlan30\n passive-interface Vlan20\n passive-interface Vlan40\n passive-interface Vlan50\n!\nip access-list extended MGMT-ACCESS\n permit tcp 10.10.8.0 0.0.0.127 any eq 22\n deny ip any any\n!\nip access-list extended GUEST-ISOLATION\n deny ip 10.10.4.0 0.0.1.255 10.10.8.128 0.0.0.127\n permit ip any any\n!\ninterface Vlan30\n ip access-group GUEST-ISOLATION in\n!\nline con 0\n logging synchronous\nline vty 0 4\n login local\n transport input ssh\n access-class MGMT-ACCESS in\n!\nend\n",
+    "campus-core2": "! NetArchitect generated configuration\n! Device: campus-core2\n! Role: Layer-3 core switch\n! Scenario: campus\n! Lab credentials only; see README. Do not reuse in production.\n!\nhostname campus-core2\n!\nno ip domain-lookup\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\n!\nenable secret NetArchitect-Lab-123\nusername admin privilege 15 secret NetArchitect-Lab-123\n!\nip routing\n!\n! --- VLAN database ---\nvlan 10\n name DATA\nvlan 20\n name VOICE\nvlan 30\n name WI-FI\nvlan 40\n name MANAGEMENT\nvlan 50\n name SERVERS\n!\n! --- Trunk to distribution 1 ---\ninterface GigabitEthernet1/0/1\n switchport trunk encapsulation dot1q\n switchport mode trunk\n switchport trunk native vlan 999\n switchport trunk allowed vlan 10,20,30,40,50\n no shutdown\n!\n! --- Trunk to distribution 2 ---\ninterface GigabitEthernet1/0/2\n switchport trunk encapsulation dot1q\n switchport mode trunk\n switchport trunk native vlan 999\n switchport trunk allowed vlan 10,20,30,40,50\n no shutdown\n!\n! --- Trunk to distribution 3 ---\ninterface GigabitEthernet1/0/3\n switchport trunk encapsulation dot1q\n switchport mode trunk\n switchport trunk native vlan 999\n switchport trunk allowed vlan 10,20,30,40,50\n no shutdown\n!\n! --- Data ---\ninterface Vlan10\n description Data\n ip address 10.10.0.3 255.255.252.0\n standby 10 ip 10.10.0.1\n standby 10 priority 100\n standby 10 preempt\n no shutdown\n!\n! --- Wi-Fi ---\ninterface Vlan30\n description Wi-Fi\n ip address 10.10.4.3 255.255.254.0\n standby 30 ip 10.10.4.1\n standby 30 priority 100\n standby 30 preempt\n no shutdown\n!\n! --- Voice ---\ninterface Vlan20\n description Voice\n ip address 10.10.6.3 255.255.254.0\n standby 20 ip 10.10.6.1\n standby 20 priority 100\n standby 20 preempt\n no shutdown\n!\n! --- Management ---\ninterface Vlan40\n description Management\n ip address 10.10.8.3 255.255.255.128\n standby 40 ip 10.10.8.1\n standby 40 priority 100\n standby 40 preempt\n no shutdown\n!\n! --- Servers ---\ninterface Vlan50\n description Servers\n ip address 10.10.8.131 255.255.255.128\n standby 50 ip 10.10.8.129\n standby 50 priority 100\n standby 50 preempt\n no shutdown\n!\n!\nspanning-tree mode rapid-pvst\n!\n! --- OSPF ---\nrouter ospf 1\n router-id 10.10.8.3\n network 10.10.0.0 0.0.3.255 area 0\n network 10.10.4.0 0.0.1.255 area 0\n network 10.10.6.0 0.0.1.255 area 0\n network 10.10.8.0 0.0.0.127 area 0\n network 10.10.8.128 0.0.0.127 area 0\n passive-interface Vlan10\n passive-interface Vlan30\n passive-interface Vlan20\n passive-interface Vlan40\n passive-interface Vlan50\n!\nip access-list extended MGMT-ACCESS\n permit tcp 10.10.8.0 0.0.0.127 any eq 22\n deny ip any any\n!\nip access-list extended GUEST-ISOLATION\n deny ip 10.10.4.0 0.0.1.255 10.10.8.128 0.0.0.127\n permit ip any any\n!\ninterface Vlan30\n ip access-group GUEST-ISOLATION in\n!\nline con 0\n logging synchronous\nline vty 0 4\n login local\n transport input ssh\n access-class MGMT-ACCESS in\n!\nend\n",
+    "campus-dist1": "! NetArchitect generated configuration\n! Device: campus-dist1\n! Role: Layer-2 distribution switch\n! Scenario: campus\n! Lab credentials only; see README. Do not reuse in production.\n!\nhostname campus-dist1\n!\nno ip domain-lookup\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\n!\nenable secret NetArchitect-Lab-123\nusername admin privilege 15 secret NetArchitect-Lab-123\n!\n!\n! --- VLAN database ---\nvlan 10\n name DATA\nvlan 20\n name VOICE\nvlan 30\n name WI-FI\nvlan 40\n name MANAGEMENT\nvlan 50\n name SERVERS\n!\n! --- Trunk to core 1 ---\ninterface GigabitEthernet0/1\n switchport trunk encapsulation dot1q\n switchport mode trunk\n switchport trunk native vlan 999\n switchport trunk allowed vlan 10,20,30,40,50\n no shutdown\n!\n! --- Trunk to core 2 ---\ninterface GigabitEthernet0/2\n switchport trunk encapsulation dot1q\n switchport mode trunk\n switchport trunk native vlan 999\n switchport trunk allowed vlan 10,20,30,40,50\n no shutdown\n!\n! --- Trunk to access switch 1 ---\ninterface GigabitEthernet0/3\n switchport trunk encapsulation dot1q\n switchport mode trunk\n switchport trunk native vlan 999\n switchport trunk allowed vlan 10,20,30,40,50\n no shutdown\n!\n! --- Management SVI ---\ninterface Vlan40\n description Management SVI\n ip address 10.10.8.21 255.255.255.128\n no shutdown\n!\n!\nspanning-tree mode rapid-pvst\n!\nip default-gateway 10.10.8.1\n!\nip access-list extended MGMT-ACCESS\n permit tcp 10.10.8.0 0.0.0.127 any eq 22\n deny ip any any\n!\nline con 0\n logging synchronous\nline vty 0 4\n login local\n transport input ssh\n access-class MGMT-ACCESS in\n!\nend\n",
+    "campus-dist2": "! NetArchitect generated configuration\n! Device: campus-dist2\n! Role: Layer-2 distribution switch\n! Scenario: campus\n! Lab credentials only; see README. Do not reuse in production.\n!\nhostname campus-dist2\n!\nno ip domain-lookup\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\n!\nenable secret NetArchitect-Lab-123\nusername admin privilege 15 secret NetArchitect-Lab-123\n!\n!\n! --- VLAN database ---\nvlan 10\n name DATA\nvlan 20\n name VOICE\nvlan 30\n name WI-FI\nvlan 40\n name MANAGEMENT\nvlan 50\n name SERVERS\n!\n! --- Trunk to core 1 ---\ninterface GigabitEthernet0/1\n switchport trunk encapsulation dot1q\n switchport mode trunk\n switchport trunk native vlan 999\n switchport trunk allowed vlan 10,20,30,40,50\n no shutdown\n!\n! --- Trunk to core 2 ---\ninterface GigabitEthernet0/2\n switchport trunk encapsulation dot1q\n switchport mode trunk\n switchport trunk native vlan 999\n switchport trunk allowed vlan 10,20,30,40,50\n no shutdown\n!\n! --- Trunk to access switch 2 ---\ninterface GigabitEthernet0/3\n switchport trunk encapsulation dot1q\n switchport mode trunk\n switchport trunk native vlan 999\n switchport trunk allowed vlan 10,20,30,40,50\n no shutdown\n!\n! --- Management SVI ---\ninterface Vlan40\n description Management SVI\n ip address 10.10.8.22 255.255.255.128\n no shutdown\n!\n!\nspanning-tree mode rapid-pvst\n!\nip default-gateway 10.10.8.1\n!\nip access-list extended MGMT-ACCESS\n permit tcp 10.10.8.0 0.0.0.127 any eq 22\n deny ip any any\n!\nline con 0\n logging synchronous\nline vty 0 4\n login local\n transport input ssh\n access-class MGMT-ACCESS in\n!\nend\n",
+    "campus-dist3": "! NetArchitect generated configuration\n! Device: campus-dist3\n! Role: Layer-2 distribution switch\n! Scenario: campus\n! Lab credentials only; see README. Do not reuse in production.\n!\nhostname campus-dist3\n!\nno ip domain-lookup\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\n!\nenable secret NetArchitect-Lab-123\nusername admin privilege 15 secret NetArchitect-Lab-123\n!\n!\n! --- VLAN database ---\nvlan 10\n name DATA\nvlan 20\n name VOICE\nvlan 30\n name WI-FI\nvlan 40\n name MANAGEMENT\nvlan 50\n name SERVERS\n!\n! --- Trunk to core 1 ---\ninterface GigabitEthernet0/1\n switchport trunk encapsulation dot1q\n switchport mode trunk\n switchport trunk native vlan 999\n switchport trunk allowed vlan 10,20,30,40,50\n no shutdown\n!\n! --- Trunk to core 2 ---\ninterface GigabitEthernet0/2\n switchport trunk encapsulation dot1q\n switchport mode trunk\n switchport trunk native vlan 999\n switchport trunk allowed vlan 10,20,30,40,50\n no shutdown\n!\n! --- Trunk to access switch 3 ---\ninterface GigabitEthernet0/3\n switchport trunk encapsulation dot1q\n switchport mode trunk\n switchport trunk native vlan 999\n switchport trunk allowed vlan 10,20,30,40,50\n no shutdown\n!\n! --- Management SVI ---\ninterface Vlan40\n description Management SVI\n ip address 10.10.8.23 255.255.255.128\n no shutdown\n!\n!\nspanning-tree mode rapid-pvst\n!\nip default-gateway 10.10.8.1\n!\nip access-list extended MGMT-ACCESS\n permit tcp 10.10.8.0 0.0.0.127 any eq 22\n deny ip any any\n!\nline con 0\n logging synchronous\nline vty 0 4\n login local\n transport input ssh\n access-class MGMT-ACCESS in\n!\nend\n",
+    "campus-acc1": "! NetArchitect generated configuration\n! Device: campus-acc1\n! Role: Layer-2 access switch\n! Scenario: campus\n! Lab credentials only; see README. Do not reuse in production.\n!\nhostname campus-acc1\n!\nno ip domain-lookup\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\n!\nenable secret NetArchitect-Lab-123\nusername admin privilege 15 secret NetArchitect-Lab-123\n!\n!\n! --- VLAN database ---\nvlan 10\n name DATA\nvlan 20\n name VOICE\nvlan 30\n name WI-FI\nvlan 40\n name MANAGEMENT\nvlan 50\n name SERVERS\n!\n! --- Trunk to distribution 1 ---\ninterface GigabitEthernet0/1\n switchport trunk encapsulation dot1q\n switchport mode trunk\n switchport trunk native vlan 999\n switchport trunk allowed vlan 10,20,30,40,50\n no shutdown\n!\n! --- Access port 1 ---\ninterface FastEthernet0/1\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n power inline auto\n no shutdown\n!\n! --- Access port 2 ---\ninterface FastEthernet0/2\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n power inline auto\n no shutdown\n!\n! --- Access port 3 ---\ninterface FastEthernet0/3\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n power inline auto\n no shutdown\n!\n! --- Access port 4 ---\ninterface FastEthernet0/4\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n power inline auto\n no shutdown\n!\n! --- Access port 5 ---\ninterface FastEthernet0/5\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n power inline auto\n no shutdown\n!\n! --- Access port 6 ---\ninterface FastEthernet0/6\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n power inline auto\n no shutdown\n!\n! --- Access port 7 ---\ninterface FastEthernet0/7\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n power inline auto\n no shutdown\n!\n! --- Access port 8 ---\ninterface FastEthernet0/8\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n power inline auto\n no shutdown\n!\n! --- Access port 9 ---\ninterface FastEthernet0/9\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n power inline auto\n no shutdown\n!\n! --- Access port 10 ---\ninterface FastEthernet0/10\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n power inline auto\n no shutdown\n!\n! --- Access port 11 ---\ninterface FastEthernet0/11\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n power inline auto\n no shutdown\n!\n! --- Access port 12 ---\ninterface FastEthernet0/12\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n power inline auto\n no shutdown\n!\n! --- Access port 13 ---\ninterface FastEthernet0/13\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 14 ---\ninterface FastEthernet0/14\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 15 ---\ninterface FastEthernet0/15\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 16 ---\ninterface FastEthernet0/16\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 17 ---\ninterface FastEthernet0/17\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 18 ---\ninterface FastEthernet0/18\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 19 ---\ninterface FastEthernet0/19\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 20 ---\ninterface FastEthernet0/20\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 21 ---\ninterface FastEthernet0/21\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 22 ---\ninterface FastEthernet0/22\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 23 ---\ninterface FastEthernet0/23\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 24 ---\ninterface FastEthernet0/24\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Management SVI ---\ninterface Vlan40\n description Management SVI\n ip address 10.10.8.41 255.255.255.128\n no shutdown\n!\n!\nspanning-tree mode rapid-pvst\n!\nip default-gateway 10.10.8.1\n!\nip access-list extended MGMT-ACCESS\n permit tcp 10.10.8.0 0.0.0.127 any eq 22\n deny ip any any\n!\nline con 0\n logging synchronous\nline vty 0 4\n login local\n transport input ssh\n access-class MGMT-ACCESS in\n!\nend\n",
+    "campus-acc2": "! NetArchitect generated configuration\n! Device: campus-acc2\n! Role: Layer-2 access switch\n! Scenario: campus\n! Lab credentials only; see README. Do not reuse in production.\n!\nhostname campus-acc2\n!\nno ip domain-lookup\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\n!\nenable secret NetArchitect-Lab-123\nusername admin privilege 15 secret NetArchitect-Lab-123\n!\n!\n! --- VLAN database ---\nvlan 10\n name DATA\nvlan 20\n name VOICE\nvlan 30\n name WI-FI\nvlan 40\n name MANAGEMENT\nvlan 50\n name SERVERS\n!\n! --- Trunk to distribution 2 ---\ninterface GigabitEthernet0/1\n switchport trunk encapsulation dot1q\n switchport mode trunk\n switchport trunk native vlan 999\n switchport trunk allowed vlan 10,20,30,40,50\n no shutdown\n!\n! --- Access port 1 ---\ninterface FastEthernet0/1\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n power inline auto\n no shutdown\n!\n! --- Access port 2 ---\ninterface FastEthernet0/2\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n power inline auto\n no shutdown\n!\n! --- Access port 3 ---\ninterface FastEthernet0/3\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n power inline auto\n no shutdown\n!\n! --- Access port 4 ---\ninterface FastEthernet0/4\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n power inline auto\n no shutdown\n!\n! --- Access port 5 ---\ninterface FastEthernet0/5\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n power inline auto\n no shutdown\n!\n! --- Access port 6 ---\ninterface FastEthernet0/6\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n power inline auto\n no shutdown\n!\n! --- Access port 7 ---\ninterface FastEthernet0/7\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n power inline auto\n no shutdown\n!\n! --- Access port 8 ---\ninterface FastEthernet0/8\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n power inline auto\n no shutdown\n!\n! --- Access port 9 ---\ninterface FastEthernet0/9\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n power inline auto\n no shutdown\n!\n! --- Access port 10 ---\ninterface FastEthernet0/10\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n power inline auto\n no shutdown\n!\n! --- Access port 11 ---\ninterface FastEthernet0/11\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n power inline auto\n no shutdown\n!\n! --- Access port 12 ---\ninterface FastEthernet0/12\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n power inline auto\n no shutdown\n!\n! --- Access port 13 ---\ninterface FastEthernet0/13\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 14 ---\ninterface FastEthernet0/14\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 15 ---\ninterface FastEthernet0/15\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 16 ---\ninterface FastEthernet0/16\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 17 ---\ninterface FastEthernet0/17\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 18 ---\ninterface FastEthernet0/18\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 19 ---\ninterface FastEthernet0/19\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 20 ---\ninterface FastEthernet0/20\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 21 ---\ninterface FastEthernet0/21\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 22 ---\ninterface FastEthernet0/22\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 23 ---\ninterface FastEthernet0/23\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 24 ---\ninterface FastEthernet0/24\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Management SVI ---\ninterface Vlan40\n description Management SVI\n ip address 10.10.8.42 255.255.255.128\n no shutdown\n!\n!\nspanning-tree mode rapid-pvst\n!\nip default-gateway 10.10.8.1\n!\nip access-list extended MGMT-ACCESS\n permit tcp 10.10.8.0 0.0.0.127 any eq 22\n deny ip any any\n!\nline con 0\n logging synchronous\nline vty 0 4\n login local\n transport input ssh\n access-class MGMT-ACCESS in\n!\nend\n",
+    "campus-acc3": "! NetArchitect generated configuration\n! Device: campus-acc3\n! Role: Layer-2 access switch\n! Scenario: campus\n! Lab credentials only; see README. Do not reuse in production.\n!\nhostname campus-acc3\n!\nno ip domain-lookup\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\n!\nenable secret NetArchitect-Lab-123\nusername admin privilege 15 secret NetArchitect-Lab-123\n!\n!\n! --- VLAN database ---\nvlan 10\n name DATA\nvlan 20\n name VOICE\nvlan 30\n name WI-FI\nvlan 40\n name MANAGEMENT\nvlan 50\n name SERVERS\n!\n! --- Trunk to distribution 3 ---\ninterface GigabitEthernet0/1\n switchport trunk encapsulation dot1q\n switchport mode trunk\n switchport trunk native vlan 999\n switchport trunk allowed vlan 10,20,30,40,50\n no shutdown\n!\n! --- Access port 1 ---\ninterface FastEthernet0/1\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n power inline auto\n no shutdown\n!\n! --- Access port 2 ---\ninterface FastEthernet0/2\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n power inline auto\n no shutdown\n!\n! --- Access port 3 ---\ninterface FastEthernet0/3\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n power inline auto\n no shutdown\n!\n! --- Access port 4 ---\ninterface FastEthernet0/4\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n power inline auto\n no shutdown\n!\n! --- Access port 5 ---\ninterface FastEthernet0/5\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n power inline auto\n no shutdown\n!\n! --- Access port 6 ---\ninterface FastEthernet0/6\n switchport mode access\n switchport access vlan 20\n spanning-tree portfast\n spanning-tree bpduguard enable\n power inline auto\n no shutdown\n!\n! --- Access port 7 ---\ninterface FastEthernet0/7\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n power inline auto\n no shutdown\n!\n! --- Access port 8 ---\ninterface FastEthernet0/8\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n power inline auto\n no shutdown\n!\n! --- Access port 9 ---\ninterface FastEthernet0/9\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n power inline auto\n no shutdown\n!\n! --- Access port 10 ---\ninterface FastEthernet0/10\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n power inline auto\n no shutdown\n!\n! --- Access port 11 ---\ninterface FastEthernet0/11\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n power inline auto\n no shutdown\n!\n! --- Access port 12 ---\ninterface FastEthernet0/12\n switchport mode access\n switchport access vlan 30\n spanning-tree portfast\n spanning-tree bpduguard enable\n power inline auto\n no shutdown\n!\n! --- Access port 13 ---\ninterface FastEthernet0/13\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 14 ---\ninterface FastEthernet0/14\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 15 ---\ninterface FastEthernet0/15\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 16 ---\ninterface FastEthernet0/16\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 17 ---\ninterface FastEthernet0/17\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 18 ---\ninterface FastEthernet0/18\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 19 ---\ninterface FastEthernet0/19\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 20 ---\ninterface FastEthernet0/20\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 21 ---\ninterface FastEthernet0/21\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 22 ---\ninterface FastEthernet0/22\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 23 ---\ninterface FastEthernet0/23\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Access port 24 ---\ninterface FastEthernet0/24\n switchport mode access\n switchport access vlan 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\n!\n! --- Management SVI ---\ninterface Vlan40\n description Management SVI\n ip address 10.10.8.43 255.255.255.128\n no shutdown\n!\n!\nspanning-tree mode rapid-pvst\n!\nip default-gateway 10.10.8.1\n!\nip access-list extended MGMT-ACCESS\n permit tcp 10.10.8.0 0.0.0.127 any eq 22\n deny ip any any\n!\nline con 0\n logging synchronous\nline vty 0 4\n login local\n transport input ssh\n access-class MGMT-ACCESS in\n!\nend\n"
+  }
+}
