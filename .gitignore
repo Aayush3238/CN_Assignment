@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+netarchitect.db
+.DS_Store
+
+# Reference material supplied with the assignment (not our work)
+NetArchitect Assignment Specification-2 (1).pdf
+NetArchitect-Project-Report.pdf
+
