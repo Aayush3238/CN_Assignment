@@ -1,0 +1,8 @@
+* text=auto
+
+# Binary artifacts must never undergo line-ending conversion.
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
