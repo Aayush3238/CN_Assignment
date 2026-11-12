@@ -1,0 +1,177 @@
+! NetArchitect generated configuration
+! Device: {{ device.hostname }}
+! Role: {{ device.role }}
+! Scenario: {{ scenario.name }}
+! Lab credentials only; see README. Do not reuse in production.
+!
+hostname {{ device.hostname }}
+!
+no ip domain-lookup
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+enable secret {{ lab_secret }}
+username admin privilege 15 secret {{ lab_secret }}
+!
+{% if device.l3 %}
+ip routing
+{% endif %}
+{% if device.vlans %}
+!
+! --- VLAN database ---
+{% for vlan in device.vlans %}
+vlan {{ vlan.id }}
+ name {{ vlan.name }}
+{% endfor %}
+{% endif %}
+!
+{% for iface in device.interfaces %}
+! --- {{ iface.description or iface.name }} ---
+interface {{ iface.name }}
+{% if iface.mode == "trunk" %}
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport trunk native vlan {{ iface.native_vlan }}
+ switchport trunk allowed vlan {{ iface.allowed_vlans | join(",") }}
+{% elif iface.mode == "access" %}
+ switchport mode access
+ switchport access vlan {{ iface.vlan }}
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+{% if iface.poe %}
+ power inline auto
+{% endif %}
+{% elif iface.mode == "svi" %}
+{% if iface.description %}
+ description {{ iface.description }}
+{% endif %}
+{% if iface.ip %}
+ ip address {{ iface.ip }} {{ iface.mask }}
+{% endif %}
+{% if iface.hsrp %}
+ standby {{ iface.hsrp.group }} ip {{ iface.hsrp.virtual }}
+ standby {{ iface.hsrp.group }} priority {{ iface.hsrp.priority }}
+ standby {{ iface.hsrp.group }} preempt
+{% endif %}
+{% elif iface.mode == "routed" %}
+{% if iface.description %}
+ description {{ iface.description }}
+{% endif %}
+ ip address {{ iface.ip }} {{ iface.mask }}
+{% if iface.clock_rate %}
+ clock rate {{ iface.clock_rate }}
+{% endif %}
+{% if iface.crypto_map and device.ipsec %}
+ crypto map {{ device.ipsec.map_name }}
+{% endif %}
+{% elif iface.mode == "physical" %}
+{% if iface.description %}
+ description {{ iface.description }}
+{% endif %}
+{% elif iface.mode == "loopback" %}
+ ip address {{ iface.ip }} {{ iface.mask }}
+{% endif %}
+{% if iface.qos and device.qos %}
+ service-policy output WAN-QOS
+{% endif %}
+ no shutdown
+!
+{% endfor %}
+{% if device.stp_mode %}
+!
+spanning-tree mode {{ device.stp_mode }}
+{% if device.stp_priority_vlans %}
+spanning-tree vlan {{ device.stp_priority_vlans | join(",") }} priority 4096
+{% endif %}
+{% endif %}
+{% if device.default_gateway %}
+!
+ip default-gateway {{ device.default_gateway }}
+{% endif %}
+{% if device.ospf %}
+!
+! --- OSPF ---
+router ospf {{ device.ospf.process }}
+ router-id {{ device.ospf.router_id }}
+{% for network, wildcard, area in device.ospf.networks %}
+ network {{ network }} {{ wildcard }} area {{ area }}
+{% endfor %}
+{% for name in device.ospf.passive %}
+ passive-interface {{ name }}
+{% endfor %}
+{% for area, network, mask in device.ospf.ranges %}
+ area {{ area }} range {{ network }} {{ mask }}
+{% endfor %}
+{% endif %}
+{% if device.bgp %}
+!
+! --- eBGP boundary ---
+router bgp {{ device.bgp.local_asn }}
+ bgp log-neighbor-changes
+{% for neighbor, asn in device.bgp.neighbors %}
+ neighbor {{ neighbor }} remote-as {{ asn }}
+{% endfor %}
+{% for network, mask in device.bgp.networks %}
+ network {{ network }} mask {{ mask }}
+{% endfor %}
+{% endif %}
+{% if device.qos %}
+!
+! --- QoS: priority queue for latency-sensitive traffic ---
+class-map match-any TRADING-CLASS
+ match access-group name TRADING-TRAFFIC
+policy-map WAN-QOS
+ class TRADING-CLASS
+  priority percent 30
+ class class-default
+  fair-queue
+!
+ip access-list extended TRADING-TRAFFIC
+ permit ip {{ device.qos_network }} {{ device.qos_wildcard }} any
+{% endif %}
+{% if device.ipsec %}
+!
+! --- IPsec at the cloud boundary ---
+crypto isakmp policy 10
+ encr aes 256
+ hash sha256
+ authentication pre-share
+ group 14
+crypto isakmp key {{ device.ipsec.key }} address {{ device.ipsec.peer }}
+!
+crypto ipsec transform-set TS esp-aes 256 esp-sha256-hmac
+ mode tunnel
+!
+ip access-list extended VPN-TRAFFIC
+ permit ip {{ device.ipsec.local_network }} {{ device.ipsec.local_wildcard }} {{ device.ipsec.remote_network }} {{ device.ipsec.remote_wildcard }}
+!
+crypto map {{ device.ipsec.map_name }} 10 ipsec-isakmp
+ set peer {{ device.ipsec.peer }}
+ set transform-set TS
+ match address VPN-TRAFFIC
+{% endif %}
+{% for acl in device.acls %}
+!
+ip access-list extended {{ acl.name }}
+{% for line in acl.lines %}
+ {{ line }}
+{% endfor %}
+{% endfor %}
+{% for acl in device.acls %}
+{% if acl.interface %}
+!
+interface {{ acl.interface }}
+ ip access-group {{ acl.name }} in
+{% endif %}
+{% endfor %}
+!
+line con 0
+ logging synchronous
+line vty 0 4
+ login local
+ transport input ssh
+{% if device.vty_acl %}
+ access-class {{ device.vty_acl }} in
+{% endif %}
+!
+end
