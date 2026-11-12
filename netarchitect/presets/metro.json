@@ -1,0 +1,36 @@
+{
+  "name": "metro",
+  "description": "Metro MAN: headquarters plus two remote sites over 15 km and 35 km, OS2 single-mode, sub-5 ms QoS and dual-homed failover.",
+  "endpoints": 450,
+  "buildings": 3,
+  "links": [
+    {"name": "HQ LAN access", "distance_m": 90, "kind": "access", "media": "copper"},
+    {"name": "HQ to Remote A", "distance_m": 15000, "kind": "wan", "media": "fiber"},
+    {"name": "HQ to Remote B", "distance_m": 35000, "kind": "wan", "media": "fiber"}
+  ],
+  "root_prefix": "10.20.0.0/16",
+  "subnets": [
+    {"name": "HQ-Users", "hosts": 200, "vlan": 10, "site": "HQ"},
+    {"name": "Trading", "hosts": 100, "vlan": 20, "site": "HQ"},
+    {"name": "RemoteA-Users", "hosts": 80, "vlan": 30, "site": "RemoteA"},
+    {"name": "RemoteB-Users", "hosts": 70, "vlan": 40, "site": "RemoteB"},
+    {"name": "Colo", "hosts": 20, "vlan": 50, "site": "HQ"},
+    {"name": "Link-HQ-RemoteA", "hosts": 2, "mode": "p2p30", "site": "HQ", "between": ["HQ", "RemoteA"]},
+    {"name": "Link-HQ-RemoteB", "hosts": 2, "mode": "p2p30", "site": "HQ", "between": ["HQ", "RemoteB"]}
+  ],
+  "sites": [
+    {"name": "HQ", "subnets": ["HQ-Users", "Trading", "Colo", "Link-HQ-RemoteA", "Link-HQ-RemoteB"], "role": "hq"},
+    {"name": "RemoteA", "subnets": ["RemoteA-Users"], "role": "site"},
+    {"name": "RemoteB", "subnets": ["RemoteB-Users"], "role": "site"}
+  ],
+  "resilient": true,
+  "single_as": true,
+  "cloud": false,
+  "local_asn": null,
+  "peer_asn": null,
+  "access_speed_gbps": 1,
+  "uplink_speed_gbps": 10,
+  "uplinks": 2,
+  "forced_tier": null,
+  "prices": null
+}
