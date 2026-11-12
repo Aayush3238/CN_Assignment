@@ -1,0 +1,30 @@
+{
+  "name": "branch-office",
+  "description": "Single branch with users, voice, guest Wi-Fi, and a 5 km WAN link to the provider.",
+  "endpoints": 180,
+  "buildings": 1,
+  "links": [
+    {"name": "Access run", "distance_m": 85, "kind": "access", "media": "copper"},
+    {"name": "Branch WAN", "distance_m": 5000, "kind": "wan", "media": "fiber"}
+  ],
+  "root_prefix": "10.50.0.0/23",
+  "subnets": [
+    {"name": "Users", "hosts": 100, "vlan": 10, "site": "Branch"},
+    {"name": "Voice", "hosts": 40, "vlan": 20, "site": "Branch", "poe": true},
+    {"name": "Guest", "hosts": 30, "vlan": 30, "site": "Branch"},
+    {"name": "WAN-Link", "hosts": 2, "mode": "p2p30", "site": "Branch", "between": ["Branch", "ISP"]}
+  ],
+  "sites": [
+    {"name": "Branch", "subnets": ["Users", "Voice", "Guest", "WAN-Link"], "role": "hq"}
+  ],
+  "resilient": false,
+  "single_as": true,
+  "cloud": false,
+  "local_asn": null,
+  "peer_asn": null,
+  "access_speed_gbps": 1,
+  "uplink_speed_gbps": 1,
+  "uplinks": 1,
+  "forced_tier": null,
+  "prices": null
+}
